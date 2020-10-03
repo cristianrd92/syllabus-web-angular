@@ -1,0 +1,40 @@
+<div class="card border-primary mb-3">
+  <div class="card-header">Docentes</div>
+  <div class="card-body text-secondary">
+    <h5 class="card-title">Listado de docentes</h5>
+  </div>
+  <div class="my-2 text-left">
+    <button type="button" class="btn btn-rounded btn-primary" [routerLink] = "['/docentes/form']">Crear docente</button>
+  </div>
+  <div *ngIf="docentes?.length==0" class="alert alert-info">
+    No hay registros en la base de datos
+  </div>
+  <table class="table table-bordered table-striped" *ngIf="docentes?.length>0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Email</th>
+          <th>Fecha</th>
+          <th>Editar</th>
+          <th>Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let docente of docentes">
+          <td>{{docente.id}}</td>
+          <td>{{docente.nombre}}</td>
+          <td>{{docente.apellido | uppercase}}</td>
+          <td>{{docente.email}}</td>
+          <td>{{docente.createdAt | date:"EEEE, dd, MMMM yyyy"}}</td>
+          <td>
+            <button type="button" name="editar" class="btn btn-primary" [routerLink]="['/docentes/form', docente.id]">Editar</button>
+          </td>
+          <td>
+            <button type="button" name="eliminar" class="btn btn-danger" (click)='delete(docente)'>Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+  </table>
+</div>
