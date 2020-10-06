@@ -1,16 +1,16 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule , LOCALE_ID} from '@angular/core';
-import { DatePipe, formatDate, registerLocaleData } from '@angular/common';
+import { registerLocaleData } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { DirectivaComponent } from './directiva/directiva.component';
-import { DocentesComponent } from './docentes/docentes.component';
-import { DocenteService } from './docentes/docente.service';
+import { CiudadesComponent } from './ciudades/ciudades.component';
+import { CiudadService } from './ciudades/ciudad.service';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-import { FormComponent } from './docentes/form.component';
+import { FormComponent } from './ciudades/form.component';
 import { FormsModule } from '@angular/forms';
 import localeEs from '@angular/common/locales/es-CL';
 
@@ -20,9 +20,9 @@ registerLocaleData(localeEs, 'es-CL');
 const routes: Routes = [
   {path: '', redirectTo: '/', pathMatch: 'full'},
   {path: 'directivas', component:DirectivaComponent},
-  {path: 'docentes', component:DocentesComponent},
-  {path: 'docentes/form', component:FormComponent},
-  {path: 'docentes/form/:id', component:FormComponent},
+  {path: 'ciudades', component:CiudadesComponent},
+  {path: 'ciudades/form', component:FormComponent},
+  {path: 'ciudades/form/:id', component:FormComponent},
 ]
 
 @NgModule({
@@ -31,7 +31,7 @@ const routes: Routes = [
     HeaderComponent,
     FooterComponent,
     DirectivaComponent,
-    DocentesComponent,
+    CiudadesComponent,
     FormComponent,
   ],
   imports: [
@@ -40,7 +40,7 @@ const routes: Routes = [
     FormsModule,
     HttpClientModule
   ],
-  providers: [DocenteService, {provide: LOCALE_ID, useValue: 'es-CL'}],
+  providers: [CiudadService, {provide: LOCALE_ID, useValue: 'es-CL'}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
