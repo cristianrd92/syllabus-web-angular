@@ -14,15 +14,16 @@
         <tr>
           <th>ID</th>
           <th>Nombre ciudad</th>
+          <th>Editar</th>
+          <th>Borrar</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let ciudad of ciudades">
           <td>{{ciudad.id}}</td>
-          <td>{{ciudad.nombre}}</td>
-          <td>{{ciudad.apellido | uppercase}}</td>
-          <td>{{ciudad.email}}</td>
-          <td>{{ciudad.createdAt | date:"EEEE, dd, MMMM yyyy"}}</td>
+          <td>{{ciudad.nombre_ciudad}}</td>
+          <!-- <td>{{ciudad.apellido | uppercase}}</td> -->
+          <!-- <td>{{ciudad.createdAt | date:"EEEE, dd, MMMM yyyy"}}</td> -->
           <td>
             <button type="button" name="editar" class="btn btn-primary" [routerLink]="['/ciudades/form', ciudad.id]">Editar</button>
           </td>

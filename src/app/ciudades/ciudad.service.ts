@@ -15,8 +15,21 @@ export class CiudadService {
   private httpHeaders = new HttpHeaders({'Content-Type': 'application/json'})
   constructor(private http: HttpClient, private router: Router) { }
 
+  private isNoAutorizado(e): boolean{
+    console.log(e);
+    if(e.status==401 || e.status==403){
+      this.router.navigate(['/login'])
+      return true
+    }
+    return false
+  }
+
   getCiudades() : Observable<Ciudad[]> {
     return this.http.get<Ciudad[]>(this.urlEndPoint).pipe(
+      catchError(e => {
+        this.isNoAutorizado(e);
+        return throwError(e);
+      }),
     map( (response) => {
       let ciudades = response as Ciudad[];
       return ciudades.map(ciudad => {
@@ -32,6 +45,9 @@ export class CiudadService {
     return this.http.post(this.urlEndPoint, ciudad, {headers: this.httpHeaders}).pipe(
       map((response:any) => response.ciudad as Ciudad),
       catchError(e => {
+        if(this.isNoAutorizado(e)){
+          return throwError(e);
+        }
 
         if(e.status==400){
           return throwError(e);
@@ -47,6 +63,9 @@ export class CiudadService {
   getCiudad(id): Observable<Ciudad> {
     return this.http.get<Ciudad>(`${this.urlEndPoint}/${id}`).pipe(
       catchError(e => {
+        if(this.isNoAutorizado(e)){
+          return throwError(e);
+        }
         this.router.navigate(['/ciudades']);
         swal("Error al editar", e.error.mensaje, "error");
         return throwError(e);
@@ -58,6 +77,9 @@ export class CiudadService {
     return this.http.put<Ciudad>(`${this.urlEndPoint}/${ciudad.id}`, ciudad, {headers: this.httpHeaders}).pipe(
       map((response:any) => response.ciudad as Ciudad),
       catchError(e => {
+        if(this.isNoAutorizado(e)){
+          return throwError(e);
+        }
         if(e.status==400){
           return throwError(e);
         }
@@ -70,6 +92,9 @@ export class CiudadService {
   delete(id: number): Observable<Ciudad> {
     return this.http.delete<Ciudad>(`${this.urlEndPoint}/${id}`, {headers: this.httpHeaders}).pipe(
       catchError(e => {
+        if(this.isNoAutorizado(e)){
+          return throwError(e);
+        }
         swal(e.error.mensaje, e.error.error, "error");
         return throwError(e);
       })
