@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormComponent } from './ciudades/form.component';
 import { FormsModule } from '@angular/forms';
 import localeEs from '@angular/common/locales/es-CL';
+import { LoginComponent } from './usuarios/login.component';
 
 
 registerLocaleData(localeEs, 'es-CL');
@@ -23,6 +24,7 @@ const routes: Routes = [
   {path: 'ciudades', component:CiudadesComponent},
   {path: 'ciudades/form', component:FormComponent},
   {path: 'ciudades/form/:id', component:FormComponent},
+  {path: 'login', component:LoginComponent},
 ]
 
 @NgModule({
@@ -33,6 +35,7 @@ const routes: Routes = [
     DirectivaComponent,
     CiudadesComponent,
     FormComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
