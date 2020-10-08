@@ -18,21 +18,30 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if(this.authService.isAuthenticated()){
+      swal("Login", "Ya te encuentras autenticado!", "info");
+      this.router.navigate(['/ciudades']);
+    }
   }
 
   login():void {
-    console.log(this.usuario);
     if(this.usuario.username==null || this.usuario.password==null){
       swal("Error Login","Usuario o contraseña vacias!","error");
       return;
     }
 
     this.authService.login(this.usuario).subscribe(response => {
-      console.log(response);
+      this.authService.guardarUsuario(response.access_token);
+      this.authService.guardarToken(response.access_token);
+      let usuario = this.authService.usuario;
       this.router.navigate(["/ciudades"]);
-      swal("Login", "Hola "+ this.usuario.username +" has inicado sesion con exito", "success");
-    });  
-
+      swal("Login", "Hola "+ usuario.username +" has inicado sesián con éxito", "success");
+    },err => {
+      if(err.status == 400){
+        swal("Error Login", "Usuario o clave incorrecta!","error");
+      }
+    }
+   );  
   }
 
 }

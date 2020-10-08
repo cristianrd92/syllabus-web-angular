@@ -1,28 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import { Ciudad } from './ciudad';
-import { CiudadService } from './ciudad.service';
+import { Facultad } from './facultad';
+import { FacultadService } from './facultad.service';
 import swal from 'sweetalert2';
 import { AuthService } from '../usuarios/auth.service';
 
 @Component({
-  selector: 'app-ciudades',
-  templateUrl: './ciudades.component.html',
+  selector: 'app-sese',
+  templateUrl: './facultades.component.html',
 })
-export class CiudadesComponent implements OnInit {
+export class FacultadesComponent implements OnInit {
 
-  ciudades: Ciudad[];
+  facultades: Facultad[];
 
-  constructor( private ciudadService: CiudadService ,
+  constructor( private facultadService: FacultadService ,
     public authService: AuthService) { }
 
   ngOnInit() {
-    this.ciudadService.getCiudades().subscribe(
-      ciudades => this.ciudades = ciudades
+    this.facultadService.getFacultades().subscribe(
+      facultades => this.facultades = facultades
     );
   }
-  delete(ciudad: Ciudad): void {
+  delete(facultad: Facultad): void {
     swal({
-      title: `Esta seguro que desea eliminar la ciudad ${ciudad.nombre_ciudad} ?`,
+      title: `Esta seguro que desea eliminar la facultad ${facultad.nombre_facultad} ?`,
       text: "Esto no se podra revertir",
       type: "warning",
       showCancelButton: true,
@@ -36,12 +36,12 @@ export class CiudadesComponent implements OnInit {
       reverseButtons: true
     }).then((result) =>{
       if (result.value){
-        this.ciudadService.delete(ciudad.id).subscribe(
+        this.facultadService.delete(facultad.id).subscribe(
           response => {
-            this.ciudades = this.ciudades.filter(ciu => ciu !== ciudad)
+            this.facultades = this.facultades.filter(fac => fac !== facultad)
             swal(
               'Borrado!',
-              'La ciudad ha sido borrada',
+              'La facultad ha sido borrada',
               'success'
               )
           }

@@ -1,0 +1,51 @@
+<ul class="alert alert-danger" *ngIf="errores?.length > 0">
+  <li *ngFor="let err of errores">
+    {{ err }}
+  </li>
+</ul>
+
+<div class="card bg-dark text-white">
+  <div class="card-header">{{titulo}}</div>
+  <div class="card-body">
+    <form #sedeForm="ngForm">
+      <div class="form-group row">
+        <label for="nombre" class="col-form-label col-sm-2">Nombre Sede</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="sede.nombre_sede" name="nombre" required minlength="4" #nombre="ngModel">
+          <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+            <div *ngIf="nombre.errors.required">
+              Nombre sede es obligatorio
+            </div>
+            <div *ngIf="nombre.errors.minlength">
+              Nombre debe contener al menos 4 caracteres
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="ciudad" class="col-form-label col-sm-2">Ciudad</label>
+        <div class="col-sm-6">
+          <select [compareWith]="compararCiudad" class="form-control" [(ngModel)]="sede.ciudad" name="ciudad" required #ciudad="ngModel">
+            <option [ngValue]="undefined" > --- Seleccione una ciuad ---</option>
+            <option *ngFor="let ciudad of ciudades" [ngValue]="ciudad">{{ciudad.nombre_ciudad}}</option>
+          </select>
+          <div class="alert alert-danger" *ngIf="ciudad.invalid && (ciudad.dirty || ciudad.touched)">
+            <div *ngIf="ciudad.errors.required">
+              La ciudad es obligatoria
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-6">
+          <button class="btn btn-primary" role="button" (click)='create()' *ngIf="!sede.id; else elseBlock" [disabled]="!sedeForm.form.valid" >Crear</button>
+
+          <ng-template #elseBlock>
+            <button class="btn btn-primary" role="button" (click)='update()' [disabled]="!sedeForm.form.valid">Editar</button>
+          </ng-template>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

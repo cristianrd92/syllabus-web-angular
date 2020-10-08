@@ -1,28 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import { Ciudad } from './ciudad';
-import { CiudadService } from './ciudad.service';
+import { Sede } from './sede';
+import { SedeService } from './sede.service';
 import swal from 'sweetalert2';
 import { AuthService } from '../usuarios/auth.service';
 
 @Component({
-  selector: 'app-ciudades',
-  templateUrl: './ciudades.component.html',
+  selector: 'app-sese',
+  templateUrl: './sedes.component.html',
 })
-export class CiudadesComponent implements OnInit {
+export class SedesComponent implements OnInit {
 
-  ciudades: Ciudad[];
+  sedes: Sede[];
 
-  constructor( private ciudadService: CiudadService ,
+  constructor( private sedeService: SedeService ,
     public authService: AuthService) { }
 
   ngOnInit() {
-    this.ciudadService.getCiudades().subscribe(
-      ciudades => this.ciudades = ciudades
+    this.sedeService.getSedes().subscribe(
+      sedes => this.sedes = sedes
     );
   }
-  delete(ciudad: Ciudad): void {
+  delete(sede: Sede): void {
     swal({
-      title: `Esta seguro que desea eliminar la ciudad ${ciudad.nombre_ciudad} ?`,
+      title: `Esta seguro que desea eliminar la sede ${sede.nombre_sede} ?`,
       text: "Esto no se podra revertir",
       type: "warning",
       showCancelButton: true,
@@ -36,12 +36,12 @@ export class CiudadesComponent implements OnInit {
       reverseButtons: true
     }).then((result) =>{
       if (result.value){
-        this.ciudadService.delete(ciudad.id).subscribe(
+        this.sedeService.delete(sede.id).subscribe(
           response => {
-            this.ciudades = this.ciudades.filter(ciu => ciu !== ciudad)
+            this.sedes = this.sedes.filter(sed => sed !== sede)
             swal(
               'Borrado!',
-              'La ciudad ha sido borrada',
+              'La sede ha sido borrada',
               'success'
               )
           }
