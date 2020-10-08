@@ -1,0 +1,66 @@
+<ul class="alert alert-danger" *ngIf="errores?.length > 0">
+  <li *ngFor="let err of errores">
+    {{ err }}
+  </li>
+</ul>
+
+<div class="card bg-dark text-white">
+  <div class="card-header">{{titulo}}</div>
+  <div class="card-body">
+    <form #carreraForm="ngForm">
+      <div class="form-group row">
+        <label for="nombre" class="col-form-label col-sm-2">Nombre Carrera</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="carrera.nombre_carrera" name="nombre" required minlength="4" #nombre="ngModel">
+          <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+            <div *ngIf="nombre.errors.required">
+              Nombre carrera es obligatorio
+            </div>
+            <div *ngIf="nombre.errors.minlength">
+              Nombre debe contener al menos 4 caracteres
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="codigo_carrera" class="col-form-label col-sm-2">Codigo Carrera</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="carrera.codigo_carrera" name="codigo_carrera" required minlength="4" #codigo_carrera="ngModel">
+          <div class="alert alert-danger" *ngIf="codigo_carrera.invalid && (codigo_carrera.dirty || codigo_carrera.touched)">
+            <div *ngIf="codigo_carrera.errors.required">
+              Codigo carrera es obligatorio
+            </div>
+            <div *ngIf="codigo_carrera.errors.minlength">
+              Codigo carrera debe contener al menos 4 caracteres
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="facultad" class="col-form-label col-sm-2">Facultad</label>
+        <div class="col-sm-6">
+          <select [compareWith]="compararFacultad" class="form-control" [(ngModel)]="carrera.facultad" name="facultad" required #facultad="ngModel">
+            <option [ngValue]="undefined" > --- Seleccione una ciuad ---</option>
+            <option *ngFor="let facultad of facultades" [ngValue]="facultad">{{facultad.nombre_facultad}}</option>
+          </select>
+          <div class="alert alert-danger" *ngIf="facultad.invalid && (facultad.dirty || facultad.touched)">
+            <div *ngIf="facultad.errors.required">
+              La facultad es obligatoria
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-6">
+          <button class="btn btn-primary" role="button" (click)='create()' *ngIf="!carrera.id; else elseBlock" [disabled]="!carreraForm.form.valid" >Crear</button>
+
+          <ng-template #elseBlock>
+            <button class="btn btn-primary" role="button" (click)='update()' [disabled]="!carreraForm.form.valid">Editar</button>
+          </ng-template>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

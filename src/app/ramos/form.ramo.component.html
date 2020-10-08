@@ -1,0 +1,52 @@
+<ul class="alert alert-danger" *ngIf="errores?.length > 0">
+  <li *ngFor="let err of errores">
+    {{ err }}
+  </li>
+</ul>
+
+<div class="card bg-dark text-white">
+  <div class="card-header">{{titulo}}</div>
+  <div class="card-body">
+    <form #ramoForm="ngForm">
+      <div class="form-group row">
+        <label for="nombre" class="col-form-label col-sm-2">Nombre ramo</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="ramo.nombre_ramo" name="nombre_ramo" required minlength="4" #nombre_ramo="ngModel">
+          <div class="alert alert-danger" *ngIf="nombre_ramo.invalid && (nombre_ramo.dirty || nombre_ramo.touched)">
+            <div *ngIf="nombre_ramo.errors.required">
+              Nombre ramo es obligatorio
+            </div>
+            <div *ngIf="nombre_ramo.errors.minlength">
+              Nombre debe contener al menos 4 caracteres
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="codigo_ramo" class="col-form-label col-sm-2">Codigo ramo</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="ramo.codigo_ramo" name="codigo_ramo" required minlength="4" #codigo_ramo="ngModel">
+          <div class="alert alert-danger" *ngIf="codigo_ramo.invalid && (codigo_ramo.dirty || codigo_ramo.touched)">
+            <div *ngIf="codigo_ramo.errors.required">
+              Codigo ramo es obligatorio
+            </div>
+            <div *ngIf="codigo_ramo.errors.minlength">
+              Codigo ramo debe contener al menos 4 caracteres
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-6">
+          <button class="btn btn-primary" role="button" (click)='create()' *ngIf="!ramo.id; else elseBlock" [disabled]="!ramoForm.form.valid" >Crear</button>
+
+          <ng-template #elseBlock>
+            <button class="btn btn-primary" role="button" (click)='update()' [disabled]="!ramoForm.form.valid">Editar</button>
+          </ng-template>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

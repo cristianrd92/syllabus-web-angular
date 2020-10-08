@@ -52,7 +52,7 @@ export class FormFacultadComponent implements OnInit {
   update(): void{
     this.facultadService.update(this.facultad)
     .subscribe(facultad => {
-      this.router.navigate(['/sedes'])
+      this.router.navigate(['/facultades'])
       swal("Facultad actualizada", `Facultad ${facultad.nombre_facultad} actualizada con exito`, 'success')
     },
     err => {

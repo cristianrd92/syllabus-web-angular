@@ -1,0 +1,34 @@
+<div class="card border-primary mb-3">
+  <div class="card-header">Ramos</div>
+  <div class="card-body text-secondary">
+    <h5 class="card-title">Listado de ramos</h5>
+  <div class="my-2 text-left">
+    <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" class="btn btn-rounded btn-primary" [routerLink] = "['/ramos/form']">Crear ramo</button>
+  </div>
+  <div *ngIf="ramos?.length==0" class="alert alert-info">
+    No hay registros en la base de datos
+  </div>
+  <table class="table table-bordered table-striped" *ngIf="ramos?.length>0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre ramo</th>
+          <th *ngIf="authService.hasRole('ROLE_ADMIN')">Editar</th>
+          <th *ngIf="authService.hasRole('ROLE_ADMIN')">Borrar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ramo of ramos">
+          <td>{{ramo.id}}</td>
+          <td>{{ramo.nombre_ramo}}</td>
+          <td *ngIf="authService.hasRole('ROLE_ADMIN')" >
+            <button type="button" name="editar" class="btn btn-primary" [routerLink]="['/ramos/form', ramo.id]">Editar</button>
+          </td>
+          <td *ngIf="authService.hasRole('ROLE_ADMIN')">
+            <button type="button" name="eliminar" class="btn btn-danger" (click)='delete(ramo)'>Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+  </table>
+  </div>
+</div>

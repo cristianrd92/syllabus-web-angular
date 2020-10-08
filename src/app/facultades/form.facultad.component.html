@@ -25,7 +25,7 @@
       <div class="form-group row">
         <label for="ciudad" class="col-form-label col-sm-2">Facultad</label>
         <div class="col-sm-6">
-          <select [compareWith]="compararFacultad" class="form-control" [(ngModel)]="facultad.sede" name="sede" required #ciudad="ngModel">
+          <select [compareWith]="compararFacultad" class="form-control" [(ngModel)]="facultad.sede" name="sede" required #sede="ngModel">
             <option [ngValue]="undefined" > --- Seleccione una sede ---</option>
             <option *ngFor="let sede of sedes" [ngValue]="sede">{{sede.nombre_sede}}</option>
           </select>
