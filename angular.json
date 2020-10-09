@@ -25,12 +25,19 @@
             ],
             "styles": [
               "src/styles.css",
-              "src/assets/css/bootstrap.min.css"
+              "src/assets/css/bootstrap.min.css",
+              "src/assets/css/animate.css",
+              "src/assets/css/style.css",
+              "src/assets/css/datatables.css"
             ],
             "scripts": [
               "src/assets/js/jquery-3.5.1.slim.min.js",
               "src/assets/js/popper.min.js",
-              "src/assets/js/bootstrap.min.js"
+              "src/assets/js/inspinia.js",
+              "src/assets/js/jquery.metisMenu.js",
+              "src/assets/js/bootstrap.min.js",
+              "src/assets/js/jquery.slimscroll.min.js",
+              "src/assets/js/datatables.js"
             ]
           },
           "configurations": {

@@ -1,0 +1,36 @@
+<div class="card border-primary mb-3">
+  <div class="card-header">Ramos Carreras</div>
+  <div class="card-body text-secondary">
+    <h5 class="card-title">Listado de Ramos Carrera</h5>
+  <div class="my-2 text-left">
+    <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" class="btn btn-rounded btn-primary" [routerLink] = "['/ramosCarreras/form']">Crear ramo carrera</button>
+  </div>
+  <div *ngIf="ramos_carreras?.length==0" class="alert alert-info">
+    No hay registros en la base de datos
+  </div>
+  <table class="table table-bordered table-striped" *ngIf="ramos_carreras?.length>0">
+      <thead>
+        <tr>
+          <th>Carrera</th>
+          <th>Ramo</th>
+          <th>Docente</th>
+          <th *ngIf="authService.hasRole('ROLE_ADMIN')">Editar</th>
+          <th *ngIf="authService.hasRole('ROLE_ADMIN')">Borrar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ramo_carrera of ramos_carreras">
+          <td>{{ramo_carrera.carrera.nombre_carrera | uppercase}}</td>
+          <td>{{ramo_carrera.ramo.nombre_ramo | uppercase}}</td>
+          <td>{{ramo_carrera.usuario.nombres | uppercase}} {{ramo_carrera.usuario.apellidos | uppercase}}</td>
+          <td *ngIf="authService.hasRole('ROLE_ADMIN')" >
+            <button type="button" name="editar" class="btn btn-primary" [routerLink]="['/ramosCarreras/form', ramo_carrera.id]">Editar</button>
+          </td>
+          <td *ngIf="authService.hasRole('ROLE_ADMIN')">
+            <button type="button" name="eliminar" class="btn btn-danger" (click)='delete(ramo_carrera)'>Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

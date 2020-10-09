@@ -25,7 +25,7 @@ constructor(private authService:AuthService, private router:Router){}
         }
         if(e.status==403){
           swal("Acceso denegado", "No tienes acceso a este recurso!", "warning");
-          this.router.navigate(['/ciudades']);
+          this.router.navigate(['/']);
         }
         return throwError(e);
       })

@@ -1,0 +1,95 @@
+<ul class="alert alert-danger" *ngIf="errores?.length > 0">
+  <li *ngFor="let err of errores">
+    {{ err }}
+  </li>
+</ul>
+
+<div class="card bg-dark text-white">
+  <div class="card-header">{{titulo}}</div>
+  <div class="card-body">
+    <form #ramoCarreraForm="ngForm">
+      <div class="form-group row">
+        <label for="nombre" class="col-form-label col-sm-2">Creditos</label>
+        <div class="col-sm-6">
+          <input type="number" class="form-control" [(ngModel)]="ramo_carrera.creditos" name="creditos" required #creditos="ngModel">
+          <div class="alert alert-danger" *ngIf="creditos.invalid && (creditos.dirty || creditos.touched)">
+            <div *ngIf="creditos.errors.required">
+              Creditos ramo carrera es obligatorio
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="facultad" class="col-form-label col-sm-2">Docente</label>
+        <div class="col-sm-6">
+          <select [compareWith]="compararUsuario" class="form-control" [(ngModel)]="ramo_carrera.usuario" name="usuario" required #usuario="ngModel">
+            <option [ngValue]="undefined" > --- Seleccione un docente ---</option>
+            <option *ngFor="let usuario of usuarios" [ngValue]="usuario">{{usuario.nombres}} {{usuario.apellidos}}</option>
+          </select>
+          <div class="alert alert-danger" *ngIf="usuario.invalid && (usuario.dirty || usuario.touched)">
+            <div *ngIf="usuario.errors.required">
+              El docente es obligatorio
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="ramo" class="col-form-label col-sm-2">Ramo</label>
+        <div class="col-sm-6">
+          <select [compareWith]="compararRamo" class="form-control" [(ngModel)]="ramo_carrera.ramo" name="facultad" required #ramo="ngModel">
+            <option [ngValue]="undefined" > --- Seleccione un ramo ---</option>
+            <option *ngFor="let ramo of ramos" [ngValue]="ramo">{{ramo.nombre_ramo}}</option>
+          </select>
+          <div class="alert alert-danger" *ngIf="ramo.invalid && (ramo.dirty || ramo.touched)">
+            <div *ngIf="ramo.errors.required">
+              El ramo es obligatorio
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="carrera" class="col-form-label col-sm-2">Carrera</label>
+        <div class="col-sm-6">
+          <select [compareWith]="compararCarrera" class="form-control" [(ngModel)]="ramo_carrera.carrera" name="carrera" required #carrera="ngModel">
+            <option [ngValue]="undefined" > --- Seleccione una carrera ---</option>
+            <option *ngFor="let carrera of carreras" [ngValue]="carrera">{{carrera.nombre_carrera}}</option>
+          </select>
+          <div class="alert alert-danger" *ngIf="carrera.invalid && (carrera.dirty || carrera.touched)">
+            <div *ngIf="carrera.errors.required">
+              La carrera es obligatoria
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="periodo" class="col-form-label col-sm-2">Periodo</label>
+        <div class="col-sm-6">
+          <select [compareWith]="compararPeriodo" class="form-control" [(ngModel)]="ramo_carrera.periodo" name="periodo" required #periodo="ngModel">
+            <option [ngValue]="undefined" > --- Seleccione un periodo ---</option>
+            <option *ngFor="let periodo of periodos" [ngValue]="periodo">{{periodo.nombre_periodo}}</option>
+          </select>
+          <div class="alert alert-danger" *ngIf="periodo.invalid && (periodo.dirty || periodo.touched)">
+            <div *ngIf="periodo.errors.required">
+              El periodo es obligatorio
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="form-group row">
+        <div class="col-sm-6">
+          <button class="btn btn-primary" role="button" (click)='create()' *ngIf="!ramo_carrera.id; else elseBlock" [disabled]="!ramoCarreraForm.form.valid" >Crear</button>
+
+          <ng-template #elseBlock>
+            <button class="btn btn-primary" role="button" (click)='update()' [disabled]="!ramoCarreraForm.form.valid">Editar</button>
+          </ng-template>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

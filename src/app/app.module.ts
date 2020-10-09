@@ -32,6 +32,10 @@ import { PeriodoService } from './periodos/periodo.service';
 import { RamosComponent } from './ramos/ramos.component';
 import { FormRamoComponent } from './ramos/form.ramo.component';
 import { RamoService } from './ramos/ramo.service';
+import { RamosCarrerasComponent } from './ramos_carreras/ramos-carreras.component';
+import { FormRamoCarreraComponent } from './ramos_carreras/form.ramo_carrera.component';
+import { RamoCarreraService } from './ramos_carreras/ramo_carrera.service';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 registerLocaleData(localeEs, 'es-CL');
@@ -42,6 +46,7 @@ const routes: Routes = [
   {path: 'ciudades/form', component:FormComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'ciudades/form/:id', component:FormComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'login', component:LoginComponent},
+  {path: 'home', component:CiudadesComponent},
   {path: 'sedes', component:SedesComponent},
   {path: 'sedes/form', component:FormSedeComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'sedes/form/:id', component:FormSedeComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
@@ -57,6 +62,9 @@ const routes: Routes = [
   {path: 'ramos', component:RamosComponent},
   {path: 'ramos/form', component:FormRamoComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'ramos/form/:id', component:FormRamoComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
+  {path: 'ramosCarreras', component:RamosCarrerasComponent},
+  {path: 'ramosCarreras/form', component:FormRamoCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
+  {path: 'ramosCarreras/form/:id', component:FormRamoCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
 
 ]
 
@@ -71,22 +79,25 @@ const routes: Routes = [
     CarrerasComponent,
     PeriodosComponent,
     RamosComponent,
+    RamosCarrerasComponent,
     FormComponent,
     FormSedeComponent,
     FormFacultadComponent,
     FormCarreraComponent,
     FormPeriodoComponent,
     FormRamoComponent,
+    FormRamoCarreraComponent,
     LoginComponent,
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    FontAwesomeModule
   ],
   providers: [CiudadService, SedeService, FacultadService, CarreraService, PeriodoService, 
-    RamoService,
+              RamoService, RamoCarreraService, 
   {provide: LOCALE_ID, useValue: 'es-CL'}, 
   { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],

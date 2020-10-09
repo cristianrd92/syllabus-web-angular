@@ -25,7 +25,7 @@ export class RoleGuard implements CanActivate {
         return true;
       }
       swal("Acceso denegado", "No tienes acceso a este recurso!", "warning");
-      this.router.navigate(['/ciudades']);
+      this.router.navigate(['/home']);
     return false;
   }
   

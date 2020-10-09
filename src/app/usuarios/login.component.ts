@@ -13,14 +13,14 @@ export class LoginComponent implements OnInit {
   titulo:string = "Por favor Inicie Sesión";
   usuario:Usuario;
 
-  constructor(private authService: AuthService, private router: Router) { 
+  constructor(public authService: AuthService, private router: Router) { 
     this.usuario= new Usuario();
   }
 
   ngOnInit(): void {
     if(this.authService.isAuthenticated()){
       swal("Login", "Ya te encuentras autenticado!", "info");
-      this.router.navigate(['/ciudades']);
+      this.router.navigate(['/home']);
     }
   }
 
@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
       this.authService.guardarUsuario(response.access_token);
       this.authService.guardarToken(response.access_token);
       let usuario = this.authService.usuario;
-      this.router.navigate(["/ciudades"]);
+      this.router.navigate(["/home"]);
       swal("Login", "Hola "+ usuario.username +" has inicado sesián con éxito", "success");
     },err => {
       if(err.status == 400){

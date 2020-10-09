@@ -1,4 +1,4 @@
-<div class="card border-primary mb-3">
+<div class="card mb-3">
   <div class="card-header">Ciudades</div>
   <div class="card-body text-secondary">
     <h5 class="card-title">Listado de ciudades</h5>
@@ -8,7 +8,7 @@
   <div *ngIf="ciudades?.length==0" class="alert alert-info">
     No hay registros en la base de datos
   </div>
-  <table class="table table-bordered table-striped" *ngIf="ciudades?.length>0">
+  <table id="myTable" class="table table-bordered table-striped" *ngIf="ciudades?.length>0">
       <thead>
         <tr>
           <th>ID</th>
@@ -33,4 +33,11 @@
       </tbody>
   </table>
   </div>
+  <script>
+    $(document).ready( function () {
+        $('#myTable').DataTable();
+    } );
+    </script>
+    
 </div>
+
