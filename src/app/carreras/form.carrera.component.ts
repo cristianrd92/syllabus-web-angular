@@ -3,6 +3,7 @@ import { Carrera } from './carrera';
 import { CarreraService } from './carrera.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
+import { Location } from '@angular/common';
 import { Facultad } from '../facultades/facultad';
 
 @Component({
@@ -17,11 +18,16 @@ export class FormCarreraComponent implements OnInit {
 
   constructor(private carreraService: CarreraService,
     private router: Router,
-    private activedRoute: ActivatedRoute){ }
+    private activedRoute: ActivatedRoute,
+    private _location: Location){ }
 
   ngOnInit(): void {
     this.cargarCarrera(),
     this.cargarFacultades()
+  }
+  
+  goBack(){
+    this._location.back();
   }
 
   cargarFacultades(): void {

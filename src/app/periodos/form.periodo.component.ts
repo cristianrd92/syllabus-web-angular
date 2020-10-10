@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Periodo } from './periodo';
 import { PeriodoService } from './periodo.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 import swal from 'sweetalert2';
 
 @Component({
@@ -15,10 +16,14 @@ export class FormPeriodoComponent implements OnInit {
 
   constructor(private periodoService: PeriodoService,
     private router: Router,
-    private activedRoute: ActivatedRoute){ }
+    private activedRoute: ActivatedRoute,
+    private _location: Location){ }
 
   ngOnInit(): void {
     this.cargarPeriodo()
+  }
+  goBack(){
+    this._location.back();
   }
 
   cargarPeriodo(): void {

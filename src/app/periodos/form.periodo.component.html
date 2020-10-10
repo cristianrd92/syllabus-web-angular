@@ -30,6 +30,7 @@
           <ng-template #elseBlock>
             <button class="btn btn-primary" role="button" (click)='update()' [disabled]="!periodoForm.form.valid">Editar</button>
           </ng-template>
+          <button class="btn btn-danger" mat-raised-button (click)="goBack()">Volver</button>
         </div>
       </div>
     </form>

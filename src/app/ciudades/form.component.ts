@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Ciudad } from './ciudad';
 import { CiudadService } from './ciudad.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 import swal from 'sweetalert2';
 
 @Component({
@@ -15,10 +16,14 @@ export class FormComponent implements OnInit {
 
   constructor(private ciudadService: CiudadService,
     private router: Router,
-    private activedRoute: ActivatedRoute){ }
+    private activedRoute: ActivatedRoute,
+    private _location: Location){ }
 
   ngOnInit(): void {
     this.cargarCiudad()
+  }
+  goBack(){
+    this._location.back();
   }
 
   cargarCiudad(): void {

@@ -4,6 +4,7 @@ import { SedeService } from './sede.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
 import { Ciudad } from '../ciudades/ciudad';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-form',
@@ -17,7 +18,8 @@ export class FormSedeComponent implements OnInit {
 
   constructor(private sedeService: SedeService,
     private router: Router,
-    private activedRoute: ActivatedRoute){ }
+    private activedRoute: ActivatedRoute,
+    private _location: Location){ }
 
   ngOnInit(): void {
     this.cargarSede(),
@@ -60,7 +62,9 @@ export class FormSedeComponent implements OnInit {
     }
     )
   }
-
+  goBack(){
+    this._location.back();
+  }
   compararCiudad(o1:Ciudad, o2:Ciudad): boolean{
     if(o1===undefined && o2===undefined){
       return true;

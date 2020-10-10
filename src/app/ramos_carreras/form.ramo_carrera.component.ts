@@ -3,6 +3,7 @@ import { RamoCarrera } from './ramo_carrera';
 import { RamoCarreraService } from './ramo_carrera.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
+import { Location } from '@angular/common';
 
 import { Carrera } from '../carreras/carrera';
 import { Usuario } from '../usuarios/usuario';
@@ -28,7 +29,8 @@ export class FormRamoCarreraComponent implements OnInit {
 
   constructor(private ramoCarreraService: RamoCarreraService,
     private router: Router,
-    private activedRoute: ActivatedRoute){ }
+    private activedRoute: ActivatedRoute,
+    private _location: Location){ }
 
   ngOnInit(): void {
     this.cargarRamoCarrera(),
@@ -83,7 +85,9 @@ export class FormRamoCarreraComponent implements OnInit {
     }
     )
   }
-
+  goBack(){
+    this._location.back();
+  }
   compararUsuario(o1:Usuario, o2:Usuario): boolean{
     if(o1===undefined && o2===undefined){
       return true;

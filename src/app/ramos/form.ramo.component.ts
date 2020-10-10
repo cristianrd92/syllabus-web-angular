@@ -3,6 +3,7 @@ import { Ramo } from './ramo';
 import { RamoService } from './ramo.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-form',
@@ -15,10 +16,15 @@ export class FormRamoComponent implements OnInit {
 
   constructor(private ramoService: RamoService,
     private router: Router,
-    private activedRoute: ActivatedRoute){ }
+    private activedRoute: ActivatedRoute,
+    private _location: Location){ }
 
   ngOnInit(): void {
     this.cargarRamo()
+  }
+
+  goBack(){
+    this._location.back();
   }
 
   cargarRamo(): void {

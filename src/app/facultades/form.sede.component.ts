@@ -4,6 +4,8 @@ import { FacultadService } from './facultad.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
 import { Sede } from '../sedes/sede';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-form',
@@ -22,6 +24,9 @@ export class FormFacultadComponent implements OnInit {
   ngOnInit(): void {
     this.cargarFacultad(),
     this.cargarSedes()
+  }
+  goBack(){
+    this._location.back();
   }
 
   cargarSedes(): void {
