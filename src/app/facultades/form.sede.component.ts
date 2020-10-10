@@ -19,7 +19,8 @@ export class FormFacultadComponent implements OnInit {
 
   constructor(private facultadService: FacultadService,
     private router: Router,
-    private activedRoute: ActivatedRoute){ }
+    private activedRoute: ActivatedRoute,
+    private _location: Location){ }
 
   ngOnInit(): void {
     this.cargarFacultad(),
