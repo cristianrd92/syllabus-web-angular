@@ -36,6 +36,7 @@ import { RamosCarrerasComponent } from './ramos_carreras/ramos-carreras.componen
 import { FormRamoCarreraComponent } from './ramos_carreras/form.ramo_carrera.component';
 import { RamoCarreraService } from './ramos_carreras/ramo_carrera.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { HomeComponent } from './home/home.component';
 
 
 registerLocaleData(localeEs, 'es-CL');
@@ -46,7 +47,7 @@ const routes: Routes = [
   {path: 'ciudades/form', component:FormComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'ciudades/form/:id', component:FormComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'login', component:LoginComponent},
-  {path: 'home', component:CiudadesComponent},
+  {path: 'home', component:HomeComponent},
   {path: 'sedes', component:SedesComponent},
   {path: 'sedes/form', component:FormSedeComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'sedes/form/:id', component:FormSedeComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
@@ -88,6 +89,7 @@ const routes: Routes = [
     FormRamoComponent,
     FormRamoCarreraComponent,
     LoginComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
