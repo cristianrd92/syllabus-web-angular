@@ -24,20 +24,20 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css",
-              "src/assets/css/bootstrap.min.css",
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "./node_modules/datatables.net-dt/css/jquery.dataTables.css",
               "src/assets/css/animate.css",
               "src/assets/css/style.css",
-              "src/assets/css/datatables.css"
+              "src/styles.css"
             ],
             "scripts": [
-              "src/assets/js/jquery-3.5.1.slim.min.js",
-              "src/assets/js/popper.min.js",
+              "./node_modules/jquery/dist/jquery.js",
+              "./node_modules/datatables.net/js/jquery.dataTables.js",
+              "./node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "./node_modules/pooper.js/dist/pooper.min.js",
               "src/assets/js/inspinia.js",
               "src/assets/js/jquery.metisMenu.js",
-              "src/assets/js/bootstrap.min.js",
-              "src/assets/js/jquery.slimscroll.min.js",
-              "src/assets/js/datatables.js"
+              "src/assets/js/jquery.slimscroll.min.js"
             ]
           },
           "configurations": {
