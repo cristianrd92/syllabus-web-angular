@@ -35,7 +35,7 @@ export class AuthService {
   login(usuario:Usuario):Observable<any> {
     const urlEndpoint = "http://localhost:8080/oauth/token";
     const credenciales = btoa( "angularapp" + ":" + "solucionesra");
-    const httpHeaders = new HttpHeaders({"Content-Type":"application/x-www-form-urlencoded",
+    const httpHeaders = new HttpHeaders({"Content-Type":"application/x-www-form-urlencoded; charset=UTF-8",
   'Authorization':"Basic "+ credenciales});
     let params = new HttpParams()
     .set("grant_type","password")
@@ -46,6 +46,7 @@ export class AuthService {
 
   guardarUsuario(accessToken: string):void{
     let payload = this.obtenerDatosToken(accessToken);
+    console.log(payload);
     this._usuario = new Usuario();
     this._usuario.nombres = payload.nombres;
     this._usuario.apellidos = payload.apellidos;

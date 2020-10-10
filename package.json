@@ -22,6 +22,7 @@
     "@fortawesome/angular-fontawesome": "^0.7.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.28",
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
+    "alertifyjs": "^1.13.1",
     "rxjs": "~6.6.0",
     "sweetalert2": "^7.26.9",
     "tslib": "^2.0.0",
