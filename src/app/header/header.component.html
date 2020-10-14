@@ -33,16 +33,16 @@
                     <a routerLink="/ciudades"><fa-icon [icon]="faCity"></fa-icon> Ciudades<span class="sr-only">(current)</span></a>
                 </li>
                 <li *ngIf="authService.hasRole('ROLE_ADMIN')" routerLinkActive="active">
-                    <a routerLink="/sedes"><i class="fa fa-diamond"></i> Sedes<span class="sr-only">(current)</span></a>
+                    <a routerLink="/sedes"><fa-icon [icon]="faUniversity"></fa-icon> Sedes<span class="sr-only">(current)</span></a>
                 </li>
                 <li *ngIf="authService.hasRole('ROLE_ADMIN')" routerLinkActive="active">
-                    <a routerLink="/facultades"><i class="fa fa-diamond"></i> Facultades<span class="sr-only">(current)</span></a>
+                    <a routerLink="/facultades"><fa-icon [icon]="faBuilding"></fa-icon> Facultades<span class="sr-only">(current)</span></a>
                 </li>
                 <li *ngIf="authService.hasRole('ROLE_ADMIN')" routerLinkActive="active">
                     <a routerLink="/carreras"><i class="fa fa-diamond"></i> Carreras<span class="sr-only">(current)</span></a>
                 </li>
                 <li *ngIf="authService.hasRole('ROLE_ADMIN')" routerLinkActive="active">
-                    <a routerLink="/periodos"><i class="fa fa-diamond"></i> Periodos<span class="sr-only">(current)</span></a>
+                    <a routerLink="/periodos"><fa-icon [icon]="faCalendarAlt"></fa-icon> Periodos<span class="sr-only">(current)</span></a>
                 </li>
                 <li *ngIf="authService.hasRole('ROLE_ADMIN')" routerLinkActive="active">
                     <a routerLink="/ramos"><i class="fa fa-diamond"></i> Ramos<span class="sr-only">(current)</span></a>
@@ -61,6 +61,7 @@
         <div class="navbar-header">
         </div>
             <ul class="nav navbar-top-links navbar-right">
+                
                 <li>
                     <span class="m-r-sm text-muted welcome-message">Bienvenido a Syllabus Web</span>
                 </li>
