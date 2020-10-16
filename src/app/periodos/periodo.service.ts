@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 @Injectable()
 export class PeriodoService {
 
-  private urlEndPoint:string = 'http://localhost:8080/api/periodo';
+  private urlEndPoint:string = 'https://syllabus-api-rest.herokuapp.com/api/periodo';
   constructor(private http: HttpClient, private router: Router) { }
 
 

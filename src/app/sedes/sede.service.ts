@@ -11,7 +11,7 @@ import { Ciudad } from '../ciudades/ciudad';
 @Injectable()
 export class SedeService {
 
-  private urlEndPoint:string = 'http://localhost:8080/api/sede';
+  private urlEndPoint:string = 'https://syllabus-api-rest.herokuapp.com/api/sede';
   constructor(private http: HttpClient, private router: Router) { }
 
   getCiudades(): Observable<Ciudad[]>{

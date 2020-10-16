@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 @Injectable()
 export class RamoService {
 
-  private urlEndPoint:string = 'http://localhost:8080/api/ramo';
+  private urlEndPoint:string = 'https://syllabus-api-rest.herokuapp.com/api/ramo';
   constructor(private http: HttpClient, private router: Router) { }
 
 

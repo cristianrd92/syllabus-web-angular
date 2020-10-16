@@ -33,7 +33,7 @@ export class AuthService {
   }
 
   login(usuario:Usuario):Observable<any> {
-    const urlEndpoint = "http://localhost:8080/oauth/token";
+    const urlEndpoint = "https://syllabus-api-rest.herokuapp.com/oauth/token";
     const credenciales = btoa( "angularapp" + ":" + "solucionesra");
     const httpHeaders = new HttpHeaders({"Content-Type":"application/x-www-form-urlencoded;charset=utf-8",
   'Authorization':"Basic "+ credenciales});
@@ -46,14 +46,29 @@ export class AuthService {
 
   guardarUsuario(accessToken: string):void{
     let payload = this.obtenerDatosToken(accessToken);
-    console.log(payload);
     this._usuario = new Usuario();
-    this._usuario.nombres = payload.nombres;
-    this._usuario.apellidos = payload.apellidos;
+    this._usuario.nombres = this.utf8Decode(payload.nombres);
+    this._usuario.apellidos = this.utf8Decode(payload.apellidos);
     this._usuario.email = payload.email;
     this._usuario.username = payload.user_name;
     this._usuario.roles = payload.authorities;
     sessionStorage.setItem("usuario", JSON.stringify(this._usuario));
+  }
+
+   utf8Decode(utf8String: string) {
+    if (typeof utf8String != 'string') throw new TypeError('parameter ‘utf8String’ is not a string');
+    const unicodeString = utf8String.replace(
+        /[\u00e0-\u00ef][\u0080-\u00bf][\u0080-\u00bf]/g, 
+        function(c) {
+            var cc = ((c.charCodeAt(0)&0x0f)<<12) | ((c.charCodeAt(1)&0x3f)<<6) | ( c.charCodeAt(2)&0x3f);
+            return String.fromCharCode(cc); }
+    ).replace(
+        /[\u00c0-\u00df][\u0080-\u00bf]/g,    
+        function(c) {
+            var cc = (c.charCodeAt(0)&0x1f)<<6 | c.charCodeAt(1)&0x3f;
+            return String.fromCharCode(cc); }
+    );
+    return unicodeString;
   }
 
   guardarToken(accessToken: string):void{

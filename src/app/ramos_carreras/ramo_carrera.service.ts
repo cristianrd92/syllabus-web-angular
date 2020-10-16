@@ -15,7 +15,7 @@ import { Carrera } from '../carreras/carrera';
 @Injectable()
 export class RamoCarreraService {
 
-  private urlEndPoint:string = 'http://localhost:8080/api/ramo_carrera';
+  private urlEndPoint:string = 'https://syllabus-api-rest.herokuapp.com/api/ramo_carrera';
   constructor(private http: HttpClient, private router: Router) { }
 
   getUsuarios(): Observable<Usuario[]>{

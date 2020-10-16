@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 @Injectable()
 export class CiudadService {
 
-  private urlEndPoint:string = 'http://localhost:8080/api/ciudad';
+  private urlEndPoint:string = 'https://syllabus-api-rest.herokuapp.com/api/ciudad';
   constructor(private http: HttpClient, private router: Router) { }
 
 

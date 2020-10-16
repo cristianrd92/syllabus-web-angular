@@ -11,7 +11,7 @@ import { Facultad } from '../facultades/facultad';
 @Injectable()
 export class CarreraService {
 
-  private urlEndPoint:string = 'http://localhost:8080/api/carrera';
+  private urlEndPoint:string = 'https://syllabus-api-rest.herokuapp.com/api/carrera';
   constructor(private http: HttpClient, private router: Router) { }
 
   getFacultades(): Observable<Facultad[]>{
