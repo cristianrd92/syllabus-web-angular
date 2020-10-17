@@ -1,0 +1,28 @@
+<div class="card mb-3">
+  <div class="card-header">Ramos Docente</div>
+  <div class="card-body text-secondary">
+    <h5 class="card-title">Listado de Ramos Asignados a Docente</h5>
+  <div class="my-2 text-left">
+    <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" class="btn btn-rounded btn-primary" [routerLink] = "['/ramosCarreras/form']">Crear ramo carrera</button>
+  </div>
+  <div *ngIf="ramos_carreras?.length==0" class="alert alert-info">
+    No hay registros en la base de datos
+  </div>
+  <table class="table table-bordered table-striped" *ngIf="ramos_carreras?.length>0">
+      <thead>
+        <tr>
+          <th>Carrera</th>
+          <th>Ramo</th>
+          <th>Estado Syllabus</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ramo_carrera of ramos_carreras">
+          <td>{{ramo_carrera.carrera.nombre_carrera | uppercase}}</td>
+          <td>{{ramo_carrera.ramo.nombre_ramo | uppercase}}</td>
+          <td>No subido</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
