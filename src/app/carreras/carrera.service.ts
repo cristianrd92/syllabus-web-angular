@@ -6,12 +6,13 @@ import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Facultad } from '../facultades/facultad';
+import { GlobalComponent } from '../global.component';
 
 
 @Injectable()
 export class CarreraService {
 
-  private urlEndPoint:string = 'https://syllabus-api-rest.herokuapp.com/api/carrera';
+  private urlEndPoint:string = GlobalComponent.apiURL+'carrera';
   constructor(private http: HttpClient, private router: Router) { }
 
   getFacultades(): Observable<Facultad[]>{

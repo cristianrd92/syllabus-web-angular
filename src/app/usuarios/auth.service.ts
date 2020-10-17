@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { GlobalComponent } from '../global.component';
 import { Usuario } from './usuario';
 
 @Injectable({
@@ -33,7 +34,7 @@ export class AuthService {
   }
 
   login(usuario:Usuario):Observable<any> {
-    const urlEndpoint = "https://syllabus-api-rest.herokuapp.com/oauth/token";
+    const urlEndpoint = GlobalComponent.apiURL+"oauth/token";
     const credenciales = btoa( "angularapp" + ":" + "solucionesra");
     const httpHeaders = new HttpHeaders({"Content-Type":"application/x-www-form-urlencoded;charset=utf-8",
   'Authorization':"Basic "+ credenciales});

@@ -5,12 +5,13 @@ import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { GlobalComponent } from '../global.component';
 
 
 @Injectable()
 export class RamoService {
 
-  private urlEndPoint:string = 'https://syllabus-api-rest.herokuapp.com/api/ramo';
+  private urlEndPoint:string = GlobalComponent.apiURL+'ramo';
   constructor(private http: HttpClient, private router: Router) { }
 
 

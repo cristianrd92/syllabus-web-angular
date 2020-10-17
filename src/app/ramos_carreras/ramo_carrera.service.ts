@@ -10,12 +10,13 @@ import { Usuario } from '../usuarios/usuario';
 import { Ramo } from '../ramos/ramo';
 import { Periodo } from '../periodos/periodo';
 import { Carrera } from '../carreras/carrera';
+import { GlobalComponent } from '../global.component';
 
 
 @Injectable()
 export class RamoCarreraService {
 
-  private urlEndPoint:string = 'https://syllabus-api-rest.herokuapp.com/api/ramo_carrera';
+  private urlEndPoint:string = GlobalComponent.apiURL+'ramo_carrera';
   constructor(private http: HttpClient, private router: Router) { }
 
   getUsuarios(): Observable<Usuario[]>{
