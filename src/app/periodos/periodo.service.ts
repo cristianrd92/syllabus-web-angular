@@ -11,7 +11,7 @@ import { GlobalComponent } from '../global.component';
 @Injectable()
 export class PeriodoService {
 
-  private urlEndPoint:string = GlobalComponent.apiURL+'periodo';
+  private urlEndPoint:string = GlobalComponent.apiURL+'api/periodo';
   constructor(private http: HttpClient, private router: Router) { }
 
 

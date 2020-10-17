@@ -12,7 +12,7 @@ import { GlobalComponent } from '../global.component';
 @Injectable()
 export class CarreraService {
 
-  private urlEndPoint:string = GlobalComponent.apiURL+'carrera';
+  private urlEndPoint:string = GlobalComponent.apiURL+'api/carrera';
   constructor(private http: HttpClient, private router: Router) { }
 
   getFacultades(): Observable<Facultad[]>{

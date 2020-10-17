@@ -11,7 +11,7 @@ import { GlobalComponent } from '../global.component';
 @Injectable()
 export class CiudadService {
 
-  private urlEndPoint:string = GlobalComponent.apiURL+'ciudad';
+  private urlEndPoint:string = GlobalComponent.apiURL+'api/ciudad';
   constructor(private http: HttpClient, private router: Router) { }
 
 

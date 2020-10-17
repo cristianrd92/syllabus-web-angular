@@ -12,7 +12,7 @@ import { GlobalComponent } from '../global.component';
 @Injectable()
 export class SedeService {
 
-  private urlEndPoint:string = GlobalComponent.apiURL+'sede';
+  private urlEndPoint:string = GlobalComponent.apiURL+'api/sede';
   constructor(private http: HttpClient, private router: Router) { }
 
   getCiudades(): Observable<Ciudad[]>{

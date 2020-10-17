@@ -12,7 +12,7 @@ import { GlobalComponent } from '../global.component';
 @Injectable()
 export class FacultadService {
 
-  private urlEndPoint:string = GlobalComponent.apiURL+'facultad';
+  private urlEndPoint:string = GlobalComponent.apiURL+'api/facultad';
   constructor(private http: HttpClient, private router: Router) { }
 
   getSedes(): Observable<Sede[]>{

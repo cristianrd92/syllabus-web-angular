@@ -11,7 +11,7 @@ import { GlobalComponent } from '../global.component';
 @Injectable()
 export class RamoService {
 
-  private urlEndPoint:string = GlobalComponent.apiURL+'ramo';
+  private urlEndPoint:string = GlobalComponent.apiURL+'api/ramo';
   constructor(private http: HttpClient, private router: Router) { }
 
 
