@@ -1,0 +1,32 @@
+<div *ngIf="modalService.modal" class="modal" tabindex="-1" role="dialog" style="display: block;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{titulo}}</h5>
+        <button type="button" class="close" data-dismiss="modal" (click)="cerrarModal()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group">
+          <div class="custom-file">
+            <input (change)="selecionarArchivo($event)" type="file" class="custom-file-input" id="inputGroupFile04">
+            <label *ngIf="!archivoSeleccionado" class="custom-file-label" for="inputGroupFile04">Seleccione Syllabus</label>
+            <label *ngIf="archivoSeleccionado" class="custom-file-label" for="inputGroupFile04">{{nombre_archivo}}</label>
+          </div>
+          <div class="input-group-append">
+            <button (click)="subirArchivo()" [disabled]="!archivoSeleccionado"  class="btn btn-success" type="button">Subir</button>
+          </div>
+        <!-- </div>
+        <div *ngIf="progreso>0" class="progress">
+          <div class="progress-bar" role="progressbar" [ngStyle]="{width:progreso+'%'}" attr.aria-valuenow="{{progreso}}" aria-valuemin="0" aria-valuemax="100"></div>
+          {{progreso}}%
+        </div> -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cerrarModal()" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

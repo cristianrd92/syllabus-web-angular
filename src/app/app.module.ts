@@ -39,6 +39,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HomeComponent } from './home/home.component';
 import { RamosDocentesComponent } from './ramos_docentes/ramos-docentes.component';
 import { RamoDocenteService } from './ramos_docentes/ramo_docente.service';
+import { PlanificacionComponent } from './ramos_docentes/planificacion/planificacion.component';
+import { PlanificacionService } from './ramos_docentes/planificacion/planificacion.service';
 
 
 registerLocaleData(localeEs, 'es-CL');
@@ -69,6 +71,7 @@ const routes: Routes = [
   {path: 'ramosCarreras/form', component:FormRamoCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'ramosCarreras/form/:id', component:FormRamoCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'ramosDocentes', component:RamosDocentesComponent},
+  // {path: 'ramosDocente/subir/:id', component:PlanificacionComponent},
 
 ]
 
@@ -94,6 +97,7 @@ const routes: Routes = [
     FormRamoCarreraComponent,
     LoginComponent,
     HomeComponent,
+    PlanificacionComponent,
   ],
   imports: [
     BrowserModule,
@@ -103,7 +107,7 @@ const routes: Routes = [
     FontAwesomeModule
   ],
   providers: [CiudadService, SedeService, FacultadService, CarreraService, PeriodoService, 
-              RamoService, RamoCarreraService, RamoDocenteService,
+              RamoService, RamoCarreraService, RamoDocenteService, PlanificacionService,
   {provide: LOCALE_ID, useValue: 'es-CL'}, 
   { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],

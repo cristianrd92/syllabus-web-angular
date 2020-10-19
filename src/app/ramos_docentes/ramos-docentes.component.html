@@ -1,3 +1,4 @@
+<app-planificacion *ngIf="ramoSeleccionado" [planificacion]= "ramoSeleccionado"></app-planificacion>
 <div class="card mb-3">
   <div class="card-header">Ramos Docente</div>
   <div class="card-body text-secondary">
@@ -13,13 +14,15 @@
         <tr>
           <th>Carrera</th>
           <th>Ramo</th>
+          <th>Subir</th>
           <th>Estado Syllabus</th>
-        </tr>
+        </tr> 
       </thead>
       <tbody>
         <tr *ngFor="let ramo_carrera of ramos_carreras">
           <td>{{ramo_carrera.carrera.nombre_carrera | uppercase}}</td>
           <td>{{ramo_carrera.ramo.nombre_ramo | uppercase}}</td>
+          <td><button (click)="abrirModal(ramo_carrera)"  type="button" name="editar" class="btn btn-primary">Subir</button></td>
           <td>No subido</td>
         </tr>
       </tbody>

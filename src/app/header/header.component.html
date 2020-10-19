@@ -51,7 +51,7 @@
                     <a routerLink="/ramosCarreras"><i class="fa fa-diamond"></i> Ramo Carrera<span class="sr-only">(current)</span></a>
                 </li>
                 <li *ngIf="authService.hasRole('ROLE_DOCENTE')" routerLinkActive="active">
-                    <a routerLink="/ramosDocentes/{{authService.usuario.id}}"><i class="fa fa-diamond"></i> Ramos asignados<span class="sr-only">(current)</span></a>
+                    <a routerLink="/ramosDocentes"><i class="fa fa-diamond"></i> Ramos asignados<span class="sr-only">(current)</span></a>
                 </li>
             </ul>
 

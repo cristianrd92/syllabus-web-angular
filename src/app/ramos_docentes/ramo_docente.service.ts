@@ -6,19 +6,19 @@ import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
-import { Usuario } from '../usuarios/usuario';
-import { Ramo } from '../ramos/ramo';
-import { Periodo } from '../periodos/periodo';
-import { Carrera } from '../carreras/carrera';
 import { GlobalComponent } from '../global.component';
+import { AuthService } from '../usuarios/auth.service';
 
 
 @Injectable()
 export class RamoDocenteService {
 
-  private urlEndPoint:string = GlobalComponent.apiURL+'api/ramo_carrera';
-  constructor(private http: HttpClient, private router: Router) { }
 
+  constructor(private http: HttpClient, private router: Router, public authService: AuthService) { }
+
+
+  private urlEndPoint:string = GlobalComponent.apiURL+'api/ramos_docente/'+this.authService.usuario.id;
+  
   getRamosCarreras() : Observable<RamoCarrera[]> {
     return this.http.get<RamoCarrera[]>(this.urlEndPoint).pipe(
       catchError(e => {
