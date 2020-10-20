@@ -25,13 +25,14 @@ export class PlanificacionComponent implements OnInit {
     public planificacionService: PlanificacionService, 
     public modalService: ModalService) { }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    
+  }
 
   selecionarArchivo(event){
     this.progreso = 0;
     this.archivoSeleccionado = event.target.files[0];
     this.nombre_archivo = event.target.files[0].name
-    console.log(this.archivoSeleccionado);
     if(this.archivoSeleccionado.type.indexOf("pdf")<0){
       sw("Error","Archivo selecionado no valido");
       this.archivoSeleccionado=null;

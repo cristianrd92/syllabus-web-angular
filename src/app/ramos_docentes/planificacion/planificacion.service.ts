@@ -6,13 +6,15 @@ import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { GlobalComponent } from 'src/app/global.component';
 import { Planificacion } from './planificacion';
+import { AuthService } from 'src/app/usuarios/auth.service';
 
 
 @Injectable()
 export class PlanificacionService {
 
   private urlEndPoint:string = GlobalComponent.apiURL+'api/planificacion';
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router,
+    private auth: AuthService) { }
 
 
   getPlanificaciones() : Observable<Planificacion[]> {
@@ -21,8 +23,22 @@ export class PlanificacionService {
         return throwError(e);
       }),
     map( (response) => {
-      console.log(response)
       let ramos_carreras = response as Planificacion[];
+      return ramos_carreras.map(ramo_carrera => {
+        return ramo_carrera;
+      });
+    })
+    );
+  }
+
+  getPlanificacionesEstado() : Observable<Object[]> {
+    return this.http.get<Planificacion[]>(`${this.urlEndPoint}/estado/${this.auth.usuario.id}`).pipe(
+      catchError(e => {
+        return throwError(e);
+      }),
+    map( (response) => {
+      console.log(response)
+      let ramos_carreras = response as Object[];
       return ramos_carreras.map(ramo_carrera => {
         return ramo_carrera;
       });

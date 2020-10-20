@@ -22,8 +22,8 @@
         <tr *ngFor="let ramo_carrera of ramos_carreras">
           <td>{{ramo_carrera.carrera.nombre_carrera | uppercase}}</td>
           <td>{{ramo_carrera.ramo.nombre_ramo | uppercase}}</td>
-          <td><button (click)="abrirModal(ramo_carrera)"  type="button" name="editar" class="btn btn-primary">Subir</button></td>
-          <td>No subido</td>
+          <td><button (click)="abrirModal(ramo_carrera)"  type="button" name="editar" class="btn btn-primary">Subir</button></td>          
+          <td *ngIf="verficarEstado(ramo_carrera.ramo.id)==true">{{estado}}</td>  
         </tr>
       </tbody>
     </table>
