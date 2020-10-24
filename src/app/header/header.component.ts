@@ -8,9 +8,6 @@ import { faUniversity } from '@fortawesome/free-solid-svg-icons';
 import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
 
-
-
-
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html'

@@ -24,13 +24,13 @@ export class RamoDocenteService {
       catchError(e => {
         return throwError(e);
       }),
-    map( (response) => {
-      let ramos_carreras = response as RamoCarrera[];
-      return ramos_carreras.map(ramo_carrera => {
-        return ramo_carrera;
-      });
-    })
+    // map( (response) => {
+    //   let ramos_carreras = response as RamoCarrera[];
+    //   return ramos_carreras.map(ramo_carrera => {
+    //     return ramo_carrera;
+    //   });
+    // })
     );
   }
-  
+
 }

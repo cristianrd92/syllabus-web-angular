@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { GlobalComponent } from 'src/app/global.component';
 import { Planificacion } from './planificacion';
 import { AuthService } from 'src/app/usuarios/auth.service';
+import { Revision } from '../revision';
 
 
 @Injectable()
@@ -16,31 +17,16 @@ export class PlanificacionService {
   constructor(private http: HttpClient, private router: Router,
     private auth: AuthService) { }
 
-
-  getPlanificaciones() : Observable<Planificacion[]> {
-    return this.http.get<Planificacion[]>(this.urlEndPoint).pipe(
-      catchError(e => {
-        return throwError(e);
-      }),
-    map( (response) => {
-      let ramos_carreras = response as Planificacion[];
-      return ramos_carreras.map(ramo_carrera => {
-        return ramo_carrera;
-      });
-    })
-    );
-  }
-
   getPlanificacionesEstado() : Observable<Object[]> {
-    return this.http.get<Planificacion[]>(`${this.urlEndPoint}/estado/${this.auth.usuario.id}`).pipe(
+    return this.http.get<Object[]>(`${this.urlEndPoint}/estado/${this.auth.usuario.id}`).pipe(
       catchError(e => {
         return throwError(e);
       }),
     map( (response) => {
-      console.log(response)
-      let ramos_carreras = response as Object[];
-      return ramos_carreras.map(ramo_carrera => {
-        return ramo_carrera;
+      let revision = response as Object[];
+      return revision.map(
+        function (revision) {
+        return revision;
       });
     })
     );
@@ -110,4 +96,11 @@ export class PlanificacionService {
     })
     return this.http.request(req)
   }
+
+  public getPDF(nombre_archivo): Observable<Blob> {   
+    //const options = { responseType: 'blob' }; there is no use of this
+        // this.http refers to HttpClient. Note here that you cannot use the generic get<Blob> as it does not compile: instead you "choose" the appropriate API in this way.
+        return this.http.get(`${this.urlEndPoint}/upload/ver/${nombre_archivo}`, { responseType: 'blob' });
+  }
+  
 }

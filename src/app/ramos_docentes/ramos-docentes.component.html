@@ -6,26 +6,28 @@
   <div class="my-2 text-left">
     <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" class="btn btn-rounded btn-primary" [routerLink] = "['/ramosCarreras/form']">Crear ramo carrera</button>
   </div>
-  <div *ngIf="ramos_carreras?.length==0" class="alert alert-info">
-    No hay registros en la base de datos
-  </div>
-  <table class="table table-bordered table-striped" *ngIf="ramos_carreras?.length>0">
+  <table class="table table-bordered table-striped" >
       <thead>
         <tr>
           <th>Carrera</th>
           <th>Ramo</th>
           <th>Subir</th>
           <th>Estado Syllabus</th>
-        </tr> 
+          <th>Descargar Syllabus</th>
+        </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let ramo_carrera of ramos_carreras">
-          <td>{{ramo_carrera.carrera.nombre_carrera | uppercase}}</td>
-          <td>{{ramo_carrera.ramo.nombre_ramo | uppercase}}</td>
-          <td><button (click)="abrirModal(ramo_carrera)"  type="button" name="editar" class="btn btn-primary">Subir</button></td>          
-          <td *ngIf="verficarEstado(ramo_carrera.ramo.id)==true">{{estado}}</td>  
+        <tr *ngFor="let planificacion of planificaciones; index as i">
+          <td>{{planificaciones[i][0].carrera.nombre_carrera | uppercase}}</td>
+          <td>{{planificaciones[i][0].ramo.nombre_ramo | uppercase}}</td>
+          <td><button (click)="abrirModal(planificaciones[i][0])"  type="button" name="editar" class="btn btn-primary">Subir</button></td>          
+          <td *ngIf="planificaciones[i][2]==null">No subido</td>
+          <td *ngIf="planificaciones[i][2]!=null && planificacion[i][1]==null">Enviado para revisión </td>
+          <td *ngIf="planificaciones[i][2]!=null && planificacion[i][1]!=null">Muestro el estado</td>
+          <td *ngIf="planificaciones[i][2]!=null" ><a (click)="showPDF(planificaciones[i][3])" ><fa-icon [icon]="faFile"></fa-icon> Subido el: {{planificaciones[i][2] | date:"EEEE dd MMMM yyyy HH:mm"}}</a></td>
+          <td *ngIf="planificaciones[i][2]==null">No subido</td>
         </tr>
       </tbody>
     </table>
-  </div>
+  </div> 
 </div>
