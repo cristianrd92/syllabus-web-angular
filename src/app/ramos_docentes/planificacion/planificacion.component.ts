@@ -6,6 +6,7 @@ import { PlanificacionService } from './planificacion.service';
 import swal from 'sweetalert2';
 import { HttpEventType } from '@angular/common/http';
 import { ModalService } from './modal.service';
+import { RamoCarrera } from 'src/app/ramos_carreras/ramo_carrera';
 
 
 @Component({
@@ -15,7 +16,7 @@ import { ModalService } from './modal.service';
 })
 export class PlanificacionComponent implements OnInit {
 
-  @Input() planificacion: Planificacion;
+  @Input() planificacion: RamoCarrera;
   titulo: "Subida de Syllabus";
   archivoSeleccionado: File;
   nombre_archivo: "";
@@ -25,9 +26,7 @@ export class PlanificacionComponent implements OnInit {
     public planificacionService: PlanificacionService, 
     public modalService: ModalService) { }
 
-  ngOnInit() { 
-    
-  }
+  ngOnInit() { }
 
   selecionarArchivo(event){
     this.progreso = 0;
@@ -44,7 +43,7 @@ export class PlanificacionComponent implements OnInit {
       swal("Error","Debe seleccionar un archivo");
     }else{
     this.planificacionService.subirArchivo(this.archivoSeleccionado, 
-      this.authService.usuario.id, this.planificacion.ramo.id).subscribe(event=>{
+      this.authService.usuario.id, this.planificacion.id).subscribe(event=>{
         if(event.type === HttpEventType.UploadProgress){
           this.progreso = Math.round((event.loaded/event.total)*100)
         }else if(event.type === HttpEventType.Response){

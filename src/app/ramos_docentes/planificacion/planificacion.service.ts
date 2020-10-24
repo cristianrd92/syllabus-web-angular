@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { GlobalComponent } from 'src/app/global.component';
 import { Planificacion } from './planificacion';
 import { AuthService } from 'src/app/usuarios/auth.service';
-import { Revision } from '../revision';
+import { RamoCarreraEstado } from '../ramo_carrera_estado';
 
 
 @Injectable()
@@ -17,16 +17,25 @@ export class PlanificacionService {
   constructor(private http: HttpClient, private router: Router,
     private auth: AuthService) { }
 
-  getPlanificacionesEstado() : Observable<Object[]> {
-    return this.http.get<Object[]>(`${this.urlEndPoint}/estado/${this.auth.usuario.id}`).pipe(
+  getPlanificacionesEstado() : Observable<RamoCarreraEstado[]> {
+    return this.http.get<RamoCarreraEstado[]>(`${this.urlEndPoint}/estado/${this.auth.usuario.id}`).pipe(
       catchError(e => {
         return throwError(e);
       }),
     map( (response) => {
-      let revision = response as Object[];
-      return revision.map(
-        function (revision) {
-        return revision;
+      let revision = response as RamoCarreraEstado[];
+      return revision.map(ramo_carrera => {
+        ramo_carrera.ramo_carrera = ramo_carrera[0]
+        ramo_carrera.re_estado = ramo_carrera[1]
+        ramo_carrera.pla_fecha_subida = ramo_carrera[2]
+        ramo_carrera.pla_ruta = ramo_carrera[3]
+        ramo_carrera.pla_id = ramo_carrera[4]
+        ramo_carrera.re_comentarios = ramo_carrera[5]
+        for (let index = 0; index < 6; index++) {
+          delete ramo_carrera[index]          
+        }
+        console.log(ramo_carrera)
+        return ramo_carrera;
       });
     })
     );
@@ -98,9 +107,8 @@ export class PlanificacionService {
   }
 
   public getPDF(nombre_archivo): Observable<Blob> {   
-    //const options = { responseType: 'blob' }; there is no use of this
-        // this.http refers to HttpClient. Note here that you cannot use the generic get<Blob> as it does not compile: instead you "choose" the appropriate API in this way.
-        return this.http.get(`${this.urlEndPoint}/upload/ver/${nombre_archivo}`, { responseType: 'blob' });
+    return this.http.get(`${this.urlEndPoint}/upload/ver/${nombre_archivo}`, 
+    { responseType: 'blob' });
   }
   
 }

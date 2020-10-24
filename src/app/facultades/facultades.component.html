@@ -11,7 +11,6 @@
   <table class="table table-bordered table-striped" *ngIf="facultades?.length>0">
       <thead>
         <tr>
-          <th>ID</th>
           <th>Nombre facultad</th>
           <th>Sede</th>
           <th *ngIf="authService.hasRole('ROLE_ADMIN')">Editar</th>
@@ -20,7 +19,6 @@
       </thead>
       <tbody>
         <tr *ngFor="let facultad of facultades">
-          <td>{{facultad.id}}</td>
           <td>{{facultad.nombre_facultad}}</td>
           <td>{{facultad.sede.nombre_sede | uppercase}}</td>
           <td *ngIf="authService.hasRole('ROLE_ADMIN')" >

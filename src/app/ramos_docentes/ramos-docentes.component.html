@@ -1,4 +1,6 @@
 <app-planificacion *ngIf="ramoSeleccionado" [planificacion]= "ramoSeleccionado"></app-planificacion>
+<app-detalles *ngIf="ramoEstado" [ramoEstado]="ramoEstado"></app-detalles>
+
 <div class="card mb-3">
   <div class="card-header">Ramos Docente</div>
   <div class="card-body text-secondary">
@@ -10,7 +12,9 @@
       <thead>
         <tr>
           <th>Carrera</th>
+          <th>Codigo ramo</th>
           <th>Ramo</th>
+          <th>Periodo</th>
           <th>Subir</th>
           <th>Estado Syllabus</th>
           <th>Descargar Syllabus</th>
@@ -18,14 +22,17 @@
       </thead>
       <tbody>
         <tr *ngFor="let planificacion of planificaciones; index as i">
-          <td>{{planificaciones[i][0].carrera.nombre_carrera | uppercase}}</td>
-          <td>{{planificaciones[i][0].ramo.nombre_ramo | uppercase}}</td>
-          <td><button (click)="abrirModal(planificaciones[i][0])"  type="button" name="editar" class="btn btn-primary">Subir</button></td>          
-          <td *ngIf="planificaciones[i][2]==null">No subido</td>
-          <td *ngIf="planificaciones[i][2]!=null && planificacion[i][1]==null">Enviado para revisión </td>
-          <td *ngIf="planificaciones[i][2]!=null && planificacion[i][1]!=null">Muestro el estado</td>
-          <td *ngIf="planificaciones[i][2]!=null" ><a (click)="showPDF(planificaciones[i][3])" ><fa-icon [icon]="faFile"></fa-icon> Subido el: {{planificaciones[i][2] | date:"EEEE dd MMMM yyyy HH:mm"}}</a></td>
-          <td *ngIf="planificaciones[i][2]==null">No subido</td>
+          <td>{{planificacion.ramo_carrera.carrera.nombre_carrera | uppercase}}</td>
+          <td>{{planificacion.ramo_carrera.ramo.codigo_ramo | uppercase}}</td>
+          <td>{{planificacion.ramo_carrera.ramo.nombre_ramo | uppercase}}</td>
+          <td>{{planificacion.ramo_carrera.periodo.nombre_periodo | uppercase}}</td>
+          <td *ngIf="planificacion.re_estado==null"><button  (click)="abrirModal(planificacion.ramo_carrera)"  type="button" name="editar" class="btn btn-primary">Subir</button></td>          
+          <td *ngIf="planificacion.re_estado!=null"><button  (click)="abrirModal(planificacion.ramo_carrera)"  disabled type="button" name="editar" class="btn btn-primary">Subir</button></td>          
+          <td *ngIf="planificacion.pla_fecha_subida==null">No subido</td>
+          <td *ngIf="planificacion.pla_fecha_subida!=null && planificacion.re_estado==null">Enviado para revisión </td>
+          <td *ngIf="planificacion.pla_fecha_subida!=null && planificacion.re_estado!=null">{{planificacion.re_estado}} <button (click)="abrirModalDetalles(planificacion)"  type="button" name="editar" class="btn btn-primary">Ver detalles</button></td>
+          <td *ngIf="planificacion.pla_fecha_subida!=null" ><a (click)="showPDF(planificacion.pla_ruta)" ><fa-icon [icon]="faFile"></fa-icon> Subido el: {{planificacion.pla_fecha_subida | date:"EEEE dd MMMM yyyy HH:mm"}}</a></td>
+          <td *ngIf="planificacion.pla_fecha_subida==null">No subido</td>
         </tr>
       </tbody>
     </table>

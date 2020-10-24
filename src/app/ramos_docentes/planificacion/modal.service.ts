@@ -5,7 +5,6 @@ import { Injectable } from '@angular/core';
 })
 export class ModalService {
 
-
   modal: boolean = false;
   constructor() { }
 
@@ -15,5 +14,6 @@ export class ModalService {
 
   cerrarModal(){
     this.modal = false
+    location.reload();
   }
 }

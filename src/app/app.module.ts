@@ -41,6 +41,8 @@ import { RamosDocentesComponent } from './ramos_docentes/ramos-docentes.componen
 import { RamoDocenteService } from './ramos_docentes/ramo_docente.service';
 import { PlanificacionComponent } from './ramos_docentes/planificacion/planificacion.component';
 import { PlanificacionService } from './ramos_docentes/planificacion/planificacion.service';
+import { DetallesComponent } from './ramos_docentes/planificacion/detalles.component';
+import { ComisionComponent } from './comision/comision.component';
 
 
 registerLocaleData(localeEs, 'es-CL');
@@ -98,6 +100,8 @@ const routes: Routes = [
     LoginComponent,
     HomeComponent,
     PlanificacionComponent,
+    DetallesComponent,
+    ComisionComponent,
   ],
   imports: [
     BrowserModule,
@@ -108,6 +112,7 @@ const routes: Routes = [
   ],
   providers: [CiudadService, SedeService, FacultadService, CarreraService, PeriodoService, 
               RamoService, RamoCarreraService, RamoDocenteService, PlanificacionService,
+             
   {provide: LOCALE_ID, useValue: 'es-CL'}, 
   { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
