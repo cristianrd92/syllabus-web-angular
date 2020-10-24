@@ -3,6 +3,7 @@ import { RamoCarrera } from './ramo_carrera';
 import { RamoCarreraService } from './ramo_carrera.service';
 import swal from 'sweetalert2';
 import { AuthService } from '../usuarios/auth.service';
+import { DatatablesEspaniol } from '../helper/datatables.component';
 
 @Component({
   selector: 'app-ramo-carrera',
@@ -11,6 +12,7 @@ import { AuthService } from '../usuarios/auth.service';
 export class RamosCarrerasComponent implements OnInit {
 
   ramos_carreras: RamoCarrera[];
+  dtOptions: DataTables.Settings = {};
 
   constructor( private ramoCarreraService: RamoCarreraService ,
     public authService: AuthService) { }
@@ -19,6 +21,9 @@ export class RamosCarrerasComponent implements OnInit {
     this.ramoCarreraService.getRamosCarreras().subscribe(
       ramos_carreras => this.ramos_carreras = ramos_carreras
     );
+    this.dtOptions = {
+      language: DatatablesEspaniol.spanish_datatables
+    };
   }
   delete(ramo_carrera: RamoCarrera): void {
     swal({

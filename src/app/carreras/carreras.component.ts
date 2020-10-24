@@ -3,6 +3,7 @@ import { Carrera } from './carrera';
 import { CarreraService } from './carrera.service';
 import swal from 'sweetalert2';
 import { AuthService } from '../usuarios/auth.service';
+import { DatatablesEspaniol } from '../helper/datatables.component';
 
 @Component({
   selector: 'app-carrera',
@@ -11,6 +12,7 @@ import { AuthService } from '../usuarios/auth.service';
 export class CarrerasComponent implements OnInit {
 
   carreras: Carrera[];
+  dtOptions: DataTables.Settings = {};
 
   constructor( private carreraService: CarreraService ,
     public authService: AuthService) { }
@@ -19,6 +21,9 @@ export class CarrerasComponent implements OnInit {
     this.carreraService.getCarreras().subscribe(
       carreras => this.carreras = carreras
     );
+    this.dtOptions = {
+      language: DatatablesEspaniol.spanish_datatables
+    };
   }
   delete(carrera: Carrera): void {
     swal({

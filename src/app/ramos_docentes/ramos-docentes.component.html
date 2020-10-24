@@ -8,7 +8,10 @@
   <div class="my-2 text-left">
     <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" class="btn btn-rounded btn-primary" [routerLink] = "['/ramosCarreras/form']">Crear ramo carrera</button>
   </div>
-  <table class="table table-bordered table-striped" >
+  <div *ngIf="planificaciones?.length==0" class="alert alert-info">
+    No hay registros en la base de datos
+  </div>
+  <table datatable [dtOptions]="dtOptions" class="table table-bordered table-striped" *ngIf="planificaciones?.length>0">
       <thead>
         <tr>
           <th>Carrera</th>
@@ -29,7 +32,7 @@
           <td *ngIf="planificacion.re_estado==null"><button  (click)="abrirModal(planificacion.ramo_carrera)"  type="button" name="editar" class="btn btn-primary">Subir</button></td>          
           <td *ngIf="planificacion.re_estado!=null"><button  (click)="abrirModal(planificacion.ramo_carrera)"  disabled type="button" name="editar" class="btn btn-primary">Subir</button></td>          
           <td *ngIf="planificacion.pla_fecha_subida==null">No subido</td>
-          <td *ngIf="planificacion.pla_fecha_subida!=null && planificacion.re_estado==null">Enviado para revisión </td>
+          <td *ngIf="planificacion.pla_fecha_subida!=null && planificacion.re_estado==null">Enviado</td>
           <td *ngIf="planificacion.pla_fecha_subida!=null && planificacion.re_estado!=null">{{planificacion.re_estado}} <button (click)="abrirModalDetalles(planificacion)"  type="button" name="editar" class="btn btn-primary">Ver detalles</button></td>
           <td *ngIf="planificacion.pla_fecha_subida!=null" ><a (click)="showPDF(planificacion.pla_ruta)" ><fa-icon [icon]="faFile"></fa-icon> Subido el: {{planificacion.pla_fecha_subida | date:"EEEE dd MMMM yyyy HH:mm"}}</a></td>
           <td *ngIf="planificacion.pla_fecha_subida==null">No subido</td>

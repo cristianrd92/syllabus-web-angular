@@ -8,7 +8,7 @@
   <div *ngIf="ciudades?.length==0" class="alert alert-info">
     No hay registros en la base de datos
   </div>
-  <table id="myTable" class="table table-bordered table-striped" *ngIf="ciudades?.length>0">
+  <table datatable [dtOptions]="dtOptions" class="table table-bordered table-striped" *ngIf="ciudades?.length>0">
       <thead>
         <tr>
           <th>Nombre ciudad</th>
@@ -31,11 +31,5 @@
       </tbody>
   </table>
   </div>
-  <script>
-    $(document).ready( function () {
-        $('#myTable').DataTable();
-    } );
-    </script>
-    
 </div>
 

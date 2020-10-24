@@ -1,1 +1,30 @@
-<p>comision works!</p>
+<div class="card mb-3">
+    <div class="card-header">Syllanbus por Aprobar</div>
+    <div class="card-body text-secondary">
+      <h5 class="card-title">Listado de Syllabus</h5>
+    <table datatable [dtOptions]="dtOptions" class="table table-bordered table-striped" >
+        <thead>
+          <tr>
+            <th>Nombre carrera</th>
+            <th>Nombre periodo</th>
+            <th>Nombre docente</th>
+            <th>Nombre ramo</th>
+            <th>Revisión Syllabus *</th>
+            <th>Estado Syllabus</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Ingenieria</td>
+            <td>Segundo semestre 2020</td>
+            <td>Fabián Abarzua</td>
+            <td>Auditoría</td>
+            <td><button type="button" class="btn btn-primary">Ver detalles</button></td>
+            <td>En revisión</td>
+          </tr>
+        </tbody>
+    </table>
+    <p>* En cuanto presione en ver detalles, el syllabus pasara a revisión y se le informara al docente</p>
+    </div>
+  </div>
+  

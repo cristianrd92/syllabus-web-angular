@@ -3,6 +3,7 @@ import { Ramo } from './ramo';
 import { RamoService } from './ramo.service';
 import swal from 'sweetalert2';
 import { AuthService } from '../usuarios/auth.service';
+import { DatatablesEspaniol } from '../helper/datatables.component';
 
 @Component({
   selector: 'app-ramos',
@@ -11,6 +12,7 @@ import { AuthService } from '../usuarios/auth.service';
 export class RamosComponent implements OnInit {
 
   ramos: Ramo[];
+  dtOptions: DataTables.Settings = {};
 
   constructor( private ramoService: RamoService ,
     public authService: AuthService) { }
@@ -19,6 +21,9 @@ export class RamosComponent implements OnInit {
     this.ramoService.getRamos().subscribe(
       ramos => this.ramos = ramos
     );
+    this.dtOptions = {
+      language: DatatablesEspaniol.spanish_datatables
+    };
   }
   delete(ramo: Ramo): void {
     swal({

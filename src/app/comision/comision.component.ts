@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DatatablesEspaniol } from '../helper/datatables.component';
 
 @Component({
   selector: 'app-comision',
@@ -8,8 +9,12 @@ import { Component, OnInit } from '@angular/core';
 export class ComisionComponent implements OnInit {
 
   constructor() { }
+  dtOptions: DataTables.Settings = {};
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.dtOptions = {
+      language: DatatablesEspaniol.spanish_datatables
+    };
   }
 
 }

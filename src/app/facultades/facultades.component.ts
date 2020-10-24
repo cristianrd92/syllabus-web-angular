@@ -3,6 +3,7 @@ import { Facultad } from './facultad';
 import { FacultadService } from './facultad.service';
 import swal from 'sweetalert2';
 import { AuthService } from '../usuarios/auth.service';
+import { DatatablesEspaniol } from '../helper/datatables.component';
 
 @Component({
   selector: 'app-sese',
@@ -11,6 +12,7 @@ import { AuthService } from '../usuarios/auth.service';
 export class FacultadesComponent implements OnInit {
 
   facultades: Facultad[];
+  dtOptions: DataTables.Settings = {};
 
   constructor( private facultadService: FacultadService ,
     public authService: AuthService) { }
@@ -19,6 +21,9 @@ export class FacultadesComponent implements OnInit {
     this.facultadService.getFacultades().subscribe(
       facultades => this.facultades = facultades
     );
+    this.dtOptions = {
+      language: DatatablesEspaniol.spanish_datatables
+    };
   }
   delete(facultad: Facultad): void {
     swal({

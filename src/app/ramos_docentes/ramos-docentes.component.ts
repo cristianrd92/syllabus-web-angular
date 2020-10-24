@@ -6,6 +6,7 @@ import { ModalService } from "../ramos_docentes/planificacion/modal.service";
 import { PlanificacionService } from './planificacion/planificacion.service';
 import { faFilePdf } from '@fortawesome/free-solid-svg-icons';
 import { RamoCarreraEstado } from './ramo_carrera_estado';
+import { DatatablesEspaniol } from '../helper/datatables.component';
 
 @Component({
   selector: 'app-ramo-docente',
@@ -14,11 +15,13 @@ import { RamoCarreraEstado } from './ramo_carrera_estado';
 export class RamosDocentesComponent implements OnInit {
 
   ramos_carreras: RamoCarrera[];
+  dtOptions: DataTables.Settings = {};
   faFile = faFilePdf;
   planificaciones: RamoCarreraEstado[];
   ramoSeleccionado: RamoCarrera;
   ramoEstado: RamoCarreraEstado;
   estado: boolean = false;
+  
 
   constructor( private ramoCarreraService: RamoDocenteService ,
     private modalService: ModalService,
@@ -26,19 +29,17 @@ export class RamosDocentesComponent implements OnInit {
     private planificacionService: PlanificacionService, ) { }
 
   ngOnInit() {
-    //this.cargarRamos();
-    this.cargarPlanificacion()
+    this.planificacionService.getPlanificacionesEstado().subscribe(
+      planificaciones => this.planificaciones = planificaciones
+    );
+    this.dtOptions = {
+      language: DatatablesEspaniol.spanish_datatables
+    };
   }
 
   cargarRamos(){
     this.ramoCarreraService.getRamosCarreras().subscribe(
       ramos_carreras => this.ramos_carreras = ramos_carreras
-    );
-  }
-  
-  cargarPlanificacion(){
-    this.planificacionService.getPlanificacionesEstado().subscribe(
-      planificaciones => this.planificaciones = planificaciones
     );
   }
 

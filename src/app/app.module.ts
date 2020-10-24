@@ -43,6 +43,8 @@ import { PlanificacionComponent } from './ramos_docentes/planificacion/planifica
 import { PlanificacionService } from './ramos_docentes/planificacion/planificacion.service';
 import { DetallesComponent } from './ramos_docentes/planificacion/detalles.component';
 import { ComisionComponent } from './comision/comision.component';
+import {DataTablesModule} from 'angular-datatables';
+
 
 
 registerLocaleData(localeEs, 'es-CL');
@@ -73,7 +75,7 @@ const routes: Routes = [
   {path: 'ramosCarreras/form', component:FormRamoCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'ramosCarreras/form/:id', component:FormRamoCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'ramosDocentes', component:RamosDocentesComponent},
-  // {path: 'ramosDocente/subir/:id', component:PlanificacionComponent},
+  {path: 'syllabusPendientes', component:ComisionComponent},
 
 ]
 
@@ -108,6 +110,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     FormsModule,
     HttpClientModule,
+    DataTablesModule,
     FontAwesomeModule
   ],
   providers: [CiudadService, SedeService, FacultadService, CarreraService, PeriodoService, 

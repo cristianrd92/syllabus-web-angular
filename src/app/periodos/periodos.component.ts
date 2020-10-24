@@ -3,6 +3,7 @@ import { Periodo } from './periodo';
 import { PeriodoService } from './periodo.service';
 import swal from 'sweetalert2';
 import { AuthService } from '../usuarios/auth.service';
+import { DatatablesEspaniol } from "../helper/datatables.component";
 
 @Component({
   selector: 'app-periodos',
@@ -11,6 +12,7 @@ import { AuthService } from '../usuarios/auth.service';
 export class PeriodosComponent implements OnInit {
 
   periodos: Periodo[];
+  dtOptions: DataTables.Settings = {};
 
   constructor( private periodoService: PeriodoService ,
     public authService: AuthService) { }
@@ -19,6 +21,9 @@ export class PeriodosComponent implements OnInit {
     this.periodoService.getPeriodos().subscribe(
       periodos => this.periodos = periodos
     );
+    this.dtOptions = {
+      language: DatatablesEspaniol.spanish_datatables
+    };
   }
   delete(periodo: Periodo): void {
     swal({

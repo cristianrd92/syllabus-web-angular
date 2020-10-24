@@ -3,6 +3,7 @@ import { Sede } from './sede';
 import { SedeService } from './sede.service';
 import swal from 'sweetalert2';
 import { AuthService } from '../usuarios/auth.service';
+import { DatatablesEspaniol } from '../helper/datatables.component';
 
 @Component({
   selector: 'app-sese',
@@ -11,6 +12,7 @@ import { AuthService } from '../usuarios/auth.service';
 export class SedesComponent implements OnInit {
 
   sedes: Sede[];
+  dtOptions: DataTables.Settings = {};
 
   constructor( private sedeService: SedeService ,
     public authService: AuthService) { }
@@ -19,6 +21,9 @@ export class SedesComponent implements OnInit {
     this.sedeService.getSedes().subscribe(
       sedes => this.sedes = sedes
     );
+    this.dtOptions = {
+      language: DatatablesEspaniol.spanish_datatables
+    };
   }
   delete(sede: Sede): void {
     swal({

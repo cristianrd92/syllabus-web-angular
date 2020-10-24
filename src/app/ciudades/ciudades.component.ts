@@ -3,6 +3,7 @@ import { Ciudad } from './ciudad';
 import { CiudadService } from './ciudad.service';
 import swal from 'sweetalert2';
 import { AuthService } from '../usuarios/auth.service';
+import { DatatablesEspaniol } from '../helper/datatables.component';
 
 @Component({
   selector: 'app-ciudades',
@@ -11,6 +12,7 @@ import { AuthService } from '../usuarios/auth.service';
 export class CiudadesComponent implements OnInit {
 
   ciudades: Ciudad[];
+  dtOptions: DataTables.Settings = {};
 
   constructor( private ciudadService: CiudadService ,
     public authService: AuthService) { }
@@ -19,6 +21,9 @@ export class CiudadesComponent implements OnInit {
     this.ciudadService.getCiudades().subscribe(
       ciudades => this.ciudades = ciudades
     );
+    this.dtOptions = {
+      language: DatatablesEspaniol.spanish_datatables
+    };
   }
   delete(ciudad: Ciudad): void {
     swal({
