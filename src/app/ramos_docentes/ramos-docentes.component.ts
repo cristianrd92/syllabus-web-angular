@@ -14,13 +14,11 @@ import { DatatablesEspaniol } from '../helper/datatables.component';
 })
 export class RamosDocentesComponent implements OnInit {
 
-  ramos_carreras: RamoCarrera[];
   dtOptions: DataTables.Settings = {};
   faFile = faFilePdf;
   planificaciones: RamoCarreraEstado[];
   ramoSeleccionado: RamoCarrera;
   ramoEstado: RamoCarreraEstado;
-  estado: boolean = false;
   
 
   constructor( private ramoCarreraService: RamoDocenteService ,
@@ -35,12 +33,6 @@ export class RamosDocentesComponent implements OnInit {
     this.dtOptions = {
       language: DatatablesEspaniol.spanish_datatables
     };
-  }
-
-  cargarRamos(){
-    this.ramoCarreraService.getRamosCarreras().subscribe(
-      ramos_carreras => this.ramos_carreras = ramos_carreras
-    );
   }
 
   abrirModal(ramo: RamoCarrera){

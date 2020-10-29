@@ -34,7 +34,6 @@ export class PlanificacionService {
         for (let index = 0; index < 6; index++) {
           delete ramo_carrera[index]          
         }
-        console.log(ramo_carrera)
         return ramo_carrera;
       });
     })

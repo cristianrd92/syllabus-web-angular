@@ -1,0 +1,36 @@
+<ul class="alert alert-danger" *ngIf="errores?.length > 0">
+  <li *ngFor="let err of errores">
+    {{ err }}
+  </li>
+</ul>
+<div class="card bg-dark text-white">
+  <div class="card-header">{{titulo}}</div>
+  <div class="card-body">
+    <form #perfilForm="ngForm">
+      <div class="form-group row">
+        <label for="nombre" class="col-form-label col-sm-2">Nombre perfil</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="perfil.name" name="nombre" required minlength="4" #nombre="ngModel">
+          <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+            <div *ngIf="nombre.errors.required">
+              Nombre perfil es obligatorio
+            </div>
+            <div *ngIf="nombre.errors.minlength">
+              Nombre debe contener al menos 4 caracteres
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-6">
+          <button class="btn btn-primary" role="button" (click)='create()' *ngIf="!perfil.id; else elseBlock" [disabled]="!perfilForm.form.valid" >Crear</button>
+
+          <ng-template #elseBlock>
+            <button class="btn btn-primary" role="button" (click)='update()' [disabled]="!perfilForm.form.valid">Editar</button>
+          </ng-template>
+          <button class="btn btn-danger" mat-raised-button (click)="goBack()">Volver</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

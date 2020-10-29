@@ -43,8 +43,11 @@ import { PlanificacionComponent } from './ramos_docentes/planificacion/planifica
 import { PlanificacionService } from './ramos_docentes/planificacion/planificacion.service';
 import { DetallesComponent } from './ramos_docentes/planificacion/detalles.component';
 import { ComisionComponent } from './comision/comision.component';
-import {DataTablesModule} from 'angular-datatables';
-
+import { DataTablesModule } from 'angular-datatables';
+import { NgSelect2Module } from 'ng-select2';
+import { PerfilesComponent } from './perfiles/perfiles.component';
+import { FormPerfilComponent } from './perfiles/form.sede.component';
+import { PerfilService } from './perfiles/perfil.service';
 
 
 registerLocaleData(localeEs, 'es-CL');
@@ -76,6 +79,9 @@ const routes: Routes = [
   {path: 'ramosCarreras/form/:id', component:FormRamoCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'ramosDocentes', component:RamosDocentesComponent},
   {path: 'syllabusPendientes', component:ComisionComponent},
+  {path: 'perfiles', component:PerfilesComponent},
+  {path: 'perfiles/form', component:FormPerfilComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
+  {path: 'perfiles/form/:id', component:FormPerfilComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
 
 ]
 
@@ -104,6 +110,8 @@ const routes: Routes = [
     PlanificacionComponent,
     DetallesComponent,
     ComisionComponent,
+    PerfilesComponent,
+    FormPerfilComponent
   ],
   imports: [
     BrowserModule,
@@ -111,10 +119,12 @@ const routes: Routes = [
     FormsModule,
     HttpClientModule,
     DataTablesModule,
+    NgSelect2Module,
     FontAwesomeModule
   ],
   providers: [CiudadService, SedeService, FacultadService, CarreraService, PeriodoService, 
               RamoService, RamoCarreraService, RamoDocenteService, PlanificacionService,
+              PerfilService,
              
   {provide: LOCALE_ID, useValue: 'es-CL'}, 
   { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

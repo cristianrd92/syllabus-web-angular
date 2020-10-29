@@ -27,6 +27,12 @@ constructor(private authService:AuthService, private router:Router){}
           swal("Acceso denegado", "No tienes acceso a este recurso!", "warning");
           this.router.navigate(['/']);
         }
+        if(e.status==500){
+          console.log(e.error)
+          console.log(e.mensaje)
+
+          swal(e.error.mensaje, e.error.error, "error");
+        }
         return throwError(e);
       })
     );
