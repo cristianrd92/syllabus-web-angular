@@ -4,6 +4,9 @@ import { PerfilService } from './perfil.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
 import { Location } from '@angular/common';
+import { Role } from '../roles/rol';
+import { RolService } from '../roles/rol.service';
+import {FormControl} from '@angular/forms';
 
 
 @Component({
@@ -13,15 +16,24 @@ import { Location } from '@angular/common';
 export class FormPerfilComponent implements OnInit {
   public perfil: Perfil = new Perfil()
   public titulo:string = "Crear Perfil"
+  roles: Role[];
   public errores:string[]
+  checkboxes={};
+  toppings = new FormControl();
+  toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
+
 
   constructor(private perfilService: PerfilService,
+    private roleService: RolService,
     private router: Router,
     private activedRoute: ActivatedRoute,
     private _location: Location){ }
 
+    html:string;
+
   ngOnInit(): void {
-    this.cargarPerfiles()
+    this.cargarPerfiles(),
+    this.cargarRoles()
   }
   goBack(){
     this._location.back();
@@ -31,9 +43,17 @@ export class FormPerfilComponent implements OnInit {
     this.activedRoute.params.subscribe(params=> {
       let id = params['id']
       if (id){
-        this.perfilService.getPerfil(id).subscribe( (perfil) => this.perfil = perfil)
+        this.perfilService.getPerfil(id).subscribe( (perfil) => {
+          this.perfil = perfil;
+          console.log(this.checkboxes)
+          console.log(perfil)
+        } )
       }
     })
+  }
+
+  cargarRoles(): void {
+    this.roleService.getRoles().subscribe(roles => { this.roles = roles });
   }
 
   create(): void{

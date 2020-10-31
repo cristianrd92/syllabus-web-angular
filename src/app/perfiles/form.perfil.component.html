@@ -22,6 +22,14 @@
         </div>
       </div>
       <div class="form-group row">
+        <mat-form-field appearance="fill">
+          <mat-label>Toppings</mat-label>
+          <mat-select multiple>
+            <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="form-group row">
         <div class="col-sm-6">
           <button class="btn btn-primary" role="button" (click)='create()' *ngIf="!perfil.id; else elseBlock" [disabled]="!perfilForm.form.valid" >Crear</button>
 

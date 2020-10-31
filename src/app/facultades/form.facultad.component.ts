@@ -13,10 +13,11 @@ import { Location } from '@angular/common';
 })
 export class FormFacultadComponent implements OnInit {
   public facultad: Facultad = new Facultad()
+ 
   sedes: Sede[];
   public titulo:string = "Crear Facultad"
   public errores:string[]
-
+  
   constructor(private facultadService: FacultadService,
     private router: Router,
     private activedRoute: ActivatedRoute,

@@ -20,7 +20,7 @@ import { AuthInterceptor } from './usuarios/interceptors/auth.interceptor';
 import { SedeService } from './sedes/sede.service';
 import { SedesComponent } from './sedes/sedes.component';
 import { FormSedeComponent } from './sedes/form.sede.component';
-import { FormFacultadComponent } from './facultades/form.sede.component';
+import { FormFacultadComponent } from './facultades/form.facultad.component';
 import { FacultadesComponent } from './facultades/facultades.component';
 import { FacultadService } from './facultades/facultad.service';
 import { CarrerasComponent } from './carreras/carreras.component';
@@ -46,8 +46,15 @@ import { ComisionComponent } from './comision/comision.component';
 import { DataTablesModule } from 'angular-datatables';
 import { NgSelect2Module } from 'ng-select2';
 import { PerfilesComponent } from './perfiles/perfiles.component';
-import { FormPerfilComponent } from './perfiles/form.sede.component';
+import { FormPerfilComponent } from './perfiles/form.perfil.component';
 import { PerfilService } from './perfiles/perfil.service';
+import { RolService } from './roles/rol.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSelectModule } from '@angular/material/select';
+import { UsuariosComponent } from './usuarios/usuarios.component';
+import { UsuarioService } from './usuarios/usuario.service';
+import { FormUsuarioComponent } from './usuarios/form.usuario.component';
+
 
 
 registerLocaleData(localeEs, 'es-CL');
@@ -82,6 +89,11 @@ const routes: Routes = [
   {path: 'perfiles', component:PerfilesComponent},
   {path: 'perfiles/form', component:FormPerfilComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'perfiles/form/:id', component:FormPerfilComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
+  
+  {path: 'usuarios', component:UsuariosComponent},
+  {path: 'usuarios/form', component:FormUsuarioComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
+  {path: 'usuarios/form/:id', component:FormUsuarioComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
+
 
 ]
 
@@ -111,7 +123,9 @@ const routes: Routes = [
     DetallesComponent,
     ComisionComponent,
     PerfilesComponent,
-    FormPerfilComponent
+    FormPerfilComponent,
+    UsuariosComponent,
+    FormUsuarioComponent,
   ],
   imports: [
     BrowserModule,
@@ -120,11 +134,13 @@ const routes: Routes = [
     HttpClientModule,
     DataTablesModule,
     NgSelect2Module,
-    FontAwesomeModule
+    FontAwesomeModule,
+    MatSelectModule,
+    BrowserAnimationsModule
   ],
   providers: [CiudadService, SedeService, FacultadService, CarreraService, PeriodoService, 
               RamoService, RamoCarreraService, RamoDocenteService, PlanificacionService,
-              PerfilService,
+              PerfilService, RolService, UsuarioService,
              
   {provide: LOCALE_ID, useValue: 'es-CL'}, 
   { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

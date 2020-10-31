@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-
-import { Role } from './rol';
+import { Usuario } from './usuario';
+import { Perfil } from '../perfiles/perfil';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
@@ -9,31 +9,29 @@ import { GlobalComponent } from '../global.component';
 
 
 @Injectable()
-export class RolService {
+export class UsuarioService {
 
-  private urlEndPoint:string = GlobalComponent.apiURL+'api/role';
+  private urlEndPoint:string = GlobalComponent.apiURL+'api/usuario';
   constructor(private http: HttpClient, private router: Router) { }
 
-
-  getRoles() : Observable<Role[]> {
-    return this.http.get<Role[]>(this.urlEndPoint).pipe(
+  getUsuarios() : Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(this.urlEndPoint).pipe(
       catchError(e => {
         return throwError(e);
       }),
     map( (response) => {
-      console.log(response)
-      let roles = response as Role[];
-      return roles.map(role => {
-        role.name = role.name.toUpperCase();
-        return role;
+      let usuarios = response as Usuario[];
+      return usuarios.map(usuario => {
+        usuario.nombres = usuario.nombres.toUpperCase();
+        return usuario;
       });
     })
     );
   }
 
-  create(facultad: Role) : Observable<Role> {
-    return this.http.post(this.urlEndPoint, facultad).pipe(
-      map((response:any) => response.facultad as Role),
+  create(usuario: Usuario) : Observable<Usuario> {
+    return this.http.post(this.urlEndPoint, usuario).pipe(
+      map((response:any) => response.usuario as Usuario),
       catchError(e => {
         if(e.status==400){
           return throwError(e);
@@ -46,11 +44,11 @@ export class RolService {
     )
   }
 
-  getRole(id): Observable<Role> {
-    return this.http.get<Role>(`${this.urlEndPoint}/${id}`).pipe(
+  getUsuario(id): Observable<Usuario> {
+    return this.http.get<Usuario>(`${this.urlEndPoint}/${id}`).pipe(
       catchError(e => {
         if(e.status !=401 && e.error.mensaje){
-          this.router.navigate(['/perfiles']);
+          this.router.navigate(['/usuarios']);
           console.error(e.error.mensaje);
         }
         if (e.error.mensaje){
@@ -61,9 +59,9 @@ export class RolService {
     )
   }
 
-  update(facultad: Role) : Observable<Role> {
-    return this.http.put<Role>(`${this.urlEndPoint}/${facultad.id}`, facultad).pipe(
-      map((response:any) => response.facultad as Role),
+  update(usuario: Usuario) : Observable<Usuario> {
+    return this.http.put<Usuario>(`${this.urlEndPoint}/${usuario.id}`, usuario).pipe(
+      map((response:any) => response.usuario as Usuario),
       catchError(e => {
         if(e.status==400){
           return throwError(e);
@@ -76,8 +74,8 @@ export class RolService {
     )
   }
 
-  delete(id: number): Observable<Role> {
-    return this.http.delete<Role>(`${this.urlEndPoint}/${id}`).pipe(
+  delete(id: number): Observable<Usuario> {
+    return this.http.delete<Usuario>(`${this.urlEndPoint}/${id}`).pipe(
       catchError(e => {
         return throwError(e);
       })

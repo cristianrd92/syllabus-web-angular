@@ -47,6 +47,7 @@ export class AuthService {
 
   guardarUsuario(accessToken: string):void{
     let payload = this.obtenerDatosToken(accessToken);
+    console.log(payload)
     this._usuario = new Usuario();
     this._usuario.id = payload.ref;
     this._usuario.nombres = this.utf8Decode(payload.nombres);
