@@ -38,7 +38,10 @@ export class FormUsuarioComponent implements OnInit {
       if (id){
         this.titulo = "Editar Usuario";
         this.usuarioService.getUsuario(id).subscribe( (usuario) => {
+          console.log(usuario.nombres)
           this.usuario = usuario
+          this.usuario.perfil = usuario.perfiles[0];
+          console.log(this.usuario.perfil)
         })
       }
     })

@@ -6,9 +6,11 @@ export class Usuario {
     username:string;
     password:string;
     nombres:string;
+    rut_usuario:string;
     apellidos:string;
     email:string;
     perfiles:Perfil[];
+    perfil:Perfil;
     carrera:Carrera;
     roles:string[]=[];
 }

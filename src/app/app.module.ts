@@ -50,10 +50,10 @@ import { FormPerfilComponent } from './perfiles/form.perfil.component';
 import { PerfilService } from './perfiles/perfil.service';
 import { RolService } from './roles/rol.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSelectModule } from '@angular/material/select';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { UsuarioService } from './usuarios/usuario.service';
 import { FormUsuarioComponent } from './usuarios/form.usuario.component';
+import { Ng9RutModule } from 'ng9-rut';
 
 
 
@@ -135,8 +135,8 @@ const routes: Routes = [
     DataTablesModule,
     NgSelect2Module,
     FontAwesomeModule,
-    MatSelectModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    Ng9RutModule
   ],
   providers: [CiudadService, SedeService, FacultadService, CarreraService, PeriodoService, 
               RamoService, RamoCarreraService, RamoDocenteService, PlanificacionService,

@@ -9,14 +9,14 @@
   <div class="card-body">
     <form #usuarioForm="ngForm">
       <div class="form-group row">
-        <label for="nombre" class="col-form-label col-sm-2">Nombres</label>
+        <label for="nombres" class="col-form-label col-sm-2">Nombres</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" [(ngModel)]="usuario.nombres" name="nombre" required minlength="4" #nombre="ngModel">
-          <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
-            <div *ngIf="nombre.errors.required">
+          <input type="text" class="form-control" [(ngModel)]="usuario.nombres" name="nombres" required minlength="4" #nombres="ngModel">
+          <div class="alert alert-danger" *ngIf="nombres.invalid && (nombres.dirty || nombres.touched)">
+            <div *ngIf="nombres.errors.required">
               Nombres es obligatorio
             </div>
-            <div *ngIf="nombre.errors.minlength">
+            <div *ngIf="nombres.errors.minlength">
               Nombre debe contener al menos 4 caracteres
             </div>
           </div>
@@ -24,20 +24,49 @@
       </div>
 
       <div class="form-group row">
-        <label for="nombre" class="col-form-label col-sm-2">Perfil</label>
+        <label for="apellidos" class="col-form-label col-sm-2">Apellidos</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" [(ngModel)]="usuario.perfiles" name="nombre" required minlength="4" #perfiles="ngModel">
-          <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
-            <div *ngIf="nombre.errors.required">
-              Nombres es obligatorio
+          <input type="text" class="form-control" [(ngModel)]="usuario.apellidos" name="apellidos" required minlength="4" #apellidos="ngModel">
+          <div class="alert alert-danger" *ngIf="apellidos.invalid && (apellidos.dirty || apellidos.touched)">
+            <div *ngIf="apellidos.errors.required">
+              Apeliidos es obligatorio
             </div>
-            <div *ngIf="nombre.errors.minlength">
-              Nombre debe contener al menos 4 caracteres
+            <div *ngIf="apellidos.errors.minlength">
+              Apellidos debe contener al menos 4 caracteres
             </div>
           </div>
         </div>
       </div>
 
+      <div class="form-group row">
+        <label for="rut_usuario" class="col-form-label col-sm-2">RUT</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" validateRut [(ngModel)]="usuario.rut_usuario" name="rut_usuario" required minlength="4" #rut_usuario="ngModel">
+          <div class="alert alert-danger" *ngIf="rut_usuario.invalid && (rut_usuario.dirty || rut_usuario.touched)">
+            <div *ngIf="rut_usuario.errors.required">
+              Rut es obligatorio
+            </div>
+            <div *ngIf="rut_usuario.errors.minlength">
+              Rut debe contener al menos 4 caracteres
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="ciudad" class="col-form-label col-sm-2">Perfil</label>
+        <div class="col-sm-6">
+          <select [compareWith]="compararPerfil" class="form-control" [(ngModel)]="usuario.perfil" name="perfil" required #perfil="ngModel">
+            <option [ngValue]="undefined" > --- Seleccione una perfil --- </option>
+            <option *ngFor="let perfil of perfiles" [ngValue]="perfil">{{perfil.name}}</option>
+          </select>
+          <div class="alert alert-danger" *ngIf="perfil.invalid && (perfil.dirty || perfil.touched)">
+            <div *ngIf="perfil.errors.required">
+              El perfil es obligatorio
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="form-group row">
         <div class="col-sm-6">
           <button class="btn btn-primary" role="button" (click)='create()' *ngIf="!usuario.id; else elseBlock" [disabled]="!usuarioForm.form.valid" >Crear</button>

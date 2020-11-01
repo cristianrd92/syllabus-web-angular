@@ -46,6 +46,10 @@ export class UsuarioService {
 
   getUsuario(id): Observable<Usuario> {
     return this.http.get<Usuario>(`${this.urlEndPoint}/${id}`).pipe(
+      map((response:any)=> {
+        console.log(response);
+        return response;
+      }),
       catchError(e => {
         if(e.status !=401 && e.error.mensaje){
           this.router.navigate(['/usuarios']);
