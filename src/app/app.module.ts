@@ -54,6 +54,8 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { UsuarioService } from './usuarios/usuario.service';
 import { FormUsuarioComponent } from './usuarios/form.usuario.component';
 import { Ng9RutModule } from 'ng9-rut';
+import { ComisionCarreraComponent } from './carreras/comision/comision_component.component';
+import { ComisionCarreraService } from './carreras/comision/comision_carrera.service';
 
 
 
@@ -93,6 +95,8 @@ const routes: Routes = [
   {path: 'usuarios', component:UsuariosComponent},
   {path: 'usuarios/form', component:FormUsuarioComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'usuarios/form/:id', component:FormUsuarioComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
+  
+  {path: 'carreras/comision/:id', component:ComisionCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
 
 
 ]
@@ -126,6 +130,7 @@ const routes: Routes = [
     FormPerfilComponent,
     UsuariosComponent,
     FormUsuarioComponent,
+    ComisionCarreraComponent
   ],
   imports: [
     BrowserModule,
@@ -140,7 +145,7 @@ const routes: Routes = [
   ],
   providers: [CiudadService, SedeService, FacultadService, CarreraService, PeriodoService, 
               RamoService, RamoCarreraService, RamoDocenteService, PlanificacionService,
-              PerfilService, RolService, UsuarioService,
+              PerfilService, RolService, UsuarioService, ComisionCarreraService,
              
   {provide: LOCALE_ID, useValue: 'es-CL'}, 
   { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

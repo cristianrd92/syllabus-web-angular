@@ -13,6 +13,7 @@
         <tr>
           <th>Nombre carrera</th>
           <th>Facultad</th>
+          <th>Comisión</th>
           <th *ngIf="authService.hasRole('ROLE_ADMIN')">Editar</th>
           <th *ngIf="authService.hasRole('ROLE_ADMIN')">Borrar</th>
         </tr>
@@ -21,6 +22,9 @@
         <tr *ngFor="let carrera of carreras">
           <td>{{carrera.nombre_carrera}}</td>
           <td>{{carrera.facultad.nombre_facultad | uppercase}}</td>
+          <td *ngIf="authService.hasRole('ROLE_ADMIN')" >
+            <button type="button" name="editar" class="btn btn-info" [routerLink]="['/carreras/comision', carrera.id]">Ver comisión</button>
+          </td> 
           <td *ngIf="authService.hasRole('ROLE_ADMIN')" >
             <button type="button" name="editar" class="btn btn-primary" [routerLink]="['/carreras/form', carrera.id]">Editar</button>
           </td>
