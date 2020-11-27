@@ -56,8 +56,7 @@ import { FormUsuarioComponent } from './usuarios/form.usuario.component';
 import { Ng9RutModule } from 'ng9-rut';
 import { ComisionCarreraComponent } from './carreras/comision/comision_component.component';
 import { ComisionCarreraService } from './carreras/comision/comision_carrera.service';
-
-
+import { FormComisionCarreraComponent } from './carreras/comision/form.comision_carrera.component';
 
 registerLocaleData(localeEs, 'es-CL');
 
@@ -97,7 +96,7 @@ const routes: Routes = [
   {path: 'usuarios/form/:id', component:FormUsuarioComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   
   {path: 'carreras/comision/:id', component:ComisionCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
-
+  {path: 'carreras/comision/asignar/:id', component:FormComisionCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
 
 ]
 
@@ -130,7 +129,8 @@ const routes: Routes = [
     FormPerfilComponent,
     UsuariosComponent,
     FormUsuarioComponent,
-    ComisionCarreraComponent
+    ComisionCarreraComponent,
+    FormComisionCarreraComponent
   ],
   imports: [
     BrowserModule,

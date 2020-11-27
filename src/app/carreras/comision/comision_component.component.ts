@@ -29,13 +29,47 @@ export class ComisionCarreraComponent implements OnInit {
     this.activedRoute.params.subscribe(params=> {
       let id = params['id']
       if (id){
-        this.carreraService.getCarrera(id).subscribe( (carrera) => this.carrera = carrera)
+        this.carreraService.getCarrera(id).subscribe( carrera => {
+          this.carrera = carrera
+          localStorage.setItem("carrera_obj", JSON.stringify(carrera))
+        })
         this.comisionService.getComisiones(id).subscribe( (comisiones) => this.comisiones = comisiones)
       }
     })
     this.dtOptions = {
       language: DatatablesEspaniol.spanish_datatables
     };
+    
+  }
+
+  delete(comision: Comision): void {
+    swal({
+      title: `Esta seguro que desea eliminar a ${comision.usuario.nombres} de la comisión?`,
+      text: "Esto no se podra revertir",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: "Si, borrar",
+      cancelButtonText: "No, cancelar!",
+      confirmButtonClass: "btn btn-success",
+      cancelButtonClass: "btn btn-danger",
+      buttonsStyling: false,
+      reverseButtons: true
+    }).then((result) =>{
+      if (result.value){
+        this.comisionService.delete(comision.id).subscribe(
+          response => {
+            this.comisiones = this.comisiones.filter(com => com !== comision)
+            swal(
+              'Borrado!',
+              'El usuario ha sido borrada de la comisión',
+              'success'
+              )
+          }
+        )
+      }
+    })
   }
 
 }

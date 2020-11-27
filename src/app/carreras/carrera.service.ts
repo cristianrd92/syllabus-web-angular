@@ -65,6 +65,20 @@ export class CarreraService {
     )
   }
 
+  getCarreraById(id): Observable<Carrera> {
+    return this.http.get<Carrera>(`${this.urlEndPoint}/${id}`).pipe(
+      catchError(e => {
+        if(e.status !=401 && e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        if (e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        return throwError(e);
+      })
+    )
+  }
+
   update(carrera: Carrera) : Observable<Carrera> {
     return this.http.put<Carrera>(`${this.urlEndPoint}/${carrera.id}`, carrera).pipe(
       map((response:any) => response.carrera as Carrera),

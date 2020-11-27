@@ -39,7 +39,6 @@ export class RamoCarreraService {
         return throwError(e);
       }),
     map( (response) => {
-      console.log(response)
       let ramos_carreras = response as RamoCarrera[];
       return ramos_carreras.map(ramo_carrera => {
         return ramo_carrera;

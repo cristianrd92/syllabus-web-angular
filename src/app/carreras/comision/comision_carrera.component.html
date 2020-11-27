@@ -1,10 +1,14 @@
 <div class="card mb-3">
-  <div class="card-header">{{carrera.nombre_carrera | uppercase }}</div>
+  <div class="card-header">{{carrera?.nombre_carrera | uppercase }}</div>
   <div class="card-body text-secondary">
     <h5 class="card-title">Listado docentes asignados a comisión</h5>
+  <div class="my-2 text-left">
+    <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" class="btn btn-rounded btn-primary" [routerLink] = "['/carreras/comision/asignar',carrera?.id]">Asignar docente a comisión</button>
+  </div>
   <div *ngIf="comisiones?.length==0" class="alert alert-info">
     No hay registros en la base de datos
   </div>
+
   <table datatable [dtOptions]="dtOptions" class="table table-bordered table-striped" *ngIf="comisiones?.length>0">
       <thead>
         <tr>

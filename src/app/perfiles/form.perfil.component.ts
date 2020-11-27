@@ -6,8 +6,6 @@ import swal from 'sweetalert2';
 import { Location } from '@angular/common';
 import { Role } from '../roles/rol';
 import { RolService } from '../roles/rol.service';
-import {FormControl} from '@angular/forms';
-
 
 @Component({
   selector: 'app-form',
@@ -17,11 +15,7 @@ export class FormPerfilComponent implements OnInit {
   public perfil: Perfil = new Perfil()
   public titulo:string = "Crear Perfil"
   roles: Role[];
-  public errores:string[]
-  checkboxes={};
-  toppings = new FormControl();
-  toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
-
+  public errores:string[];
 
   constructor(private perfilService: PerfilService,
     private roleService: RolService,
@@ -45,7 +39,6 @@ export class FormPerfilComponent implements OnInit {
       if (id){
         this.perfilService.getPerfil(id).subscribe( (perfil) => {
           this.perfil = perfil;
-          console.log(this.checkboxes)
           console.log(perfil)
         } )
       }
