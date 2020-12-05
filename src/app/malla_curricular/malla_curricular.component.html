@@ -1,0 +1,33 @@
+<div class="card mb-3">
+  <div class="card-header">Mallas Curriculares</div>
+  <div class="card-body text-secondary">
+    <h5 class="card-title">Listado de mallas curriculares</h5>
+  <div class="my-2 text-left">
+    <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" class="btn btn-rounded btn-primary" [routerLink] = "['/mallas/form']">Crear malla</button>
+  </div>
+  <div *ngIf="mallas?.length==0" class="alert alert-info">
+    No hay registros en la base de datos
+  </div>
+  <table datatable [dtOptions]="dtOptions" class="table table-bordered table-striped" *ngIf="mallas?.length>0">
+      <thead>
+        <tr>
+          <th>Descripción malla</th>
+          <th *ngIf="authService.hasRole('ROLE_ADMIN')">Editar</th>
+          <th *ngIf="authService.hasRole('ROLE_ADMIN')">Borrar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let malla of mallas">
+          <td>{{malla.descripcion_malla}}</td>
+          <td *ngIf="authService.hasRole('ROLE_ADMIN')" >
+            <button type="button" name="editar" class="btn btn-primary" [routerLink]="['/malla/form', malla.id]">Editar</button>
+          </td>
+          <td *ngIf="authService.hasRole('ROLE_ADMIN')">
+            <button type="button" name="eliminar" class="btn btn-danger" (click)='delete(malla)'>Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+  </table>
+  </div>
+</div>
+

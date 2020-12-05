@@ -57,6 +57,12 @@ import { Ng9RutModule } from 'ng9-rut';
 import { ComisionCarreraComponent } from './carreras/comision/comision_component.component';
 import { ComisionCarreraService } from './carreras/comision/comision_carrera.service';
 import { FormComisionCarreraComponent } from './carreras/comision/form.comision_carrera.component';
+import { MallaCurricularComponent } from './malla_curricular/malla_curricular.component';
+import { FormMallaCurricularComponent } from './malla_curricular/form.component';
+import { MallaCurricularService } from './malla_curricular/malla_curricular.service';
+import { SemestreComponent } from './semestres/semestre.component';
+import { FormSemestreComponent } from './semestres/form.component';
+import { SemestreService } from './semestres/semestre.service';
 
 registerLocaleData(localeEs, 'es-CL');
 
@@ -90,7 +96,15 @@ const routes: Routes = [
   {path: 'perfiles', component:PerfilesComponent},
   {path: 'perfiles/form', component:FormPerfilComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'perfiles/form/:id', component:FormPerfilComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
+  {path: 'mallas', component:MallaCurricularComponent},
+  {path: 'mallas/form', component:FormMallaCurricularComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
+  {path: 'mallas/form/:id', component:FormMallaCurricularComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
+  {path: 'semestres', component:SemestreComponent},
+  {path: 'semestres/form', component:FormSemestreComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
+  {path: 'semestres/form/:id', component:FormSemestreComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   
+
+
   {path: 'usuarios', component:UsuariosComponent},
   {path: 'usuarios/form', component:FormUsuarioComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'usuarios/form/:id', component:FormUsuarioComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
@@ -130,7 +144,11 @@ const routes: Routes = [
     UsuariosComponent,
     FormUsuarioComponent,
     ComisionCarreraComponent,
-    FormComisionCarreraComponent
+    FormComisionCarreraComponent,
+    MallaCurricularComponent,
+    FormMallaCurricularComponent,
+    SemestreComponent,
+    FormSemestreComponent,
   ],
   imports: [
     BrowserModule,
@@ -146,6 +164,7 @@ const routes: Routes = [
   providers: [CiudadService, SedeService, FacultadService, CarreraService, PeriodoService, 
               RamoService, RamoCarreraService, RamoDocenteService, PlanificacionService,
               PerfilService, RolService, UsuarioService, ComisionCarreraService,
+              MallaCurricularService, SemestreService,
              
   {provide: LOCALE_ID, useValue: 'es-CL'}, 
   { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
