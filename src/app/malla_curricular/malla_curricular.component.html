@@ -12,6 +12,8 @@
       <thead>
         <tr>
           <th>Descripción malla</th>
+          <th *ngIf="authService.hasRole('ROLE_ADMIN')">Ver malla</th>
+          <th *ngIf="authService.hasRole('ROLE_ADMIN')">Asignar ramos</th>
           <th *ngIf="authService.hasRole('ROLE_ADMIN')">Editar</th>
           <th *ngIf="authService.hasRole('ROLE_ADMIN')">Borrar</th>
         </tr>
@@ -20,7 +22,13 @@
         <tr *ngFor="let malla of mallas">
           <td>{{malla.descripcion_malla}}</td>
           <td *ngIf="authService.hasRole('ROLE_ADMIN')" >
-            <button type="button" name="editar" class="btn btn-primary" [routerLink]="['/malla/form', malla.id]">Editar</button>
+            <button type="button" name="editar" class="btn btn-info" [routerLink]="['/mallas/ver', malla.id]">Ver malla</button>
+          </td>
+          <td *ngIf="authService.hasRole('ROLE_ADMIN')" >
+            <button type="button" name="editar" class="btn btn-success" [routerLink]="['/mallas/ramos', malla.id]">Agregar Ramos</button>
+          </td>
+          <td *ngIf="authService.hasRole('ROLE_ADMIN')" >
+            <button type="button" name="editar" class="btn btn-primary" [routerLink]="['/mallas/form', malla.id]">Editar</button>
           </td>
           <td *ngIf="authService.hasRole('ROLE_ADMIN')">
             <button type="button" name="eliminar" class="btn btn-danger" (click)='delete(malla)'>Eliminar</button>

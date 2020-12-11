@@ -6,6 +6,8 @@ import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { GlobalComponent } from '../global.component';
+import { Ramo } from '../ramos/ramo';
+import { DetalleMallaCurricular } from './detalle_malla_curricular';
 
 
 @Injectable()
@@ -30,9 +32,43 @@ export class MallaCurricularService {
     );
   }
 
+  getRamosMalla(id): Observable<Ramo[]> {
+    return this.http.get<Ramo[]>(`${this.urlEndPoint}/ramo/${id}`).pipe(
+      catchError(e => {
+        if(e.status !=401 && e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        if (e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        return throwError(e);
+      }),
+      map( (response) => {
+        let ramos = response as Ramo[];
+        return ramos.map(ramo => {
+          return ramo;
+        });
+      })
+    )
+  }
+
   create(malla: MallaCurricular) : Observable<MallaCurricular> {
     return this.http.post(this.urlEndPoint, malla).pipe(
       map((response:any) => response.malla as MallaCurricular),
+      catchError(e => {
+        if(e.status==400){
+          return throwError(e);
+        }
+        if (e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        return throwError(e);
+      })
+    )
+  }
+  crearDetalle(detalle: DetalleMallaCurricular) : Observable<DetalleMallaCurricular> {
+    return this.http.post(`${this.urlEndPoint}/detalle`, detalle).pipe(
+      map((response:any) => response.detalle as DetalleMallaCurricular),
       catchError(e => {
         if(e.status==400){
           return throwError(e);
@@ -60,6 +96,21 @@ export class MallaCurricularService {
     )
   }
 
+  getDetalleMalla(id): Observable<DetalleMallaCurricular[]> {
+    return this.http.get<DetalleMallaCurricular[]>(`${this.urlEndPoint}/detalle/${id}`).pipe(
+      catchError(e => {
+        if(e.status !=401 && e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        if (e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        return throwError(e);
+      })
+    )
+  }
+
+
   update(malla: MallaCurricular) : Observable<MallaCurricular> {
     return this.http.put<MallaCurricular>(`${this.urlEndPoint}/${malla.id}`, malla).pipe(
       map((response:any) => response.malla as MallaCurricular),
@@ -82,4 +133,12 @@ export class MallaCurricularService {
       })
     )
   }
+  deleteDetalle(id: number): Observable<DetalleMallaCurricular> {
+    return this.http.delete<DetalleMallaCurricular>(`${this.urlEndPoint}/detalle/${id}`).pipe(
+      catchError(e => {
+        return throwError(e);
+      })
+    )
+  }
+
 }

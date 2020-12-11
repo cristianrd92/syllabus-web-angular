@@ -1,0 +1,31 @@
+<style>
+  .cardList {
+  }
+  /* Row Gap */
+  .cardList > *:not(:last-child) {
+    margin-bottom: 2px;
+  }
+  .cardnew{
+    display: block;
+    padding: 32px;
+    border: 1px solid black;
+    border-radius: 8px;
+    }
+ </style>
+<div class="card mb-3">
+  <div class="card-header">Malla</div>
+  <div class="card-body text-secondary">
+    <h5 class="card-title">Ramos malla</h5>
+  <div *ngIf="detalles?.length==0" class="alert alert-info">
+    No hay registros en la base de datos
+  </div>
+
+<div class="cardList">
+  <div *ngFor="let detalle of detalles">
+    <div class="cardnew">{{detalle.ramo.nombre_ramo | uppercase}} - {{detalle.semestre.descripcion_semestre | uppercase}}</div>
+    <br>
+  </div>
+</div>
+  </div>
+</div>
+

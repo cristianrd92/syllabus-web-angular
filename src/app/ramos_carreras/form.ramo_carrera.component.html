@@ -25,7 +25,7 @@
         <div class="col-sm-6">
           <select [compareWith]="compararUsuario" class="form-control" [(ngModel)]="ramo_carrera.usuario" name="usuario" required #usuario="ngModel">
             <option [ngValue]="undefined" > --- Seleccione un docente ---</option>
-            <option *ngFor="let usuario of usuarios" [ngValue]="usuario">{{usuario.nombres}} {{usuario.apellidos}}</option>
+            <option *ngFor="let usuario of usuarios" [ngValue]="usuario">{{usuario.nombres | uppercase}} {{usuario.apellidos | uppercase}}</option>
           </select>
           <div class="alert alert-danger" *ngIf="usuario.invalid && (usuario.dirty || usuario.touched)">
             <div *ngIf="usuario.errors.required">
@@ -40,7 +40,7 @@
         <div class="col-sm-6">
           <select [compareWith]="compararRamo" class="form-control" [(ngModel)]="ramo_carrera.ramo" name="facultad" required #ramo="ngModel">
             <option [ngValue]="undefined" > --- Seleccione un ramo ---</option>
-            <option *ngFor="let ramo of ramos" [ngValue]="ramo">{{ramo.nombre_ramo}}</option>
+            <option *ngFor="let ramo of ramos" [ngValue]="ramo">{{ramo.codigo_ramo | uppercase}} - {{ramo.nombre_ramo | uppercase}}</option>
           </select>
           <div class="alert alert-danger" *ngIf="ramo.invalid && (ramo.dirty || ramo.touched)">
             <div *ngIf="ramo.errors.required">
@@ -55,7 +55,7 @@
         <div class="col-sm-6">
           <select [compareWith]="compararCarrera" class="form-control" [(ngModel)]="ramo_carrera.carrera" name="carrera" required #carrera="ngModel">
             <option [ngValue]="undefined" > --- Seleccione una carrera ---</option>
-            <option *ngFor="let carrera of carreras" [ngValue]="carrera">{{carrera.nombre_carrera}}</option>
+            <option *ngFor="let carrera of carreras" [ngValue]="carrera">{{carrera.nombre_carrera | uppercase}}</option>
           </select>
           <div class="alert alert-danger" *ngIf="carrera.invalid && (carrera.dirty || carrera.touched)">
             <div *ngIf="carrera.errors.required">
@@ -70,7 +70,7 @@
         <div class="col-sm-6">
           <select [compareWith]="compararPeriodo" class="form-control" [(ngModel)]="ramo_carrera.periodo" name="periodo" required #periodo="ngModel">
             <option [ngValue]="undefined" > --- Seleccione un periodo ---</option>
-            <option *ngFor="let periodo of periodos" [ngValue]="periodo">{{periodo.nombre_periodo}}</option>
+            <option *ngFor="let periodo of periodos" [ngValue]="periodo">{{periodo.nombre_periodo | uppercase}}</option>
           </select>
           <div class="alert alert-danger" *ngIf="periodo.invalid && (periodo.dirty || periodo.touched)">
             <div *ngIf="periodo.errors.required">

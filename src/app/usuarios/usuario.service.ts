@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Usuario } from './usuario';
-import { Perfil } from '../perfiles/perfil';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { GlobalComponent } from '../global.component';
+import { ChangePasswordForm } from './change.password';
+import { Carrera } from '../carreras/carrera';
 
 
 @Injectable()
@@ -29,9 +30,39 @@ export class UsuarioService {
     );
   }
 
+  getCarreras() : Observable<Carrera[]> {
+    return this.http.get<Carrera[]>(this.urlEndPoint+'/carreras').pipe(
+      catchError(e => {
+        return throwError(e);
+      }),
+    map( (response) => {
+      let carreras = response as Carrera[];
+      return carreras.map(carrera => {
+        carrera.nombre_carrera = carrera.nombre_carrera.toUpperCase();
+        carrera.codigo_carrera = carrera.codigo_carrera.toUpperCase();
+        return carrera;
+      });
+    })
+    );
+  }
+
   create(usuario: Usuario) : Observable<Usuario> {
     return this.http.post(this.urlEndPoint, usuario).pipe(
       map((response:any) => response.usuario as Usuario),
+      catchError(e => {
+        if(e.status==400){
+          return throwError(e);
+        }
+        if (e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        return throwError(e);
+      })
+    )
+  }
+  cambiarPassword(change: ChangePasswordForm) : Observable<ChangePasswordForm> {
+    return this.http.post(this.urlEndPoint+"/cambiarClave", change).pipe(
+      map((response:any) => response.change as ChangePasswordForm),
       catchError(e => {
         if(e.status==400){
           return throwError(e);

@@ -7,6 +7,7 @@ import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Facultad } from '../facultades/facultad';
 import { GlobalComponent } from '../global.component';
+import { Ramo } from '../ramos/ramo';
 
 
 @Injectable()

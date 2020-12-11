@@ -58,11 +58,18 @@ import { ComisionCarreraComponent } from './carreras/comision/comision_component
 import { ComisionCarreraService } from './carreras/comision/comision_carrera.service';
 import { FormComisionCarreraComponent } from './carreras/comision/form.comision_carrera.component';
 import { MallaCurricularComponent } from './malla_curricular/malla_curricular.component';
+import { MallaCurricularRamosComponent } from './malla_curricular/malla_curricular.ramos.component';
 import { FormMallaCurricularComponent } from './malla_curricular/form.component';
 import { MallaCurricularService } from './malla_curricular/malla_curricular.service';
 import { SemestreComponent } from './semestres/semestre.component';
 import { FormSemestreComponent } from './semestres/form.component';
 import { SemestreService } from './semestres/semestre.service';
+import { FormPasswordComponent } from './usuarios/form.password.component';
+import { FormDetalleMallaComponent } from './malla_curricular/form.detalle_malla';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MallaCurricularVerComponent } from './malla_curricular/malla_curricular.ver.component';
+import { CardComponent } from './malla_curricular/card.component';
+
 
 registerLocaleData(localeEs, 'es-CL');
 
@@ -99,6 +106,10 @@ const routes: Routes = [
   {path: 'mallas', component:MallaCurricularComponent},
   {path: 'mallas/form', component:FormMallaCurricularComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'mallas/form/:id', component:FormMallaCurricularComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
+  {path: 'mallas/ramos/:id', component:MallaCurricularRamosComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
+  {path: 'mallas/ramos/asignar/:id', component:FormDetalleMallaComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
+  {path: 'mallas/ver/:id', component:MallaCurricularVerComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
+
   {path: 'semestres', component:SemestreComponent},
   {path: 'semestres/form', component:FormSemestreComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'semestres/form/:id', component:FormSemestreComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
@@ -108,6 +119,7 @@ const routes: Routes = [
   {path: 'usuarios', component:UsuariosComponent},
   {path: 'usuarios/form', component:FormUsuarioComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'usuarios/form/:id', component:FormUsuarioComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
+  {path: 'usuarios/cambiarPassword', component:FormPasswordComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   
   {path: 'carreras/comision/:id', component:ComisionCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'carreras/comision/asignar/:id', component:FormComisionCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
@@ -149,6 +161,11 @@ const routes: Routes = [
     FormMallaCurricularComponent,
     SemestreComponent,
     FormSemestreComponent,
+    FormPasswordComponent,
+    MallaCurricularRamosComponent,
+    MallaCurricularVerComponent,
+    FormDetalleMallaComponent,
+    CardComponent
   ],
   imports: [
     BrowserModule,
@@ -159,6 +176,7 @@ const routes: Routes = [
     NgSelect2Module,
     FontAwesomeModule,
     BrowserAnimationsModule,
+    FlexLayoutModule, 
     Ng9RutModule
   ],
   providers: [CiudadService, SedeService, FacultadService, CarreraService, PeriodoService, 

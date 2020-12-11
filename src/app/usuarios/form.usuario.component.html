@@ -41,13 +41,33 @@
       <div class="form-group row">
         <label for="rut_usuario" class="col-form-label col-sm-2">RUT</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" validateRut [(ngModel)]="usuario.rut_usuario" name="rut_usuario" required minlength="4" #rut_usuario="ngModel">
+          <input type="text" class="form-control" formatRut  validateRut [(ngModel)]="usuario.rut_usuario" name="rut_usuario" required minlength="4" #rut_usuario="ngModel">
           <div class="alert alert-danger" *ngIf="rut_usuario.invalid && (rut_usuario.dirty || rut_usuario.touched)">
             <div *ngIf="rut_usuario.errors.required">
               Rut es obligatorio
             </div>
+            <div *ngIf="rut_usuario.errors.invalidRut" >
+              Rut invalido
+            </div>
             <div *ngIf="rut_usuario.errors.minlength">
               Rut debe contener al menos 4 caracteres
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="rut_usuario" class="col-form-label col-sm-2">Email</label>
+        <div class="col-sm-6">
+          <input type="email" class="form-control"  [(ngModel)]="usuario.email" name="email" required minlength="4" #email="ngModel">
+          <div class="alert alert-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
+            <div *ngIf="email.errors.required">
+              Email es obligatorio
+            </div>
+            <div *ngIf="email.errors.minlength">
+              Email debe contener al menos 4 caracteres
+            </div>
+            <div *ngIf="email.errors">
+              {{imprimirErrores(email.errors)}}
             </div>
           </div>
         </div>
@@ -56,8 +76,7 @@
       <div class="form-group row">
         <label for="ciudad" class="col-form-label col-sm-2">Perfil</label>
         <div class="col-sm-6">
-          <select [compareWith]="compararPerfil" class="form-control" [(ngModel)]="usuario.perfil" name="perfil" required #perfil="ngModel">
-            <option [ngValue]="undefined" > --- Seleccione una perfil --- </option>
+          <select [compareWith]="compararPerfil" multiple class="form-control" [(ngModel)]="usuario.perfil" name="perfil" required #perfil="ngModel">
             <option *ngFor="let perfil of perfiles" [ngValue]="perfil">{{perfil.name}}</option>
           </select>
           <div class="alert alert-danger" *ngIf="perfil.invalid && (perfil.dirty || perfil.touched)">
@@ -65,6 +84,18 @@
               El perfil es obligatorio
             </div>
           </div>
+        </div>
+      </div>
+      <div class="form-group row" >
+        <label for="ciudad" class="col-form-label col-sm-2">¿Es jefe de carrera?</label><input type="checkbox" (change)="esJefeF($event)" style="text-align: center !important;">
+      </div>
+      <div class="form-group row" [hidden]="!esJefe">
+        <label for="ciudad" class="col-form-label col-sm-2">Seleccione carrera</label>
+        <div class="col-sm-6">
+          <select class="form-control" [(ngModel)]="usuario.carrera" name="perfil" required #perfil="ngModel">
+            <option [ngValue]="undefined" > --- Seleccione una carrera ---</option>
+            <option *ngFor="let carrera of carreras" [ngValue]="carrera">{{carrera.codigo_carrera}} - {{carrera.nombre_carrera}}</option>
+          </select>
         </div>
       </div>
       <div class="form-group row">

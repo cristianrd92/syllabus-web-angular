@@ -10,7 +10,7 @@ export class Usuario {
     apellidos:string;
     email:string;
     perfiles:Perfil[];
-    perfil:Perfil;
-    carrera:Carrera;
+    perfil:Perfil[];
+    carrera:number;
     roles:string[]=[];
 }

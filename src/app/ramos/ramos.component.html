@@ -11,6 +11,7 @@
   <table datatable [dtOptions]="dtOptions" class="table table-bordered table-striped" *ngIf="ramos?.length>0">
       <thead>
         <tr>
+          <th>Código ramo</th>
           <th>Nombre ramo</th>
           <th *ngIf="authService.hasRole('ROLE_ADMIN')">Editar</th>
           <th *ngIf="authService.hasRole('ROLE_ADMIN')">Borrar</th>
@@ -18,7 +19,8 @@
       </thead>
       <tbody>
         <tr *ngFor="let ramo of ramos">
-          <td>{{ramo.nombre_ramo}}</td>
+          <td>{{ramo.codigo_ramo | uppercase}}</td>
+          <td>{{ramo.nombre_ramo | uppercase}}</td>
           <td *ngIf="authService.hasRole('ROLE_ADMIN')" >
             <button type="button" name="editar" class="btn btn-primary" [routerLink]="['/ramos/form', ramo.id]">Editar</button>
           </td>

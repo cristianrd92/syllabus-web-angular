@@ -4,6 +4,10 @@ import { MallaCurricularService } from './malla_curricular.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import swal from 'sweetalert2';
+import { AuthService } from '../usuarios/auth.service';
+import { Carrera } from '../carreras/carrera';
+import { RamoCarreraService } from '../ramos_carreras/ramo_carrera.service';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-form',
@@ -11,21 +15,48 @@ import swal from 'sweetalert2';
 })
 export class FormMallaCurricularComponent implements OnInit {
   public malla: MallaCurricular = new MallaCurricular()
-  public titulo:string = "Crear Malla"
-  public errores:string[]
+  public titulo:string = "Crear Malla";
+  public errores:string[];
+  carreras: Carrera[];
 
-  constructor(private mallaService: MallaCurricularService,
+  constructor(public authService:AuthService,
+    private ramoCarreraService: RamoCarreraService,
+    private mallaService: MallaCurricularService,
     private router: Router,
     private activedRoute: ActivatedRoute,
     private _location: Location){ }
 
   ngOnInit(): void {
-    this.cargarMalla()
+    this.cargarMalla(),
+    this.cargarCarreras()
   }
   goBack(){
     this._location.back();
   }
 
+  cargarCarreras(): void {
+    this.ramoCarreraService.getCarreras().subscribe(carreras => 
+      { 
+        if(this.authService.usuario.carrera==1000){
+          this.carreras = carreras;
+        }else{
+          carreras.forEach(carrera => {
+            if(carrera.id==this.authService.usuario.carrera){
+              console.log(carrera)
+              this.carreras = []
+              this.carreras.push(carrera);
+            }
+          });
+        }
+      });
+  }
+  
+  compararCarrera(o1:Carrera, o2:Carrera): boolean{
+    if(o1===undefined && o2===undefined){
+      return true;
+    }
+    return o1 == null || o2== null ? false: o1.id===o2.id;
+  }
   cargarMalla(): void {
     this.activedRoute.params.subscribe(params=> {
       let id = params['id']
