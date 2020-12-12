@@ -12,7 +12,7 @@ import { DatatablesEspaniol } from '../helper/datatables.component';
 export class FacultadesComponent implements OnInit {
 
   facultades: Facultad[];
-  dtOptions: DataTables.Settings = {};
+  dtOptions: any = {};
 
   constructor( private facultadService: FacultadService ,
     public authService: AuthService) { }
@@ -22,7 +22,15 @@ export class FacultadesComponent implements OnInit {
       facultades => this.facultades = facultades
     );
     this.dtOptions = {
-      language: DatatablesEspaniol.spanish_datatables
+      language: DatatablesEspaniol.spanish_datatables,
+      dom: 'Bfrtip',
+      buttons: [
+        'copy',
+        'print',
+        'pdf',
+        'excel',
+        'csv'
+      ]
     };
   }
   delete(facultad: Facultad): void {

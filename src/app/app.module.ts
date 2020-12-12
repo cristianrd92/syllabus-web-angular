@@ -69,6 +69,7 @@ import { FormDetalleMallaComponent } from './malla_curricular/form.detalle_malla
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MallaCurricularVerComponent } from './malla_curricular/malla_curricular.ver.component';
 import { CardComponent } from './malla_curricular/card.component';
+import { FormComisionComponent } from './comision/form.comision.component';
 
 
 registerLocaleData(localeEs, 'es-CL');
@@ -99,7 +100,6 @@ const routes: Routes = [
   {path: 'ramosCarreras/form', component:FormRamoCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'ramosCarreras/form/:id', component:FormRamoCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'ramosDocentes', component:RamosDocentesComponent},
-  {path: 'syllabusPendientes', component:ComisionComponent},
   {path: 'perfiles', component:PerfilesComponent},
   {path: 'perfiles/form', component:FormPerfilComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'perfiles/form/:id', component:FormPerfilComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
@@ -114,6 +114,8 @@ const routes: Routes = [
   {path: 'semestres/form', component:FormSemestreComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'semestres/form/:id', component:FormSemestreComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   
+  {path: 'syllabusPendientes', component:ComisionComponent},
+  {path: 'syllabusPendientes/form/:id', component:FormComisionComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_COMISION"}},
 
 
   {path: 'usuarios', component:UsuariosComponent},
@@ -165,7 +167,8 @@ const routes: Routes = [
     MallaCurricularRamosComponent,
     MallaCurricularVerComponent,
     FormDetalleMallaComponent,
-    CardComponent
+    CardComponent,
+    FormComisionComponent
   ],
   imports: [
     BrowserModule,

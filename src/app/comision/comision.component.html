@@ -2,11 +2,19 @@
     <div class="card-header">Syllanbus por Aprobar</div>
     <div class="card-body text-secondary">
       <h5 class="card-title">Listado de Syllabus</h5>
-    <table datatable [dtOptions]="dtOptions" class="table table-bordered table-striped" >
+      <div class="form-group row">
+        <label for="ciudad" class="col-form-label col-sm-2">Seleccione carrera en la que ver Syllabus</label>
+        <div class="col-sm-6">
+          <select #mySelect
+          (change)='onOptionsSelected(mySelect.value)' class="form-control" name="sede" required >
+            <option [ngValue]="undefined" > --- Seleccione una carrera ---</option>
+            <option *ngFor="let carrera of carreras" [value]="carrera.id" [ngValue]="carrera">{{carrera.codigo_carrera | uppercase}} - {{carrera.nombre_carrera |uppercase}}</option>
+          </select>
+        </div>
+      </div>
+    <table datatable [dtOptions]="dtOptions" class="table table-bordered table-striped" *ngIf="syllabus?.length>0">
         <thead>
           <tr>
-            <th>Nombre carrera</th>
-            <th>Nombre periodo</th>
             <th>Nombre docente</th>
             <th>Nombre ramo</th>
             <th>Revisión Syllabus *</th>
@@ -14,17 +22,18 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Ingenieria</td>
-            <td>Segundo semestre 2020</td>
-            <td>Fabián Abarzua</td>
-            <td>Auditoría</td>
-            <td><button type="button" class="btn btn-primary">Ver detalles</button></td>
-            <td>En revisión</td>
+          <tr *ngFor="let syllabu of syllabus; index as i ">
+            <td>{{syllabu.planificacion.usuario.nombres |uppercase}} {{syllabu.planificacion.usuario.apellidos |uppercase}}</td>
+            <td>{{syllabu.planificacion.ramo.ramo.nombre_ramo |uppercase}}</td>
+            <td *ngIf="authService.hasRole('ROLE_COMISION')" >
+              <button type="button" name="editar" class="btn btn-primary" [routerLink]="['/syllabusPendientes/form', syllabu.planificacion.id]">Ver detalles</button>
+            </td>            
+            <td *ngIf="syllabu.revision==null">Esperando revisión</td>
+            <td *ngIf="syllabu.revision!=null">{{syllabu.revision.estado}}</td>
           </tr>
         </tbody>
     </table>
-    <p>* En cuanto presione en ver detalles, el syllabus pasara a revisión y se le informara al docente</p>
+    <p *ngIf="syllabus?.length>0">* En cuanto presione en ver detalles, el syllabus pasara a revisión y se le informara al docente</p>
     </div>
   </div>
   

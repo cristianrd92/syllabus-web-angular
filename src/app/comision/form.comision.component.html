@@ -1,0 +1,57 @@
+<ul class="alert alert-danger" *ngIf="errores?.length > 0">
+  <li *ngFor="let err of errores">
+    {{ err }}
+  </li>
+</ul>
+<div class="card bg-dark text-white">
+  <div class="card-header">{{titulo}}</div>
+  <div class="card-body">
+    <div class="form-group row">
+      <label for="nombre" class="col-form-label col-sm-2">Usuario</label>
+      <div class="col-sm-6">
+        <input readonly class="form-control" type="text" value="{{planificacion?.usuario.nombres |uppercase}} {{planificacion?.usuario.apellidos |uppercase}}">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="nombre" class="col-form-label col-sm-2">Carrera</label>
+      <div class="col-sm-6">
+        <input readonly class="form-control" type="text" value="{{planificacion?.ramo.carrera.nombre_carrera |uppercase}}">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="nombre" class="col-form-label col-sm-2">Ramo</label>
+      <div class="col-sm-6">
+        <input readonly class="form-control" type="text" value="{{planificacion?.ramo.ramo.codigo_ramo |uppercase}} {{planificacion?.ramo.ramo.nombre_ramo |uppercase}}">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="nombre" class="col-form-label col-sm-2">Revisar syllabus</label>
+      <div class="col-sm-6">
+        <button (click)="showPDF(planificacion?.ruta)" class="btn btn-primary"><fa-icon [icon]="faFile"></fa-icon> Descargar Syllabus</button> Subido el: {{planificacion?.fecha_subida | date:"EEEE dd MMMM yyyy HH:mm"}}
+      </div>
+    </div>
+    <form #facultadForm="ngForm">
+      <div class="form-group row">
+        <label for="nombre" class="col-form-label col-sm-2">Comentarios</label>
+        <div class="col-sm-6">
+          <textarea  class="form-control" [(ngModel)]="revision.comentarios" name="nombre" required minlength="4" #nombre="ngModel"></textarea>
+          <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+            <div *ngIf="nombre.errors.required">
+              Los comentarios son obligatorios
+            </div>
+            <div *ngIf="nombre.errors.minlength">
+              Comentarios debe contener al menos 4 caracteres
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-3">
+          <button class="btn btn-success" role="button" (click)="aprobar()" style="margin: 5px">Aprobar</button>
+          <button class="btn btn-warning" role="button" (click)="rechazar()" style="margin: 5px">Rechazar</button>
+          <button class="btn btn-danger"  role="button" (click)="goBack()" style="margin: 5px">Volver</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

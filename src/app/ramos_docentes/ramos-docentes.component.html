@@ -35,7 +35,6 @@
           <td *ngIf="planificacion.pla_fecha_subida!=null && planificacion.re_estado==null">Enviado</td>
           <td *ngIf="planificacion.pla_fecha_subida!=null && planificacion.re_estado!=null">{{planificacion.re_estado}} <button (click)="abrirModalDetalles(planificacion)"  type="button" name="editar" class="btn btn-primary">Ver detalles</button></td>
           <td *ngIf="planificacion.pla_fecha_subida!=null" ><a (click)="showPDF(planificacion.pla_ruta)" ><fa-icon [icon]="faFile"></fa-icon> Subido el: {{planificacion.pla_fecha_subida | date:"EEEE dd MMMM yyyy HH:mm"}}</a></td>
-          <td *ngIf="planificacion.pla_fecha_subida==null">No subido</td>
         </tr>
       </tbody>
     </table>
