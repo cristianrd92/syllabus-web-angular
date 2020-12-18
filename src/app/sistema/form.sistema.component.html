@@ -1,0 +1,214 @@
+<ul class="alert alert-danger" *ngIf="errores?.length > 0">
+  <li *ngFor="let err of errores">
+    {{ err }}
+  </li>
+</ul>
+
+<div class="card bg-dark text-white" *ngIf="sistema!=undefined">
+  <div class="card-header">{{titulo}}</div>
+  <div class="card-body">
+    <form #sistemaForm="ngForm">
+      <div class="form-group row">
+        <label for="nombre" class="col-form-label col-sm-2">Nombre sistema</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="sistema.nombre_sistema" name="nombre_sistema" required minlength="4" #nombre="ngModel">
+          <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+            <div *ngIf="nombre.errors.required">
+              Nombre sistema es obligatorio
+            </div>
+            <div *ngIf="nombre.errors.minlength">
+              Nombre sistema debe contener al menos 4 caracteres
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="nombre" class="col-form-label col-sm-2">URL sistema</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="sistema.url_sistema" name="url_sistema" required minlength="4" #nombre="ngModel">
+          <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+            <div *ngIf="nombre.errors.required">
+              URL sistema es obligatorio
+            </div>
+            <div *ngIf="nombre.errors.minlength">
+              URL sistema debe contener al menos 4 caracteres
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="nombre" class="col-form-label col-sm-2">Fecha tope subida Syllabus</label>
+        <div class="col-sm-6">
+          <input type="date" class="form-control" [(ngModel)]="sistema.fecha" name="fecha" required #nombre="ngModel">
+          <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+            <div *ngIf="nombre.errors.required">
+              Fecha tope subida Syllabus
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="nombre" class="col-form-label col-sm-2">Host correo</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="sistema.host_correo" name="host_correo" required minlength="4" #nombre="ngModel">
+          <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+            <div *ngIf="nombre.errors.required">
+              Host correo es obligatorio
+            </div>
+            <div *ngIf="nombre.errors.minlength">
+              Host correo debe contener al menos 4 caracteres
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="nombre" class="col-form-label col-sm-2">Puerto host correo</label>
+        <div class="col-sm-6">
+          <input type="number" class="form-control" [(ngModel)]="sistema.puerto_correo" name="puerto_correo" required minlength="3" #nombre="ngModel">
+          <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+            <div *ngIf="nombre.errors.required">
+              Puerto correo es obligatorio
+            </div>
+            <div *ngIf="nombre.errors.minlength">
+              Puerto correo debe contener al menos 3 caracteres
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="nombre" class="col-form-label col-sm-2">Correo electronico</label>
+        <div class="col-sm-6">
+          <input type="email" class="form-control" [(ngModel)]="sistema.usuario_correo" name="usuario_correo" required minlength="5" #nombre="ngModel">
+          <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+            <div *ngIf="nombre.errors.required">
+              Correo electronico es obligatorio
+            </div>
+            <div *ngIf="nombre.errors.minlength">
+              Correo electronico debe contener al menos 5 caracteres
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="nombre" class="col-form-label col-sm-2">Password correo electronico</label>
+        <div class="col-sm-6">
+          <input type="password" class="form-control" [(ngModel)]="sistema.password_correo" name="password_correo" required minlength="5" #nombre="ngModel">
+          <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+            <div *ngIf="nombre.errors.required">
+              Password correo electronico es obligatorio
+            </div>
+            <div *ngIf="nombre.errors.minlength">
+              Password correo electronico debe contener al menos 5 caracteres
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="nombre" class="col-form-label col-sm-2">URL imagen en correos</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="sistema.url_imagen" name="url_imagen" required minlength="5" #nombre="ngModel">
+          <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+            <div *ngIf="nombre.errors.required">
+              Password correo electronico es obligatorio
+            </div>
+            <div *ngIf="nombre.errors.minlength">
+              Password correo electronico debe contener al menos 5 caracteres
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="nombre" class="col-form-label col-sm-2">Mensaje bienvenida al sistema</label>
+        <div class="col-sm-6">
+          <textarea class="form-control" [(ngModel)]="sistema.mensaje_bienvenida_sistema" name="mensaje_bienvenida_sistema" required minlength="5" rows="5" #nombre="ngModel"></textarea>
+          <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+            <div *ngIf="nombre.errors.required">
+              Mensaje bienvenida al sistema es obligatorio
+            </div>
+            <div *ngIf="nombre.errors.minlength">
+              Mensaje bienvenida al sistema debe contener al menos 5 caracteres
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="nombre" class="col-form-label col-sm-2">Mensaje reinicio de contraseña</label>
+        <div class="col-sm-6">
+          <textarea class="form-control" [(ngModel)]="sistema.mensaje_reinicio_clave" name="mensaje_reinicio_clave" required minlength="5" rows="5" #nombre="ngModel"></textarea>
+          <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+            <div *ngIf="nombre.errors.required">
+              Mensaje reinicio de contraseña es obligatorio
+            </div>
+            <div *ngIf="nombre.errors.minlength">
+              Mensaje reinicio de contraseña debe contener al menos 5 caracteres
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="nombre" class="col-form-label col-sm-2">Mensaje recuperación de contraseña</label>
+        <div class="col-sm-6">
+          <textarea class="form-control" [(ngModel)]="sistema.mensaje_recuperacion_clave" name="mensaje_recuperacion_clave" required minlength="5" rows="5" #nombre="ngModel"></textarea>
+          <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+            <div *ngIf="nombre.errors.required">
+              Mensaje recuperación de contraseña es obligatorio
+            </div>
+            <div *ngIf="nombre.errors.minlength">
+              Mensaje recuperación de contraseña debe contener al menos 5 caracteres
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="nombre" class="col-form-label col-sm-2">Mensaje subida syllabus docente</label>
+        <div class="col-sm-6">
+          <textarea class="form-control" [(ngModel)]="sistema.mensaje_subida_syllabus_docente" name="mensaje_subida_syllabus_docente" required minlength="5" rows="5" #nombre="ngModel"></textarea>
+          <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+            <div *ngIf="nombre.errors.required">
+              Mensaje subida syllabus docente es obligatorio
+            </div>
+            <div *ngIf="nombre.errors.minlength">
+              Mensaje subida syllabus docente debe contener al menos 5 caracteres
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="nombre" class="col-form-label col-sm-2">Mensaje revisión syllabus comisión</label>
+        <div class="col-sm-6">
+          <textarea class="form-control" [(ngModel)]="sistema.mensaje_revision_syllabus_comision" name="mensaje_revision_syllabus_comision" required minlength="5" rows="5" #nombre="ngModel"></textarea>
+          <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+            <div *ngIf="nombre.errors.required">
+              Mensaje revisión syllabus comisión es obligatorio
+            </div>
+            <div *ngIf="nombre.errors.minlength">
+              Mensaje revisión syllabus comisión debe contener al menos 5 caracteres
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="nombre" class="col-form-label col-sm-2">Mensaje revisión syllabus docente</label>
+        <div class="col-sm-6">
+          <textarea class="form-control" [(ngModel)]="sistema.mensaje_revision_syllabus_docente" name="mensaje_revision_syllabus_docente" required minlength="5" rows="5" #nombre="ngModel"></textarea>
+          <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+            <div *ngIf="nombre.errors.required">
+              Mensaje revisión syllabus docente es obligatorio
+            </div>
+            <div *ngIf="nombre.errors.minlength">
+              Mensaje revisión syllabus docente debe contener al menos 5 caracteres
+            </div>
+          </div>
+        </div>
+      </div>
+        
+      
+
+      <div class="form-group row">
+        <div class="col-sm-6">
+          <button class="btn btn-primary" role="button" (click)='update()' [disabled]="!sistemaForm.form.valid">Actualizar</button>
+       </div>
+      </div>
+    </form>
+  </div>
+</div>

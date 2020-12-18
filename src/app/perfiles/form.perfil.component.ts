@@ -50,6 +50,7 @@ export class FormPerfilComponent implements OnInit {
   }
 
   create(): void{
+    console.log(this.perfil)
     this.perfilService.create(this.perfil)
     .subscribe(perfil => {
       this.router.navigate(['/perfiles'])

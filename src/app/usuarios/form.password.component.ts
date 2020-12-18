@@ -8,7 +8,7 @@ import { Usuario } from './usuario';
 import { AuthService } from './auth.service';
 
 @Component({
-  selector: 'app-form',
+  selector: 'change-password',
   templateUrl: './form.password.component.html',
 })
 export class FormPasswordComponent implements OnInit {
@@ -21,7 +21,7 @@ export class FormPasswordComponent implements OnInit {
   showPasswordCon: boolean;
 
   constructor(private usuarioService: UsuarioService,
-    private authService: AuthService,
+    public authService: AuthService,
     private router: Router,
     private _location: Location){ }
     

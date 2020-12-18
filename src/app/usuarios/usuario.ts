@@ -9,6 +9,7 @@ export class Usuario {
     rut_usuario:string;
     apellidos:string;
     email:string;
+    first:boolean;
     perfiles:Perfil[];
     perfil:Perfil[];
     carrera:number;

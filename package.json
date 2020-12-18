@@ -37,6 +37,7 @@
     "datatables.net-dt": "^1.10.22",
     "jquery": "^3.5.1",
     "jszip": "^3.5.0",
+    "moment": "^2.29.1",
     "ng-multiselect-dropdown": "^0.2.10",
     "ng-select2": "^1.2.3",
     "ng9-rut": "0.0.6",

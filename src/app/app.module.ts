@@ -70,13 +70,17 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MallaCurricularVerComponent } from './malla_curricular/malla_curricular.ver.component';
 import { CardComponent } from './malla_curricular/card.component';
 import { FormComisionComponent } from './comision/form.comision.component';
-
+import { FormSistemaComponent } from './sistema/form.sistema.component';
+import { SistemaService } from './sistema/sistema.service';
 
 registerLocaleData(localeEs, 'es-CL');
 
 const routes: Routes = [
   {path: '', redirectTo: '/', pathMatch: 'full'},
   {path: 'ciudades', component:CiudadesComponent},
+
+  {path: 'ajustes', component:FormSistemaComponent},
+
   {path: 'ciudades/form', component:FormComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'ciudades/form/:id', component:FormComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'login', component:LoginComponent},
@@ -116,7 +120,6 @@ const routes: Routes = [
   
   {path: 'syllabusPendientes', component:ComisionComponent},
   {path: 'syllabusPendientes/form/:id', component:FormComisionComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_COMISION"}},
-
 
   {path: 'usuarios', component:UsuariosComponent},
   {path: 'usuarios/form', component:FormUsuarioComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
@@ -168,7 +171,8 @@ const routes: Routes = [
     MallaCurricularVerComponent,
     FormDetalleMallaComponent,
     CardComponent,
-    FormComisionComponent
+    FormComisionComponent,
+    FormSistemaComponent
   ],
   imports: [
     BrowserModule,
@@ -185,7 +189,7 @@ const routes: Routes = [
   providers: [CiudadService, SedeService, FacultadService, CarreraService, PeriodoService, 
               RamoService, RamoCarreraService, RamoDocenteService, PlanificacionService,
               PerfilService, RolService, UsuarioService, ComisionCarreraService,
-              MallaCurricularService, SemestreService,
+              MallaCurricularService, SemestreService, SistemaService,
              
   {provide: LOCALE_ID, useValue: 'es-CL'}, 
   { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

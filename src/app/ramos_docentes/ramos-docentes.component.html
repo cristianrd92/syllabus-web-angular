@@ -25,13 +25,14 @@
       </thead>
       <tbody>
         <tr *ngFor="let planificacion of planificaciones; index as i">
-          <td>{{planificacion.ramo_carrera.carrera.nombre_carrera | uppercase}}</td>
+          <td>{{planificacion.ramo_carrera.carrera.nombre_corto | uppercase}}</td>
           <td>{{planificacion.ramo_carrera.ramo.codigo_ramo | uppercase}}</td>
           <td>{{planificacion.ramo_carrera.ramo.nombre_ramo | uppercase}}</td>
           <td>{{planificacion.ramo_carrera.periodo.nombre_periodo | uppercase}}</td>
-          <td *ngIf="planificacion.re_estado==null"><button  (click)="abrirModal(planificacion.ramo_carrera)"  type="button" name="editar" class="btn btn-primary">Subir</button></td>          
-          <td *ngIf="planificacion.re_estado!=null"><button  (click)="abrirModal(planificacion.ramo_carrera)"  disabled type="button" name="editar" class="btn btn-primary">Subir</button></td>          
+          <td *ngIf="planificacion.re_estado==null || planificacion.re_estado=='Rechazado'"><button  (click)="abrirModal(planificacion.ramo_carrera)"  type="button" name="editar" class="btn btn-primary">Subir</button></td>          
+          <td *ngIf="planificacion.re_estado=='Aprobado'"><button  (click)="abrirModal(planificacion.ramo_carrera)"  disabled type="button" name="editar" class="btn btn-primary">Subir</button></td>          
           <td *ngIf="planificacion.pla_fecha_subida==null">No subido</td>
+          <td *ngIf="planificacion.re_estado==null && planificacion.pla_fecha_subida==null" >No subido</td>
           <td *ngIf="planificacion.pla_fecha_subida!=null && planificacion.re_estado==null">Enviado</td>
           <td *ngIf="planificacion.pla_fecha_subida!=null && planificacion.re_estado!=null">{{planificacion.re_estado}} <button (click)="abrirModalDetalles(planificacion)"  type="button" name="editar" class="btn btn-primary">Ver detalles</button></td>
           <td *ngIf="planificacion.pla_fecha_subida!=null" ><a (click)="showPDF(planificacion.pla_ruta)" ><fa-icon [icon]="faFile"></fa-icon> Subido el: {{planificacion.pla_fecha_subida | date:"EEEE dd MMMM yyyy HH:mm"}}</a></td>

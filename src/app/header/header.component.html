@@ -1,7 +1,5 @@
-<body *ngIf="authService.isAuthenticated()" class="">
-
+<body *ngIf="authService.isAuthenticated() && authService.usuario.first==false" class="">
     <div  id="wrapper">
-
     <nav  class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
             <ul class="nav metismenu" id="side-menu">
@@ -12,6 +10,7 @@
                             <span class="text-muted text-xs block">{{authService.usuario.email}} <b class="caret"></b></span>
                         </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                            <li><a class="dropdown-item" routerLink="/ajustes">Ajustes de Sistema</a></li>
                             <li><a class="dropdown-item" routerLink="/usuarios/cambiarPassword">Cambiar Clave</a></li>
                             <li><a class="dropdown-item" (click)="logout()">Cerrar Sesión</a></li>
                         </ul>
@@ -107,6 +106,7 @@
         </div>
         </div>
 </body>
+<change-password *ngIf="authService.isAuthenticated() && authService.usuario.first==true"></change-password>
 <app-login *ngIf="!authService.isAuthenticated()"></app-login>
 
 

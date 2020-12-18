@@ -53,6 +53,7 @@ export class AuthService {
     this._usuario.nombres = this.utf8Decode(payload.nombres);
     this._usuario.apellidos = this.utf8Decode(payload.apellidos);
     this._usuario.email = payload.email;
+    this._usuario.first = payload.first;
     this._usuario.username = payload.user_name;
     this._usuario.roles = payload.authorities;
     this._usuario.carrera = payload.carrera
