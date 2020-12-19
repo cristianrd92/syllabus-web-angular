@@ -124,8 +124,7 @@ const routes: Routes = [
   {path: 'usuarios', component:UsuariosComponent},
   {path: 'usuarios/form', component:FormUsuarioComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'usuarios/form/:id', component:FormUsuarioComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
-  {path: 'usuarios/cambiarPassword', component:FormPasswordComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
-  
+  {path: 'usuarios/cambiarPassword', component:FormPasswordComponent},  
   {path: 'carreras/comision/:id', component:ComisionCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'carreras/comision/asignar/:id', component:FormComisionCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
 
