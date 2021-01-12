@@ -34,7 +34,7 @@ import { MallaCurricularService } from './malla_curricular.service';
         this.activedRoute.params.subscribe(params=> {
           let id = params['id']
           this.malla = JSON.parse(localStorage.getItem('malla_obj'));
-          this.mallaService.getRamosMalla(this.malla.carrera.id).subscribe(
+          this.mallaService.getRamosMalla(this.malla).subscribe(
               ramos => { 
                   this.ramos = ramos 
                 });

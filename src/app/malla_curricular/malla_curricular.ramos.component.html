@@ -14,6 +14,8 @@
           <th>Código ramo</th>
           <th>Nombre ramo</th>
           <th>Semestre</th>
+          <th>Posición ramo en semestre</th>
+          <th *ngIf="authService.hasRole('ROLE_ADMIN')">Editar</th> 
           <th *ngIf="authService.hasRole('ROLE_ADMIN')">Borrar</th> 
         </tr>
       </thead>
@@ -22,6 +24,10 @@
         <td>{{detalle.ramo.codigo_ramo | uppercase}}</td>
         <td>{{detalle.ramo.nombre_ramo | uppercase}}</td>
         <td>{{detalle.semestre.descripcion_semestre | uppercase}}</td>
+        <td>{{detalle.posicion }}</td>
+        <td *ngIf="authService.hasRole('ROLE_ADMIN')">
+          <button type="button" name="editar" class="btn btn-primary" [routerLink]="['/mallas/ramos/editar', detalle.id]">Editar</button>
+      </td>
         <td *ngIf="authService.hasRole('ROLE_ADMIN')">
             <button type="button" name="eliminar" class="btn btn-danger" (click)='delete(detalle)'>Eliminar</button>
         </td>

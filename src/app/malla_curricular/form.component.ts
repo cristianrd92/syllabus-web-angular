@@ -37,17 +37,7 @@ export class FormMallaCurricularComponent implements OnInit {
   cargarCarreras(): void {
     this.ramoCarreraService.getCarreras().subscribe(carreras => 
       { 
-        if(this.authService.usuario.carrera==1000){
-          this.carreras = carreras;
-        }else{
-          carreras.forEach(carrera => {
-            if(carrera.id==this.authService.usuario.carrera){
-              console.log(carrera)
-              this.carreras = []
-              this.carreras.push(carrera);
-            }
-          });
-        }
+        this.carreras = carreras;
       });
   }
   

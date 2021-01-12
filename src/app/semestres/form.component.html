@@ -11,13 +11,24 @@
       <div class="form-group row">
         <label for="nombre" class="col-form-label col-sm-2">Descripción semestre</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" [(ngModel)]="semestre.descripcion_semestre" name="nombre" required minlength="4" #nombre="ngModel">
-          <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
-            <div *ngIf="nombre.errors.required">
+          <input type="text" class="form-control" [(ngModel)]="semestre.descripcion_semestre" name="descripcion_semestre" required minlength="4" #descripcion_semestre="ngModel">
+          <div class="alert alert-danger" *ngIf="descripcion_semestre.invalid && (descripcion_semestre.dirty || descripcion_semestre.touched)">
+            <div *ngIf="descripcion_semestre.errors.required">
               Descripción semestre es obligatorio
             </div>
-            <div *ngIf="nombre.errors.minlength">
+            <div *ngIf="descripcion_semestre.errors.minlength">
               Descripción semestre debe contener al menos 4 caracteres
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="nombre" class="col-form-label col-sm-2">Posición semestre</label>
+        <div class="col-sm-6">
+          <input type="number" class="form-control" [(ngModel)]="semestre.posicion" name="posicion" required #posicion="ngModel">
+          <div class="alert alert-danger" *ngIf="posicion.invalid && (posicion.dirty || posicion.touched)">
+            <div *ngIf="posicion.errors.required">
+              Posición es obligatorio
             </div>
           </div>
         </div>

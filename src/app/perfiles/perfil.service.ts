@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { GlobalComponent } from '../global.component';
-import { Role } from '../roles/rol';
+import { Permiso } from '../roles/rol';
 
 
 @Injectable()
@@ -15,13 +15,13 @@ export class PerfilService {
   private urlEndPoint:string = GlobalComponent.apiURL+'api/perfil';
   constructor(private http: HttpClient, private router: Router) { }
 
-  getRoles(): Observable<Role[]>{
-    return this.http.get<Role[]>(this.urlEndPoint + "/roles").pipe(
+  getRoles(): Observable<Permiso[]>{
+    return this.http.get<Permiso[]>(this.urlEndPoint + "/roles").pipe(
       catchError(e => {
         return throwError(e);
       }),
     map( (response) => {
-      let roles = response as Role[];
+      let roles = response as Permiso[];
       console.log(roles);
       return roles.map(role => {
         role.name = role.name.toUpperCase();

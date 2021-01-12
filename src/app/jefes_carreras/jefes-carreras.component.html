@@ -1,0 +1,34 @@
+<div class="card mb-3">
+  <div class="card-header">Jefes Carreras</div>
+  <div class="card-body text-secondary">
+    <h5 class="card-title">Listado de Jefes Carrera</h5>
+  <div class="my-2 text-left">
+    <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" class="btn btn-rounded btn-primary" [routerLink] = "['/jefesCarreras/form']">Crear jefe carrera</button>
+  </div>
+  <div *ngIf="jefes_carreras?.length==0" class="alert alert-info">
+    No hay registros en la base de datos
+  </div>
+  <table datatable [dtOptions]="dtOptions" class="table table-bordered table-striped" *ngIf="jefes_carreras?.length>0">
+      <thead>
+        <tr>
+          <th>Carrera</th>
+          <th>Docente</th>
+          <th *ngIf="authService.hasRole('ROLE_ADMIN')">Editar</th>
+          <th *ngIf="authService.hasRole('ROLE_ADMIN')">Borrar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let jefe_carrera of jefes_carreras">
+          <td>{{jefe_carrera.carrera.nombre_carrera | uppercase}}</td>
+          <td>{{jefe_carrera.usuario.nombres | uppercase}} {{jefe_carrera.usuario.apellidos | uppercase}}</td>
+          <td *ngIf="authService.hasRole('ROLE_ADMIN')" >
+            <button type="button" name="editar" class="btn btn-primary" [routerLink]="['/jefesCarreras/form', jefe_carrera.id]">Editar</button>
+          </td>
+          <td *ngIf="authService.hasRole('ROLE_ADMIN')">
+            <button type="button" name="eliminar" class="btn btn-danger" (click)='delete(jefe_carrera)'>Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

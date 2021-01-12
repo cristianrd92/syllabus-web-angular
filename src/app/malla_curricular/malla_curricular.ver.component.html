@@ -1,14 +1,7 @@
 <style>
-  .cardList {
-  }
-  /* Row Gap */
-  .cardList > *:not(:last-child) {
-    margin-bottom: 2px;
-  }
   .cardnew{
     display: block;
     padding: 32px;
-    border: 1px solid black;
     border-radius: 8px;
     }
  </style>
@@ -20,12 +13,7 @@
     No hay registros en la base de datos
   </div>
 
-<div class="cardList">
-  <div *ngFor="let detalle of detalles">
-    <div class="cardnew">{{detalle.ramo.nombre_ramo | uppercase}} - {{detalle.semestre.descripcion_semestre | uppercase}}</div>
-    <br>
-  </div>
-</div>
+  <div [innerHTML]="tabla | sanitizeHtml"></div>
   </div>
 </div>
 

@@ -32,8 +32,8 @@ export class MallaCurricularService {
     );
   }
 
-  getRamosMalla(id): Observable<Ramo[]> {
-    return this.http.get<Ramo[]>(`${this.urlEndPoint}/ramo/${id}`).pipe(
+  getRamosMalla(malla:MallaCurricular): Observable<Ramo[]> {
+    return this.http.get<Ramo[]>(`${this.urlEndPoint}/ramo/${malla.carrera.id}/${malla.id}`).pipe(
       catchError(e => {
         if(e.status !=401 && e.error.mensaje){
           console.error(e.error.mensaje);
@@ -96,6 +96,20 @@ export class MallaCurricularService {
     )
   }
 
+  getMallaEditar(id): Observable<DetalleMallaCurricular> {
+    return this.http.get<DetalleMallaCurricular>(`${this.urlEndPoint}/detalleEditar/${id}`).pipe(
+      catchError(e => {
+        if(e.status !=401 && e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        if (e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        return throwError(e);
+      })
+    )
+  }
+
   getDetalleMalla(id): Observable<DetalleMallaCurricular[]> {
     return this.http.get<DetalleMallaCurricular[]>(`${this.urlEndPoint}/detalle/${id}`).pipe(
       catchError(e => {
@@ -114,6 +128,21 @@ export class MallaCurricularService {
   update(malla: MallaCurricular) : Observable<MallaCurricular> {
     return this.http.put<MallaCurricular>(`${this.urlEndPoint}/${malla.id}`, malla).pipe(
       map((response:any) => response.malla as MallaCurricular),
+      catchError(e => {
+        if(e.status==400){
+          return throwError(e);
+        }
+        if (e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        return throwError(e);
+      })
+    )
+  }
+
+  updateDetalle(malla: DetalleMallaCurricular) : Observable<DetalleMallaCurricular> {
+    return this.http.put<DetalleMallaCurricular>(`${this.urlEndPoint}/editar/${malla.id}`, malla).pipe(
+      map((response:any) => response.malla as DetalleMallaCurricular),
       catchError(e => {
         if(e.status==400){
           return throwError(e);

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Role } from './rol';
+import { Permiso } from './rol';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
@@ -15,14 +15,14 @@ export class RolService {
   constructor(private http: HttpClient, private router: Router) { }
 
 
-  getRoles() : Observable<Role[]> {
-    return this.http.get<Role[]>(this.urlEndPoint).pipe(
+  getRoles() : Observable<Permiso[]> {
+    return this.http.get<Permiso[]>(this.urlEndPoint).pipe(
       catchError(e => {
         return throwError(e);
       }),
     map( (response) => {
       console.log(response)
-      let roles = response as Role[];
+      let roles = response as Permiso[];
       return roles.map(role => {
         role.name = role.name.toUpperCase();
         return role;
@@ -31,9 +31,9 @@ export class RolService {
     );
   }
 
-  create(facultad: Role) : Observable<Role> {
+  create(facultad: Permiso) : Observable<Permiso> {
     return this.http.post(this.urlEndPoint, facultad).pipe(
-      map((response:any) => response.facultad as Role),
+      map((response:any) => response.facultad as Permiso),
       catchError(e => {
         if(e.status==400){
           return throwError(e);
@@ -46,8 +46,8 @@ export class RolService {
     )
   }
 
-  getRole(id): Observable<Role> {
-    return this.http.get<Role>(`${this.urlEndPoint}/${id}`).pipe(
+  getRole(id): Observable<Permiso> {
+    return this.http.get<Permiso>(`${this.urlEndPoint}/${id}`).pipe(
       catchError(e => {
         if(e.status !=401 && e.error.mensaje){
           this.router.navigate(['/perfiles']);
@@ -61,9 +61,9 @@ export class RolService {
     )
   }
 
-  update(facultad: Role) : Observable<Role> {
-    return this.http.put<Role>(`${this.urlEndPoint}/${facultad.id}`, facultad).pipe(
-      map((response:any) => response.facultad as Role),
+  update(facultad: Permiso) : Observable<Permiso> {
+    return this.http.put<Permiso>(`${this.urlEndPoint}/${facultad.id}`, facultad).pipe(
+      map((response:any) => response.facultad as Permiso),
       catchError(e => {
         if(e.status==400){
           return throwError(e);
@@ -76,8 +76,8 @@ export class RolService {
     )
   }
 
-  delete(id: number): Observable<Role> {
-    return this.http.delete<Role>(`${this.urlEndPoint}/${id}`).pipe(
+  delete(id: number): Observable<Permiso> {
+    return this.http.delete<Permiso>(`${this.urlEndPoint}/${id}`).pipe(
       catchError(e => {
         return throwError(e);
       })

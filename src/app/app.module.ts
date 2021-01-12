@@ -73,6 +73,12 @@ import { FormComisionComponent } from './comision/form.comision.component';
 import { FormSistemaComponent } from './sistema/form.sistema.component';
 import { SistemaService } from './sistema/sistema.service';
 
+import { SanitizeHtmlPipe } from './helper/sanitize';
+import { JefesCarrerasComponent } from './jefes_carreras/jefes-carreras.component';
+import { FormJefeCarreraComponent } from './jefes_carreras/form.jefe_carrera.component';
+import { JefeCarreraService } from './jefes_carreras/jefe_carrera.service';
+import { FormDetalleMallaEditarComponent } from './malla_curricular/form.detalle_malla.editar.component';
+
 registerLocaleData(localeEs, 'es-CL');
 
 const routes: Routes = [
@@ -112,7 +118,16 @@ const routes: Routes = [
   {path: 'mallas/form/:id', component:FormMallaCurricularComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'mallas/ramos/:id', component:MallaCurricularRamosComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'mallas/ramos/asignar/:id', component:FormDetalleMallaComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
+  
+  {path: 'mallas/ramos/editar/:id', component:FormDetalleMallaEditarComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
+
+  
   {path: 'mallas/ver/:id', component:MallaCurricularVerComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
+
+  {path: 'jefesCarreras', component:JefesCarrerasComponent},
+  {path: 'jefesCarreras/form', component:FormJefeCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
+  {path: 'jefesCarreras/form/:id', component:FormJefeCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
+
 
   {path: 'semestres', component:SemestreComponent},
   {path: 'semestres/form', component:FormSemestreComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
@@ -132,6 +147,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
+    SanitizeHtmlPipe,
     AppComponent,
     HeaderComponent,
     FooterComponent,
@@ -171,7 +187,10 @@ const routes: Routes = [
     FormDetalleMallaComponent,
     CardComponent,
     FormComisionComponent,
-    FormSistemaComponent
+    FormSistemaComponent,
+    JefesCarrerasComponent,
+    FormJefeCarreraComponent,
+    FormDetalleMallaEditarComponent
   ],
   imports: [
     BrowserModule,
@@ -188,7 +207,7 @@ const routes: Routes = [
   providers: [CiudadService, SedeService, FacultadService, CarreraService, PeriodoService, 
               RamoService, RamoCarreraService, RamoDocenteService, PlanificacionService,
               PerfilService, RolService, UsuarioService, ComisionCarreraService,
-              MallaCurricularService, SemestreService, SistemaService,
+              MallaCurricularService, SemestreService, SistemaService, JefeCarreraService,
              
   {provide: LOCALE_ID, useValue: 'es-CL'}, 
   { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

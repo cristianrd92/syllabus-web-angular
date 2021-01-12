@@ -4,7 +4,6 @@ import { Perfil } from '../perfiles/perfil';
 import { UsuarioService } from './usuario.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
-import { Ciudad } from '../ciudades/ciudad';
 import { Location } from '@angular/common';
 import { PerfilService } from '../perfiles/perfil.service';
 import { Carrera } from '../carreras/carrera';
@@ -16,10 +15,11 @@ import { Carrera } from '../carreras/carrera';
 export class FormUsuarioComponent implements OnInit {
   public usuario: Usuario = new Usuario()
   perfiles: Perfil[];
+  perfil: Perfil[];
   carreras: Carrera[];
   public titulo:string = "Crear Usuario"
   public errores:string[]
-  esJefe:boolean;
+  // esJefe:boolean;
 
   constructor(private usuarioService: UsuarioService,private perfilService: PerfilService,
     private router: Router,
@@ -27,14 +27,14 @@ export class FormUsuarioComponent implements OnInit {
     private _location: Location){ }
 
   ngOnInit(): void {
-    this.esJefe=false;
+    // this.esJefe=false;
     this.cargarUsuario(),
     this.cargarPerfiles(),
     this.cargarCarreras()
   }
-  esJefeF(e) {
-    this.esJefe = e.target.checked;
-  }
+  // esJefeF(e) {
+  //   this.esJefe = e.target.checked;
+  // }
 
   cargarCarreras(): void {
     this.usuarioService.getCarreras().subscribe(carreras=>{
@@ -58,8 +58,7 @@ export class FormUsuarioComponent implements OnInit {
         this.usuarioService.getUsuario(id).subscribe( (usuario) => {
           console.log(usuario.nombres)
           this.usuario = usuario
-          this.usuario.perfiles.push(usuario.perfiles[0]); 
-          console.log(this.usuario.perfil)
+          console.log(this.usuario.perfiles)
         })
       }
     })
@@ -80,10 +79,12 @@ export class FormUsuarioComponent implements OnInit {
   }
 
   update(): void{
+    this.usuario.perfiles = this.usuario.perfil
+    this.usuario.username = this.usuario.rut_usuario.slice(0,-1);
     this.usuarioService.update(this.usuario)
     .subscribe(usuario => {
       this.router.navigate(['/usuarios'])
-      swal("Usuario actualizado", `Usuario ${usuario.username} actualizado con exito`, 'success')
+      swal("Usuario actualizado", `Usuario actualizado con exito`, 'success')
     },
     err => {
       this.errores = err.error.errors as string[]

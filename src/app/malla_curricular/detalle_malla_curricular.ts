@@ -7,4 +7,5 @@ export class DetalleMallaCurricular {
   malla_curricular: MallaCurricular;
   ramo:Ramo;
   semestre:Semestre;
+  posicion:number;
 }

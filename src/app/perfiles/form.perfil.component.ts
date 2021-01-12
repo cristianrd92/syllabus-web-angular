@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { Perfil } from './perfil';
 import { PerfilService } from './perfil.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
 import { Location } from '@angular/common';
-import { Role } from '../roles/rol';
+import { Permiso } from '../roles/rol';
 import { RolService } from '../roles/rol.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 
 @Component({
   selector: 'app-form',
@@ -14,23 +15,64 @@ import { RolService } from '../roles/rol.service';
 export class FormPerfilComponent implements OnInit {
   public perfil: Perfil = new Perfil()
   public titulo:string = "Crear Perfil"
-  roles: Role[];
+  permisos: Permiso[];
   public errores:string[];
+  public elementos: ElementRef;
+  
+  tabla = '';
 
   constructor(private perfilService: PerfilService,
     private roleService: RolService,
     private router: Router,
     private activedRoute: ActivatedRoute,
-    private _location: Location){ }
+    private _location: Location,
+    private sanitized: DomSanitizer){ }
 
-    html:string;
+    html:SafeHtml;
 
   ngOnInit(): void {
-    this.cargarPerfiles(),
-    this.cargarRoles()
+    this.cargarRoles(),
+    this.cargarPerfiles()
   }
   goBack(){
     this._location.back();
+  }
+
+  checkedTickets = [];
+
+  onCheck(evt) {
+    if (!this.checkedTickets.includes(evt)) {
+      this.checkedTickets.push(evt);
+    } else {
+      var index = this.checkedTickets.indexOf(evt);
+      if (index > -1) {
+        this.checkedTickets.splice(index, 1);
+      }
+    }
+    console.log(this.checkedTickets);
+  }
+  
+
+  cargarPermisos(permisos){
+    this.tabla+='<table class="table table-responsive table-dark">';
+    this.tabla+='<thead>'
+    this.tabla+='<tr><th scope="col">Nombre</th>'    
+    this.tabla+='<th scope="col">Ver</th>' 
+    this.tabla+='<th scope="col">Crear</th>' 
+    this.tabla+='<th scope="col">Modificar</th>' 
+    this.tabla+='<th scope="col">Eliminar</th></tr>' 
+    this.tabla+='</thead>'
+    this.tabla+='<tbody>'
+    for (let index = 0; index < permisos.length; index++) {
+      const element = permisos[index];
+      if(index%4==0){
+        this.tabla+='<tr><th>'+element.descripcion+'</th>';
+      }
+      this.tabla+='<th><input type="checkbox" (change)="onCheck('+element.id+')" [(NgModel)]="perfil.permisos" [value]="'+element.id+'"></th>'
+    }
+    this.tabla+='</tr>'
+    this.tabla+='</tbody></table>'
+    //this.html = this.sanitized.bypassSecurityTrustHtml(this.tabla);
   }
 
   cargarPerfiles(): void {
@@ -46,7 +88,10 @@ export class FormPerfilComponent implements OnInit {
   }
 
   cargarRoles(): void {
-    this.roleService.getRoles().subscribe(roles => { this.roles = roles });
+    this.roleService.getRoles().subscribe(permisos => { 
+      this.cargarPermisos(permisos);
+      this.permisos = permisos;
+    });
   }
 
   create(): void{

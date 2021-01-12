@@ -33,6 +33,7 @@ export class FormDetalleMallaComponent implements OnInit {
     semestres: Semestre[];
 
   ngOnInit(): void {
+    this.cargarDetalleMalla(),
     this.cargarRamos(),
     this.cargarSemestres()
   }
@@ -40,12 +41,24 @@ export class FormDetalleMallaComponent implements OnInit {
     this._location.back();
   }
 
+  cargarDetalleMalla(): void {
+    this.activedRoute.params.subscribe(params=> {
+      let id = params['id']
+      if (id){
+        this.titulo ="Editar detalle malla";
+        this.mallaService.getMalla(id).subscribe( (malla) => {
+          this.malla = malla;
+        })
+      }
+    })
+  }
+
   cargarRamos(): void {
       this.activedRoute.params.subscribe(params=> {
         let id = params['id']
         this.malla_id=id;
         this.malla = JSON.parse(localStorage.getItem('malla_obj'));
-        this.mallaService.getRamosMalla(this.malla.carrera.id).subscribe(ramos => { 
+        this.mallaService.getRamosMalla(this.malla).subscribe(ramos => { 
         this.ramos = ramos 
         });
       });
