@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { GlobalComponent } from '../global.component';
 import { Ramo } from '../ramos/ramo';
 import { DetalleMallaCurricular } from './detalle_malla_curricular';
+import { MallaDetalle } from './malla_detalla';
 
 
 @Injectable()
@@ -110,8 +111,8 @@ export class MallaCurricularService {
     )
   }
 
-  getDetalleMalla(id): Observable<DetalleMallaCurricular[]> {
-    return this.http.get<DetalleMallaCurricular[]>(`${this.urlEndPoint}/detalle/${id}`).pipe(
+  getDetalleMallaEliminar(id): Observable<DetalleMallaCurricular[]> {
+    return this.http.get<DetalleMallaCurricular[]>(`${this.urlEndPoint}/malla/${id}`).pipe(
       catchError(e => {
         if(e.status !=401 && e.error.mensaje){
           console.error(e.error.mensaje);
@@ -124,6 +125,41 @@ export class MallaCurricularService {
     )
   }
 
+  getDetalleMalla(id): Observable<MallaDetalle[]> {
+    return this.http.get<MallaDetalle[]>(`${this.urlEndPoint}/malla/${id}`).pipe(
+      catchError(e => {
+        if(e.status !=401 && e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        if (e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        return throwError(e);
+      }),
+      map( (response) => {
+        let ramos = response as MallaDetalle[];
+        return ramos.map(detalle => {
+          detalle.id = detalle[0]
+          detalle.malla_curricular_id = detalle[1]
+          detalle.ramo_id = detalle[2]
+          detalle.semestre_id = detalle[3]
+          detalle.posicion_ramo = detalle[4]
+          detalle.malla_id = detalle[5]
+          detalle.descripcion_malla = detalle[6]
+          detalle.carrera_id = detalle[7]
+          detalle.nombre_ramo = detalle[8]
+          detalle.descripcion_semestre = detalle[9]
+          detalle.posicion_semestre = detalle[10]
+          detalle.nombre_usuario = detalle[11]
+          detalle.estado = detalle[12]
+          for (let index = 0; index < 13; index++) {
+            delete detalle[index]          
+          }
+          return detalle;
+        });
+      })
+    )
+  }
 
   update(malla: MallaCurricular) : Observable<MallaCurricular> {
     return this.http.put<MallaCurricular>(`${this.urlEndPoint}/${malla.id}`, malla).pipe(

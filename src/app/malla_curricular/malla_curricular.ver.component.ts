@@ -9,6 +9,7 @@ import { CarreraService } from '../carreras/carrera.service';
 import { Ramo } from '../ramos/ramo';
 import { DetalleMallaCurricular } from './detalle_malla_curricular';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { MallaDetalle } from './malla_detalla';
 
 @Component({
   selector: 'app-ciudades',
@@ -17,7 +18,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 export class MallaCurricularVerComponent implements OnInit {
 
-  detalles: DetalleMallaCurricular[];
+  detalles: MallaDetalle[];
   malla: MallaCurricular;
   tabla = '';
   dtOptions: DataTables.Settings = {};
