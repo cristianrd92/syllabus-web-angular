@@ -112,7 +112,7 @@ export class MallaCurricularService {
   }
 
   getDetalleMallaEliminar(id): Observable<DetalleMallaCurricular[]> {
-    return this.http.get<DetalleMallaCurricular[]>(`${this.urlEndPoint}/malla/${id}`).pipe(
+    return this.http.get<DetalleMallaCurricular[]>(`${this.urlEndPoint}/detalle/${id}`).pipe(
       catchError(e => {
         if(e.status !=401 && e.error.mensaje){
           console.error(e.error.mensaje);

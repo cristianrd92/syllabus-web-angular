@@ -34,6 +34,7 @@ export class MallaCurricularRamosComponent implements OnInit {
           localStorage.setItem("malla_obj", JSON.stringify(malla))
         })
         this.mallaService.getDetalleMallaEliminar(id).subscribe(detalles=>{
+          console.log(detalles)
           this.detalles = detalles
         })
       }
