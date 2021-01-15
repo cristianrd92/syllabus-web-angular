@@ -25,7 +25,7 @@
       <div class="form-group row">
         <label for="nombre" class="col-form-label col-sm-2">Nombre corto</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" [(ngModel)]="ramo.nombre_corto" name="nombre_corto" required minlength="4" maxlength="10" #nombre_corto="ngModel">
+          <input type="text" class="form-control" [(ngModel)]="ramo.nombre_corto" name="nombre_corto" required minlength="4" maxlength="15" #nombre_corto="ngModel">
           <div class="alert alert-danger" *ngIf="nombre_corto.invalid && (nombre_corto.dirty || nombre_corto.touched)">
             <div *ngIf="nombre_ramo.errors.required">
               Nombre corto es obligatorio
