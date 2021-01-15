@@ -27,7 +27,7 @@ export class JefesCarrerasComponent implements OnInit {
   }
   delete(jefe_carrera: JefeCarrera): void {
     swal({
-      title: `Esta seguro que desea eliminar el jefe carrera ?`,
+      title: `Esta seguro que desea eliminar el director de escuela?`,
       text: "Esto no se podra revertir",
       type: "warning",
       showCancelButton: true,
@@ -46,7 +46,7 @@ export class JefesCarrerasComponent implements OnInit {
             this.jefes_carreras = this.jefes_carreras.filter(jef => jef !== jefe_carrera)
             swal(
               'Borrado!',
-              'El jefe carrera ha sido borrada',
+              'El director de escuela ha sido borrada',
               'success'
               )
           }

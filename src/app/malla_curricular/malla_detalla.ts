@@ -5,6 +5,7 @@ export class MallaDetalle{
     semestre_id:number;
     posicion_ramo:number;
     malla_id:number;
+    creditos:number;
     descripcion_malla:string;
     carrera_id:number;
     nombre_ramo:string;

@@ -9,17 +9,34 @@ import { GlobalComponent } from '../global.component';
 import { Ramo } from '../ramos/ramo';
 import { DetalleMallaCurricular } from './detalle_malla_curricular';
 import { MallaDetalle } from './malla_detalla';
+import { AuthService } from '../usuarios/auth.service';
 
 
 @Injectable()
 export class MallaCurricularService {
 
   private urlEndPoint:string = GlobalComponent.apiURL+'api/malla';
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, 
+    private auth: AuthService,
+    private router: Router) { }
 
 
   getMallas() : Observable<MallaCurricular[]> {
     return this.http.get<MallaCurricular[]>(this.urlEndPoint).pipe(
+      catchError(e => {
+        return throwError(e);
+      }),
+    map( (response) => {
+      let mallas = response as MallaCurricular[];
+      return mallas.map(malla => {
+        malla.descripcion_malla = malla.descripcion_malla.toUpperCase();
+        return malla;
+      });
+    })
+    );
+  }
+  getMallasByCarrera() : Observable<MallaCurricular[]> {
+    return this.http.get<MallaCurricular[]>(`${this.urlEndPoint}/carrera/${this.auth.usuario.carrera}`).pipe(
       catchError(e => {
         return throwError(e);
       }),
@@ -148,11 +165,12 @@ export class MallaCurricularService {
           detalle.descripcion_malla = detalle[6]
           detalle.carrera_id = detalle[7]
           detalle.nombre_ramo = detalle[8]
-          detalle.descripcion_semestre = detalle[9]
-          detalle.posicion_semestre = detalle[10]
-          detalle.nombre_usuario = detalle[11]
-          detalle.estado = detalle[12]
-          for (let index = 0; index < 13; index++) {
+          detalle.creditos = detalle[9]
+          detalle.descripcion_semestre = detalle[10]
+          detalle.posicion_semestre = detalle[11]
+          detalle.nombre_usuario = detalle[12]
+          detalle.estado = detalle[13]
+          for (let index = 0; index <= 13; index++) {
             delete detalle[index]          
           }
           return detalle;

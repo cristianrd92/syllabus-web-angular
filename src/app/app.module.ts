@@ -78,6 +78,7 @@ import { JefesCarrerasComponent } from './jefes_carreras/jefes-carreras.componen
 import { FormJefeCarreraComponent } from './jefes_carreras/form.jefe_carrera.component';
 import { JefeCarreraService } from './jefes_carreras/jefe_carrera.service';
 import { FormDetalleMallaEditarComponent } from './malla_curricular/form.detalle_malla.editar.component';
+import { MallaCarreraComponent } from './malla_curricular/malla_carrera/malla_carrera.component';
 
 registerLocaleData(localeEs, 'es-CL');
 
@@ -114,6 +115,7 @@ const routes: Routes = [
   {path: 'perfiles/form', component:FormPerfilComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'perfiles/form/:id', component:FormPerfilComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'mallas', component:MallaCurricularComponent},
+  {path: 'mallasCarrera', component:MallaCarreraComponent},
   {path: 'mallas/form', component:FormMallaCurricularComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'mallas/form/:id', component:FormMallaCurricularComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'mallas/ramos/:id', component:MallaCurricularRamosComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
@@ -190,7 +192,8 @@ const routes: Routes = [
     FormSistemaComponent,
     JefesCarrerasComponent,
     FormJefeCarreraComponent,
-    FormDetalleMallaEditarComponent
+    FormDetalleMallaEditarComponent,
+    MallaCarreraComponent
   ],
   imports: [
     BrowserModule,
