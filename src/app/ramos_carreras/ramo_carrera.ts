@@ -5,6 +5,7 @@ import { Usuario } from '../usuarios/usuario';
 
 export class RamoCarrera {
   id: number;
+  anio: number;
   creditos: number;
   usuario: Usuario;
   carrera: Carrera;

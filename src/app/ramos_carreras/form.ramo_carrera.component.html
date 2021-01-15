@@ -19,6 +19,17 @@
           </div>
         </div>
       </div>
+      <div class="form-group row">
+        <label for="nombre" class="col-form-label col-sm-2">Año ramo</label>
+        <div class="col-sm-6">
+          <input type="number" class="form-control" [(ngModel)]="ramo_carrera.anio" name="anio" required #anio="ngModel">
+          <div class="alert alert-danger" *ngIf="anio.invalid && (anio.dirty || anio.touched)">
+            <div *ngIf="anio.errors.required">
+              Año ramo carrera es obligatorio
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div class="form-group row">
         <label for="facultad" class="col-form-label col-sm-2">Docente</label>
