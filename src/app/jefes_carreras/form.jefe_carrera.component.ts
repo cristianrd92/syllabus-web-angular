@@ -20,7 +20,7 @@ export class FormJefeCarreraComponent implements OnInit {
   carreras: Carrera[];
 
 
-  public titulo:string = "Crear Jefe Carrera"
+  public titulo:string = "Asignar director de escuela"
   public errores:string[]
 
   constructor(private jefeCarreraService: JefeCarreraService,
@@ -45,7 +45,7 @@ export class FormJefeCarreraComponent implements OnInit {
     this.activedRoute.params.subscribe(params=> {
       let id = params['id']
       if (id){
-        this.titulo ="Editar Jefe Carrera";
+        this.titulo ="Editar director de escuela";
         this.jefeCarreraService.getJefeCarrera(id).subscribe( (jefe_carrera) => {
           console.log(jefe_carrera)
           this.jefe_carrera = jefe_carrera;
@@ -58,7 +58,7 @@ export class FormJefeCarreraComponent implements OnInit {
     this.jefeCarreraService.create(this.jefe_carrera)
     .subscribe(jefe_carrera => {
       this.router.navigate(['/jefesCarreras'])
-      swal("Nuevo jefe carrera", `Jefe carrera creado con exito`, 'success')
+      swal("Nuevo director de escuela", `Director de escuela asignado con exito`, 'success')
     },
     err => {
       this.errores = err.error.errors as string[]
@@ -70,7 +70,7 @@ export class FormJefeCarreraComponent implements OnInit {
     this.jefeCarreraService.update(this.jefe_carrera)
     .subscribe(carrera => {
       this.router.navigate(['/jefesCarreras'])
-      swal("Jefe carrera actualizada", `Jefe carrera actualizado con exito`, 'success')
+      swal("Director de escuela actualizado", `Director de escuela actualizado con exito`, 'success')
     },
     err => {
       this.errores = err.error.errors as string[]

@@ -1,9 +1,9 @@
 <div class="card mb-3">
-  <div class="card-header">Jefes Carreras</div>
+  <div class="card-header">Directores Escuela</div>
   <div class="card-body text-secondary">
-    <h5 class="card-title">Listado de Jefes Carrera</h5>
+    <h5 class="card-title">Listado Directores Escuela</h5>
   <div class="my-2 text-left">
-    <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" class="btn btn-rounded btn-primary" [routerLink] = "['/jefesCarreras/form']">Crear jefe carrera</button>
+    <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" class="btn btn-rounded btn-primary" [routerLink] = "['/jefesCarreras/form']">Asignar director de escuela</button>
   </div>
   <div *ngIf="jefes_carreras?.length==0" class="alert alert-info">
     No hay registros en la base de datos

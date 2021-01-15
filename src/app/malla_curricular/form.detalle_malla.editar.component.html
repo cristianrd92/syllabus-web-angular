@@ -12,7 +12,7 @@
       <div class="form-group row">
         <label for="facultad" class="col-form-label col-sm-2">Ramo</label>
         <div class="col-sm-6">
-          <select class="form-control" [(ngModel)]="detalle_malla.ramo" name="ramo" required #ramo="ngModel">
+          <select [compareWith]="compararRamo" class="form-control" [(ngModel)]="detalle_malla.ramo" name="ramo" required #ramo="ngModel">
             <option [ngValue]="undefined" > --- Seleccione un ramo ---</option>
             <option *ngFor="let ramo of ramos" [ngValue]="ramo">{{ramo.codigo_ramo | uppercase}} - {{ramo.nombre_ramo |uppercase}}</option>
           </select>
@@ -26,7 +26,7 @@
       <div class="form-group row">
         <label for="facultad" class="col-form-label col-sm-2">Semestre</label>
         <div class="col-sm-6">
-          <select class="form-control" [(ngModel)]="detalle_malla.semestre" name="semestre" required #semestre="ngModel">
+          <select [compareWith]="compararSemestre" class="form-control" [(ngModel)]="detalle_malla.semestre" name="semestre" required #semestre="ngModel">
             <option [ngValue]="undefined" > --- Seleccione un semestre ---</option>
             <option *ngFor="let semestre of semestres" [ngValue]="semestre">{{semestre.descripcion_semestre | uppercase}}</option>
           </select>

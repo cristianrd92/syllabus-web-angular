@@ -11,6 +11,7 @@ import { Ramo } from '../ramos/ramo';
 import { MallaCurricular } from './malla_curricular';
 import { Semestre } from '../semestres/semestre';
 import { SemestreService } from '../semestres/semestre.service';
+import { RamoService } from '../ramos/ramo.service';
 
 
 @Component({
@@ -25,11 +26,12 @@ export class FormDetalleMallaEditarComponent implements OnInit {
   malla: MallaCurricular;
 
   semestres: Semestre[];
-  public titulo:string = "Editar Detalle Malla"
+  public titulo:string = "Asignar Ramo a Malla"
   public errores:string[]
 
   constructor(private mallaService: MallaCurricularService,
     private semestreService: SemestreService,
+    private ramoService: RamoService,
     private router: Router,
     private activedRoute: ActivatedRoute,
     private _location: Location){ }
@@ -44,7 +46,7 @@ export class FormDetalleMallaEditarComponent implements OnInit {
     this.activedRoute.params.subscribe(params=> {
       let id = params['id']
       if (id){
-        this.titulo ="Editar Jefe Carrera";
+        this.titulo ="Editar Ramo Malla Carrera";
         this.mallaService.getMallaEditar(id).subscribe( (malla) => {
           console.log(malla)
           this.detalle_malla = malla;
@@ -54,13 +56,8 @@ export class FormDetalleMallaEditarComponent implements OnInit {
   }
 
   cargarRamos(): void {
-    this.activedRoute.params.subscribe(params=> {
-      let id = params['id']
-      this.malla_id=id;
-      this.malla = JSON.parse(localStorage.getItem('malla_obj'));
-      this.mallaService.getRamosMalla(this.malla).subscribe(ramos => { 
+    this.ramoService.getRamos().subscribe(ramos => { 
       this.ramos = ramos 
-      });
     });
 }
 cargarSemestres(): void {
@@ -70,10 +67,11 @@ cargarSemestres(): void {
 }
 
   update(): void{
+    this.malla = JSON.parse(localStorage.getItem('malla_obj'));
     this.mallaService.updateDetalle(this.detalle_malla)
     .subscribe(malla => {
-      this.router.navigate(['/mallas'])
-      swal("Jefe carrera actualizada", `Jefe carrera actualizado con exito`, 'success')
+      this.router.navigate(['/mallas/ramos/'+this.malla.id])
+      swal("Detalle malla actualizado", `Detalle malla actualizado con exito`, 'success')
     },
     err => {
       this.errores = err.error.errors as string[]
