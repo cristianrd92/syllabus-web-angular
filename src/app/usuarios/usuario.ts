@@ -10,6 +10,7 @@ export class Usuario {
     apellidos:string;
     email:string;
     first:boolean;
+    nombre_corto:string;
     perfiles:Perfil[];
     perfil:Perfil[];
     carrera:number;

@@ -43,7 +43,14 @@ export class FormUsuarioComponent implements OnInit {
   }
   
   cargarPerfiles(): void {
-    this.perfilService.getPerfiles().subscribe(perfiles => { this.perfiles = perfiles });
+    this.perfilService.getPerfiles().subscribe(perfiles => { 
+      delete(perfiles[1])
+      delete(perfiles[2])
+      var filtered = perfiles.filter(function (el) {
+        return el != null;
+      });
+      this.perfiles = filtered 
+    });
   }
 
   imprimirErrores(error){

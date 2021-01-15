@@ -9,7 +9,7 @@
     <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" class="btn btn-rounded btn-primary" [routerLink] = "['/ramosCarreras/form']">Crear ramo carrera</button>
   </div>
   <div *ngIf="planificaciones?.length==0" class="alert alert-info">
-    No hay registros en la base de datos
+    No cuenta con ramos asignados
   </div>
   <table datatable [dtOptions]="dtOptions" class="table table-bordered table-striped" *ngIf="planificaciones?.length>0">
       <thead>

@@ -39,6 +39,24 @@
       </div>
 
       <div class="form-group row">
+        <label for="apellidos" class="col-form-label col-sm-2">Nombre Corto</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="usuario.nombre_corto" name="nombre_corto" required minlength="4" maxlength="10" #nombre_corto="ngModel">
+          <div class="alert alert-danger" *ngIf="nombre_corto.invalid && (nombre_corto.dirty || nombre_corto.touched)">
+            <div *ngIf="nombre_corto.errors.required">
+              Nombre corto es obligatorio
+            </div>
+            <div *ngIf="nombre_corto.errors.minlength">
+              Nombre corto debe contener al menos 4 caracteres
+            </div>
+            <div *ngIf="nombre_corto.errors.maxlength">
+              Nombre corto debe contener un maximo de 10 caracteres
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
         <label for="rut_usuario" class="col-form-label col-sm-2">RUT</label>
         <div class="col-sm-6">
           <input type="text" class="form-control" formatRut  validateRut [(ngModel)]="usuario.rut_usuario" name="rut_usuario" required minlength="4" #rut_usuario="ngModel">

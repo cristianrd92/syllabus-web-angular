@@ -51,23 +51,26 @@ export class MallaCurricularVerComponent implements OnInit {
     let fila=0;
     let columna=0;
     let presente = 0;
+    let presente2 = 0;
     for (let t=0; t<detalles.length; t++){
-      if(detalles[t].posicion > columna){
-        columna = detalles[t].posicion
+      if(detalles[t].posicion_ramo > columna){
+        columna = detalles[t].posicion_ramo
       }
-      if(detalles[t].semestre.posicion > fila){
-        fila = detalles[t].semestre.posicion
+      if(detalles[t].posicion_semestre > fila){
+        fila = detalles[t].posicion_semestre
       }
     }
     console.log(fila);
     console.log(columna);
-    this.tabla+='<table class="table cardnew table-responsive">';
+    this.tabla+='<table class="table cardnew table-responsive table-borderless">';
     this.tabla+='<thead><tr>'
-    // for (let i = 0; i<=columna-1; i++){
-    //   this.tabla+='<th scope="col">'+ detalles[i].semestre.descripcion_semestre +'</th>'
-    // }
-    this.tabla+='<th scope="col">Primer Semestre</th>'
-    this.tabla+='<th scope="col">Segundo Semestre</th>'
+    
+    for (let t=0; t<detalles.length; t++){
+      if(detalles[t].posicion_semestre != presente2){
+        presente2 = detalles[t].posicion_semestre
+        this.tabla+='<th scope="col">'+ detalles[t].descripcion_semestre +'</th>'
+      }
+    }
     this.tabla+='</tr></thead>'
     this.tabla+='<tbody>'
     for (let i = 1; i<=columna; i++){
@@ -75,8 +78,22 @@ export class MallaCurricularVerComponent implements OnInit {
       for (let j=1; j<fila+1; j++) {
         presente = 0;
         for (let t=0; t<detalles.length; t++){
-          if(detalles[t].posicion == i && detalles[t].semestre.posicion == j){
-            this.tabla+='<td id="'+ i +'-'+ j +'">'+ detalles[t].ramo.nombre_ramo +'</td>';
+          if(detalles[t].posicion_ramo == i && detalles[t].posicion_semestre == j){
+            //this.tabla+='<td id="'+ i +'-'+ j +'">'+ detalles[t].nombre_ramo +'</td>';
+            if(detalles[t].estado == "Aprobado"){
+              this.tabla+='<td id="'+ i +'-'+ j +'"><div class="card" style="background-color:green;color:white;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">'
+            }else if (detalles[t].estado == "No subido") {
+              this.tabla+='<td id="'+ i +'-'+ j +'"><div class="card" style="background-color:#FACC2E;color:white;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">'
+            } else if (detalles[t].estado == "Rechazado"){
+              this.tabla+='<td id="'+ i +'-'+ j +'"><div class="card" style="background-color:red;color:white;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">'
+            }else{
+              this.tabla+='<td id="'+ i +'-'+ j +'"><div class="card" style="background-color:grey;color:white;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">'
+            }
+            this.tabla+='<div class="card-body">'
+            this.tabla+='<h4 class="card-title">'+ detalles[t].nombre_ramo +'</h4>'
+            this.tabla+='<p class="card-text">'+ detalles[t].nombre_usuario +'</p>'
+            this.tabla+='<p class="card-text">'+ detalles[t].estado +'</p>'
+            this.tabla+='</div></div></td>'
             presente = 1;
           }
         }
