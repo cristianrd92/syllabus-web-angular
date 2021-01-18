@@ -29,34 +29,34 @@
                         <li><a href="dashboard_5.html">Dashboard v.5 </a></li>
                     </ul>
                 </li> -->
-                <li *ngIf="authService.hasRole('ROLE_ADMIN')" routerLinkActive="active">
+                <li *ngIf="authService.hasRole('ROLE_V_CIUDAD')" routerLinkActive="active">
                     <a routerLink="/ciudades"><fa-icon [icon]="faCity"></fa-icon> Ciudades<span class="sr-only">(current)</span></a>
                 </li>
-                <li *ngIf="authService.hasRole('ROLE_ADMIN')" routerLinkActive="active">
+                <li *ngIf="authService.hasRole('ROLE_V_SEDE')" routerLinkActive="active">
                     <a routerLink="/sedes"><fa-icon [icon]="faUniversity"></fa-icon> Sedes<span class="sr-only">(current)</span></a>
                 </li>
-                <li *ngIf="authService.hasRole('ROLE_ADMIN')" routerLinkActive="active">
+                <li *ngIf="authService.hasRole('ROLE_V_FACULTAD')" routerLinkActive="active">
                     <a routerLink="/facultades"><fa-icon [icon]="faBuilding"></fa-icon> Facultades<span class="sr-only">(current)</span></a>
                 </li>
-                <li *ngIf="authService.hasRole('ROLE_ADMIN')" routerLinkActive="active">
+                <li *ngIf="authService.hasRole('ROLE_V_CARRERA')" routerLinkActive="active">
                     <a routerLink="/carreras"><fa-icon [icon]="faGraduationCap"></fa-icon> Carreras<span class="sr-only">(current)</span></a>
                 </li>
                 <li *ngIf="authService.hasRole('ROLE_ADMIN')" routerLinkActive="active">
                     <a routerLink="/periodos"><fa-icon [icon]="faCalendarAlt"></fa-icon> Periodos<span class="sr-only">(current)</span></a>
                 </li>
-                <li *ngIf="authService.hasRole('ROLE_ADMIN')" routerLinkActive="active">
+                <li *ngIf="authService.hasRole('ROLE_V_RAMO')" routerLinkActive="active">
                     <a routerLink="/ramos"><fa-icon [icon]="faBookOpen"></fa-icon> Ramos<span class="sr-only">(current)</span></a>
                 </li>
-                <li *ngIf="authService.hasRole('ROLE_ADMIN')" routerLinkActive="active">
+                <li *ngIf="authService.hasRole('ROLE_V_RAMO_CARRERA')" routerLinkActive="active">
                     <a routerLink="/ramosCarreras"><fa-icon [icon]="faBookReader"></fa-icon> Ramo Carrera<span class="sr-only">(current)</span></a>
                 </li>
-                <!-- <li *ngIf="authService.hasRole('ROLE_ADMIN')" routerLinkActive="active">
+                <li *ngIf="authService.hasRole('ROLE_V_PERFIL')" routerLinkActive="active">
                     <a routerLink="/perfiles"><fa-icon [icon]="faUserLock"></fa-icon> Perfiles de Usuario<span class="sr-only">(current)</span></a>
-                </li> -->
-                <li *ngIf="authService.hasRole('ROLE_ADMIN')" routerLinkActive="active">
+                </li>
+                <li *ngIf="authService.hasRole('ROLE_V_USUARIO')" routerLinkActive="active">
                     <a routerLink="/usuarios"><fa-icon [icon]="faUser"></fa-icon> Usuario<span class="sr-only">(current)</span></a>
                 </li>
-                <li *ngIf="authService.hasRole('ROLE_ADMIN')" routerLinkActive="active">
+                <li *ngIf="authService.hasRole('ROLE_V_MALLA')" routerLinkActive="active">
                     <a routerLink="/mallas"><fa-icon [icon]="faTable"></fa-icon> Malla<span class="sr-only">(current)</span></a>
                 </li>
                 <li *ngIf="authService.hasRole('ROLE_ADMIN')" routerLinkActive="active">

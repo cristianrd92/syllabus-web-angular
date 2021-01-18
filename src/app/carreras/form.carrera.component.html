@@ -42,7 +42,7 @@
         <label for="facultad" class="col-form-label col-sm-2">Facultad</label>
         <div class="col-sm-6">
           <select [compareWith]="compararFacultad" class="form-control" [(ngModel)]="carrera.facultad" name="facultad" required #facultad="ngModel">
-            <option [ngValue]="undefined" > --- Seleccione una ciuad ---</option>
+            <option [ngValue]="undefined" > --- Seleccione una facultad ---</option>
             <option *ngFor="let facultad of facultades" [ngValue]="facultad">{{facultad.nombre_facultad}}</option>
           </select>
           <div class="alert alert-danger" *ngIf="facultad.invalid && (facultad.dirty || facultad.touched)">

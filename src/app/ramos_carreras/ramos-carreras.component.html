@@ -3,7 +3,7 @@
   <div class="card-body text-secondary">
     <h5 class="card-title">Listado de Ramos Carrera</h5>
   <div class="my-2 text-left">
-    <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" class="btn btn-rounded btn-primary" [routerLink] = "['/ramosCarreras/form']">Crear ramo carrera</button>
+    <button *ngIf="authService.hasRole('ROLE_C_RAMO_CARRERA')" type="button" class="btn btn-rounded btn-primary" [routerLink] = "['/ramosCarreras/form']">Crear ramo carrera</button>
   </div>
   <div *ngIf="ramos_carreras?.length==0" class="alert alert-info">
     No hay registros en la base de datos
@@ -15,8 +15,8 @@
           <th>Código Ramo</th>
           <th>Ramo</th>
           <th>Docente</th>
-          <th *ngIf="authService.hasRole('ROLE_ADMIN')">Editar</th>
-          <th *ngIf="authService.hasRole('ROLE_ADMIN')">Borrar</th>
+          <th *ngIf="authService.hasRole('ROLE_M_RAMO_CARRERA')">Editar</th>
+          <th *ngIf="authService.hasRole('ROLE_E_RAMO_CARRERA')">Borrar</th>
         </tr>
       </thead>
       <tbody>
@@ -25,10 +25,10 @@
           <td>{{ramo_carrera.ramo.codigo_ramo | uppercase}}</td>
           <td>{{ramo_carrera.ramo.nombre_ramo | uppercase}}</td>
           <td>{{ramo_carrera.usuario.nombres | uppercase}} {{ramo_carrera.usuario.apellidos | uppercase}}</td>
-          <td *ngIf="authService.hasRole('ROLE_ADMIN')" >
+          <td *ngIf="authService.hasRole('ROLE_M_RAMO_CARRERA')" >
             <button type="button" name="editar" class="btn btn-primary" [routerLink]="['/ramosCarreras/form', ramo_carrera.id]">Editar</button>
           </td>
-          <td *ngIf="authService.hasRole('ROLE_ADMIN')">
+          <td *ngIf="authService.hasRole('ROLE_E_RAMO_CARRERA')">
             <button type="button" name="eliminar" class="btn btn-danger" (click)='delete(ramo_carrera)'>Eliminar</button>
           </td>
         </tr>

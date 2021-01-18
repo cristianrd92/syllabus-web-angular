@@ -42,6 +42,7 @@
     "ng-multiselect-dropdown": "^0.2.10",
     "ng-select2": "^1.2.3",
     "ng9-rut": "0.0.6",
+    "ngx-loading": "^8.0.0",
     "pdfmake": "^0.1.68",
     "popper.js": "^1.16.1",
     "rxjs": "~6.6.0",

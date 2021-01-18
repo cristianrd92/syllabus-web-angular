@@ -79,52 +79,60 @@ import { FormJefeCarreraComponent } from './jefes_carreras/form.jefe_carrera.com
 import { JefeCarreraService } from './jefes_carreras/jefe_carrera.service';
 import { FormDetalleMallaEditarComponent } from './malla_curricular/form.detalle_malla.editar.component';
 import { MallaCarreraComponent } from './malla_curricular/malla_carrera/malla_carrera.component';
+import { NgxLoadingModule,ngxLoadingAnimationTypes  } from 'ngx-loading';
 
 registerLocaleData(localeEs, 'es-CL');
 
 const routes: Routes = [
   {path: '', redirectTo: '/', pathMatch: 'full'},
-  {path: 'ciudades', component:CiudadesComponent},
-
   {path: 'ajustes', component:FormSistemaComponent},
-
-  {path: 'ciudades/form', component:FormComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
-  {path: 'ciudades/form/:id', component:FormComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'login', component:LoginComponent},
   {path: 'home', component:HomeComponent},
-  {path: 'sedes', component:SedesComponent},
-  {path: 'sedes/form', component:FormSedeComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
-  {path: 'sedes/form/:id', component:FormSedeComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
-  {path: 'facultades', component:FacultadesComponent},
-  {path: 'facultades/form', component:FormFacultadComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
-  {path: 'facultades/form/:id', component:FormFacultadComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
-  {path: 'carreras', component:CarrerasComponent},
-  {path: 'carreras/form', component:FormCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
-  {path: 'carreras/form/:id', component:FormCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
-  {path: 'periodos', component:PeriodosComponent},
-  {path: 'periodos/form', component:FormPeriodoComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
-  {path: 'periodos/form/:id', component:FormPeriodoComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
-  {path: 'ramos', component:RamosComponent},
-  {path: 'ramos/form', component:FormRamoComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
-  {path: 'ramos/form/:id', component:FormRamoComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
-  {path: 'ramosCarreras', component:RamosCarrerasComponent},
-  {path: 'ramosCarreras/form', component:FormRamoCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
-  {path: 'ramosCarreras/form/:id', component:FormRamoCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
-  {path: 'ramosDocentes', component:RamosDocentesComponent},
-  {path: 'perfiles', component:PerfilesComponent},
-  {path: 'perfiles/form', component:FormPerfilComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
-  {path: 'perfiles/form/:id', component:FormPerfilComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
-  {path: 'mallas', component:MallaCurricularComponent},
-  {path: 'mallasCarrera', component:MallaCarreraComponent},
-  {path: 'mallas/form', component:FormMallaCurricularComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
-  {path: 'mallas/form/:id', component:FormMallaCurricularComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
-  {path: 'mallas/ramos/:id', component:MallaCurricularRamosComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
-  {path: 'mallas/ramos/asignar/:id', component:FormDetalleMallaComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
-  
-  {path: 'mallas/ramos/editar/:id', component:FormDetalleMallaEditarComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
+  {path: 'usuarios/cambiarPassword', component:FormPasswordComponent},  
 
-  
-  {path: 'mallas/ver/:id', component:MallaCurricularVerComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
+  //LISTO
+  {path: 'ciudades', component:CiudadesComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_V_CIUDAD"}},
+  {path: 'ciudades/form', component:FormComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_C_CIUDAD"}},
+  {path: 'ciudades/form/:id', component:FormComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_M_CIUDAD"}},
+  //LISTO
+  {path: 'sedes', component:SedesComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_V_SEDE"}},
+  {path: 'sedes/form', component:FormSedeComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_C_SEDE"}},
+  {path: 'sedes/form/:id', component:FormSedeComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_M_SEDE"}},
+  //LISTO
+  {path: 'facultades', component:FacultadesComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_V_FACULTAD"}},
+  {path: 'facultades/form', component:FormFacultadComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_C_FACULTAD"}},
+  {path: 'facultades/form/:id', component:FormFacultadComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_M_FACULTAD"}},
+  //LISTO
+  {path: 'carreras', component:CarrerasComponent, canActivate: [AuthGuard, RoleGuard], data: {role:["ROLE_V_CARRERA"]}},
+  {path: 'carreras/form', component:FormCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_C_CARRERA"}},
+  {path: 'carreras/form/:id', component:FormCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:["ROLE_M_CARRERA"]}},
+  //LISTO
+  {path: 'periodos', component:PeriodosComponent, canActivate: [AuthGuard, RoleGuard], data: {role:["ROLE_V_PERIODO"]}},
+  {path: 'periodos/form', component:FormPeriodoComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_C_PERIODO"}},
+  {path: 'periodos/form/:id', component:FormPeriodoComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_M_PERIODO"}},
+  //LISTO
+  {path: 'ramos', component:RamosComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_V_RAMO"}},
+  {path: 'ramos/form', component:FormRamoComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_C_RAMO"}},
+  {path: 'ramos/form/:id', component:FormRamoComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_M_RAMO"}},
+  //LISTO
+  {path: 'ramosCarreras', component:RamosCarrerasComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_V_RAMO_CARRERA"}},
+  {path: 'ramosCarreras/form', component:FormRamoCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_C_RAMO_CARRERA"}},
+  {path: 'ramosCarreras/form/:id', component:FormRamoCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_M_RAMO_CARRERA"}},
+  //LISTO
+  {path: 'perfiles', component:PerfilesComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_V_PERFIL"}},
+  {path: 'perfiles/form', component:FormPerfilComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_C_PERFIL"}},
+  {path: 'perfiles/form/:id', component:FormPerfilComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_M_PERFIL"}},
+  //LISTO
+  {path: 'mallas', component:MallaCurricularComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_V_MALLA"}},
+  {path: 'mallas/form', component:FormMallaCurricularComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_C_MALLA"}},
+  {path: 'mallas/form/:id', component:FormMallaCurricularComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_M_MALLA"}},
+  {path: 'mallas/ramos/:id', component:MallaCurricularRamosComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_V_MALLA"}},
+  {path: 'mallas/ramos/asignar/:id', component:FormDetalleMallaComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_C_MALLA"}},  
+  {path: 'mallas/ramos/editar/:id', component:FormDetalleMallaEditarComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_M_MALLA"}},
+  {path: 'mallas/ver/:id', component:MallaCurricularVerComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_V_MALLA"}},
+
+  {path: 'mallasCarrera', component:MallaCarreraComponent},
+  {path: 'ramosDocentes', component:RamosDocentesComponent},
 
   {path: 'jefesCarreras', component:JefesCarrerasComponent},
   {path: 'jefesCarreras/form', component:FormJefeCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
@@ -137,11 +145,11 @@ const routes: Routes = [
   
   {path: 'syllabusPendientes', component:ComisionComponent},
   {path: 'syllabusPendientes/form/:id', component:FormComisionComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_COMISION"}},
-
-  {path: 'usuarios', component:UsuariosComponent},
-  {path: 'usuarios/form', component:FormUsuarioComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
-  {path: 'usuarios/form/:id', component:FormUsuarioComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
-  {path: 'usuarios/cambiarPassword', component:FormPasswordComponent},  
+  //LISTO
+  {path: 'usuarios', component:UsuariosComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_V_USUARIO"}},
+  {path: 'usuarios/form', component:FormUsuarioComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_M_USUARIO"}},
+  {path: 'usuarios/form/:id', component:FormUsuarioComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_E_USUARIO"}},
+  
   {path: 'carreras/comision/:id', component:ComisionCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
   {path: 'carreras/comision/asignar/:id', component:FormComisionCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
 
@@ -198,6 +206,12 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
+    NgxLoadingModule.forRoot({animationType: ngxLoadingAnimationTypes.wanderingCubes,
+      backdropBackgroundColour: 'rgba(0,0,0,0.1)', 
+      backdropBorderRadius: '4px',
+      primaryColour: '#ffffff', 
+      secondaryColour: '#ffffff', 
+      tertiaryColour: '#ffffff'}),
     FormsModule,
     HttpClientModule,
     DataTablesModule,

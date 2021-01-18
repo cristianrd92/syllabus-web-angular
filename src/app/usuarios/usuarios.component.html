@@ -3,7 +3,7 @@
   <div class="card-body text-secondary">
     <h5 class="card-title">Listado de usuarios</h5>
   <div class="my-2 text-left">
-    <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" class="btn btn-rounded btn-primary" [routerLink] = "['/usuarios/form']">Crear usuario</button>
+    <button *ngIf="authService.hasRole('ROLE_C_USUARIO')" type="button" class="btn btn-rounded btn-primary" [routerLink] = "['/usuarios/form']">Crear usuario</button>
   </div>
   <div *ngIf="usuarios?.length==0" class="alert alert-info">
     No hay registros en la base de datos
@@ -13,18 +13,18 @@
         <tr>
           <th>Nombres</th>
           <th>Apellidos</th>
-          <th *ngIf="authService.hasRole('ROLE_ADMIN')">Editar</th>
-          <th *ngIf="authService.hasRole('ROLE_ADMIN')">Borrar</th>
+          <th *ngIf="authService.hasRole('ROLE_M_USUARIO')">Editar</th>
+          <th *ngIf="authService.hasRole('ROLE_E_USUARIO')">Borrar</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let usuario of usuarios">
           <td>{{ usuario.nombres }}</td> 
           <td>{{ usuario.apellidos | uppercase}}</td>
-          <td *ngIf="authService.hasRole('ROLE_ADMIN')" >
+          <td *ngIf="authService.hasRole('ROLE_M_USUARIO')" >
             <button type="button" name="editar" class="btn btn-primary" [routerLink]="['/usuarios/form', usuario.id]">Editar</button>
           </td>
-          <td *ngIf="authService.hasRole('ROLE_ADMIN')">
+          <td *ngIf="authService.hasRole('ROLE_E_USUARIO')">
             <button type="button" name="eliminar" class="btn btn-danger" (click)='delete(usuario)'>Eliminar</button>
           </td>
         </tr>

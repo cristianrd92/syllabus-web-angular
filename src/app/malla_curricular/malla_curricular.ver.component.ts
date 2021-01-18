@@ -30,8 +30,6 @@ export class MallaCurricularVerComponent implements OnInit {
     private sanitized: DomSanitizer
     ) { }
 
-  html:SafeHtml;
-
   ngOnInit() {
     this.activedRoute.params.subscribe(params=> {
       let id = params['id']

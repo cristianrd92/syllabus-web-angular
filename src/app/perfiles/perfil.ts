@@ -6,4 +6,5 @@ export class Perfil {
   name: string;
   descripcion: string;
   permisos: Permiso[];
+  temporales: any[];
 }

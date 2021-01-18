@@ -96,11 +96,21 @@ export class AuthService {
     return false;
   }
 
-  hasRole(role:string):boolean{
+  hasRole(role):boolean{
     if(this.usuario.roles.includes(role)){
       return true;
     }
     return false;
+  }
+
+  hasRoleObject(role):boolean{
+    console.log(role)
+    for(var x=0;x<role.length;x++){
+      if(this.usuario.roles.includes(role[x])){
+        console.log("Entro")
+        return true
+      }
+    }
   }
 
   logout():void{
