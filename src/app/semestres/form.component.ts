@@ -12,6 +12,7 @@ import swal from 'sweetalert2';
 export class FormSemestreComponent implements OnInit {
   public semestre: Semestre = new Semestre();
   public titulo:string = "Crear Semestre";
+  public loading:boolean=false;
   public errores:string[];
 
   constructor(private semestreService: SemestreService,
@@ -30,32 +31,41 @@ export class FormSemestreComponent implements OnInit {
     this.activedRoute.params.subscribe(params=> {
       let id = params['id']
       if (id){
-        this.semestreService.getSemestre(id).subscribe( (semestre) => this.semestre = semestre)
+        this.titulo="Editar Semestre";
+        this.loading=true;
+        this.semestreService.getSemestre(id).subscribe( (semestre) => {
+          this.semestre = semestre;
+          this.loading=false; 
+        })
       }
     })
   }
 
   create(): void{
+    this.loading=true;
     this.semestreService.create(this.semestre)
     .subscribe(semestre => {
       this.router.navigate(['/semestres'])
+      this.loading=false;
       swal("Nuevo semestre", `Semestre creado ${semestre.descripcion_semestre} con exito`, 'success')
     },
     err => {
-      this.errores = err.error.errors as string[]
-    }
-    );
+      this.errores = err.error.errors as string[];
+      this.loading=false;
+    });
   }
 
   update(): void{
+    this.loading=true;
     this.semestreService.update(this.semestre)
     .subscribe(semestre => {
       this.router.navigate(['/semestres'])
+      this.loading=false;
       swal("Semestre actualizado", `Semestre ${semestre.descripcion_semestre} actualizado con exito`, 'success')
     },
     err => {
-      this.errores = err.error.errors as string[]
-    }
-    )
+      this.errores = err.error.errors as string[];
+      this.loading=false;
+    })
   }
 }

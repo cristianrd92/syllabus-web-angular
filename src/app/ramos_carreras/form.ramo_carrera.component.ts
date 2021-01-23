@@ -22,10 +22,10 @@ export class FormRamoCarreraComponent implements OnInit {
   ramos: Ramo[];
   periodos: Periodo[];
   carreras: Carrera[];
-
-
-  public titulo:string = "Crear Ramo Carrera"
-  public errores:string[]
+  public loading:boolean=false;
+  public titulo:string = "Crear Ramo Carrera";
+  public errores:string[];
+  public cont=0;
 
   constructor(private ramoCarreraService: RamoCarreraService,
     private router: Router,
@@ -33,82 +33,135 @@ export class FormRamoCarreraComponent implements OnInit {
     private _location: Location){ }
 
   ngOnInit(): void {
-    this.cargarRamoCarrera(),
     this.cargarUsuarios(),
     this.cargarRamos(),
     this.cargarCarreras(),
-    this.cargarPeriodos()
+    this.cargarPeriodos(),
+    this.cargarRamoCarrera()
   }
 
   cargarUsuarios(): void {
-    this.ramoCarreraService.getUsuarios().subscribe(usuarios => { this.usuarios = usuarios });
+    this.loading=true;
+    this.ramoCarreraService.getUsuarios().subscribe(usuarios => { 
+      this.usuarios = usuarios;
+      this.cont++;
+      if(this.cont==4){
+        this.loading=false;
+      }
+    });
   }
   cargarRamos(): void {
-    this.ramoCarreraService.getRamos().subscribe(ramos => { this.ramos = ramos });
+    this.loading=true;
+    this.ramoCarreraService.getRamos().subscribe(ramos => { 
+      this.ramos = ramos;
+      this.cont++;
+      if(this.cont==4){
+        this.loading=false;
+      }
+    });
   }
   cargarPeriodos(): void {
-    this.ramoCarreraService.getPeriodos().subscribe(periodos => { this.periodos = periodos });
+    this.loading=true;
+    this.ramoCarreraService.getPeriodos().subscribe(periodos => { 
+      this.periodos = periodos;
+      this.cont++;
+      if(this.cont==4){
+        this.loading=false;
+      }
+    });
   }
   cargarCarreras(): void {
-    this.ramoCarreraService.getCarreras().subscribe(carreras => { this.carreras = carreras });
+    this.loading=true;
+    this.ramoCarreraService.getCarreras().subscribe(carreras => { 
+      this.carreras = carreras;
+      this.cont++;
+      if(this.cont==4){
+        this.loading=false;
+      }
+    });
   }
 
   cargarRamoCarrera(): void {
     this.activedRoute.params.subscribe(params=> {
       let id = params['id']
       if (id){
-        this.ramoCarreraService.getRamoCarrera(id).subscribe( (ramo_carrera) => this.ramo_carrera = ramo_carrera)
+        this.loading=true;
+        this.titulo = "Editar Ramo Carrera"
+        this.ramoCarreraService.getRamoCarrera(id).subscribe( (ramo_carrera) => {
+          this.ramo_carrera = ramo_carrera;
+          this.loading=false;
+        })
       }
     })
   }
 
   create(): void{
+    this.loading=true;
     this.ramoCarreraService.create(this.ramo_carrera)
     .subscribe(ramo_carrera => {
-      this.router.navigate(['/ramosCarreras'])
+      this.router.navigate(['/ramosCarreras']);
+      this.loading=false;
       swal("Nuevo ramo carrera", `Ramo carrera creado con exito`, 'success')
     },
     err => {
-      this.errores = err.error.errors as string[]
-    }
-    );
+      this.errores = err.error.errors as string[];
+      this.loading=false;
+    });
   }
 
   update(): void{
+    this.loading=true;
     this.ramoCarreraService.update(this.ramo_carrera)
     .subscribe(carrera => {
       this.router.navigate(['/ramosCarreras'])
+      this.loading=false;
       swal("Ramo carrera actualizada", `Ramo carrera actualizado con exito`, 'success')
     },
     err => {
-      this.errores = err.error.errors as string[]
-    }
-    )
+      this.errores = err.error.errors as string[];
+      this.loading=false;
+    })
   }
   goBack(){
     this._location.back();
   }
   compararUsuario(o1:Usuario, o2:Usuario): boolean{
+    this.cont++;
     if(o1===undefined && o2===undefined){
       return true;
+    }
+    if(this.cont==4){
+      this.loading=false;
     }
     return o1 == null || o2== null ? false: o1.id===o2.id;
   }
   compararRamo(o1:Ramo, o2:Ramo): boolean{
+    this.cont++;
     if(o1===undefined && o2===undefined){
       return true;
+    }
+    if(this.cont==4){
+      this.loading=false;
     }
     return o1 == null || o2== null ? false: o1.id===o2.id;
   }
   compararPeriodo(o1:Periodo, o2:Periodo): boolean{
+    this.cont++;
     if(o1===undefined && o2===undefined){
       return true;
+    }
+    if(this.cont==4){
+      this.loading=false;
     }
     return o1 == null || o2== null ? false: o1.id===o2.id;
   }
   compararCarrera(o1:Carrera, o2:Carrera): boolean{
+    this.cont++;
     if(o1===undefined && o2===undefined){
       return true;
+    }
+    if(this.cont==4){
+      this.loading=false;
     }
     return o1 == null || o2== null ? false: o1.id===o2.id;
   }

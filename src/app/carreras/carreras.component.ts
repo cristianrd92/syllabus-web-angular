@@ -13,14 +13,18 @@ export class CarrerasComponent implements OnInit {
 
   carreras: Carrera[];
   dtOptions: DataTables.Settings = {};
+  public loading:boolean=false;
 
   constructor( private carreraService: CarreraService ,
     public authService: AuthService) { }
 
   ngOnInit() {
+    this.loading=true;
     this.carreraService.getCarreras().subscribe(
-      carreras => this.carreras = carreras
-    );
+      carreras => {
+        this.carreras = carreras;
+        this.loading=false;
+      });
     this.dtOptions = {
       language: DatatablesEspaniol.spanish_datatables
     };
@@ -41,9 +45,11 @@ export class CarrerasComponent implements OnInit {
       reverseButtons: true
     }).then((result) =>{
       if (result.value){
+        this.loading=true;
         this.carreraService.delete(carrera.id).subscribe(
           response => {
             this.carreras = this.carreras.filter(car => car !== carrera)
+            this.loading=false;
             swal(
               'Borrado!',
               'La carrera ha sido borrada',

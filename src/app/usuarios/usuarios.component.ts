@@ -13,14 +13,18 @@ export class UsuariosComponent implements OnInit {
 
   usuarios: Usuario[];
   dtOptions: DataTables.Settings = {};
+  public loading:boolean = false;
 
   constructor( private usuarioService: UsuarioService ,
     public authService: AuthService) { }
 
   ngOnInit() {
+    this.loading=true;
     this.usuarioService.getUsuarios().subscribe(
-      usuarios => this.usuarios = usuarios
-    );
+      usuarios => {
+        this.usuarios = usuarios;
+        this.loading=false;
+      });
     this.dtOptions = {
       language: DatatablesEspaniol.spanish_datatables
     };
@@ -41,9 +45,11 @@ export class UsuariosComponent implements OnInit {
       reverseButtons: true
     }).then((result) =>{
       if (result.value){
+        this.loading=true;
         this.usuarioService.delete(usuario.id).subscribe(
           response => {
-            this.usuarios = this.usuarios.filter(use => use !== usuario)
+            this.usuarios = this.usuarios.filter(use => use !== usuario);
+            this.loading=false;
             swal(
               'Borrado!',
               'El usuario ha sido borrada',

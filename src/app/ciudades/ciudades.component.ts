@@ -16,11 +16,15 @@ export class CiudadesComponent implements OnInit {
 
   constructor( private ciudadService: CiudadService ,
     public authService: AuthService) { }
+    public loading:boolean = false;
 
   ngOnInit() {
+    this.loading = true;
     this.ciudadService.getCiudades().subscribe(
-      ciudades => this.ciudades = ciudades
-    );
+      ciudades => {
+        this.ciudades = ciudades
+        this.loading = false; 
+      });
     this.dtOptions = {
       language: DatatablesEspaniol.spanish_datatables
     };
@@ -41,9 +45,11 @@ export class CiudadesComponent implements OnInit {
       reverseButtons: true
     }).then((result) =>{
       if (result.value){
+        this.loading = true;
         this.ciudadService.delete(ciudad.id).subscribe(
           response => {
             this.ciudades = this.ciudades.filter(ciu => ciu !== ciudad)
+            this.loading = false;
             swal(
               'Borrado!',
               'La ciudad ha sido borrada',

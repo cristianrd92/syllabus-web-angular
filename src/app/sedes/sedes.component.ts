@@ -13,14 +13,18 @@ export class SedesComponent implements OnInit {
 
   sedes: Sede[];
   dtOptions: DataTables.Settings = {};
+  public loading= false;
 
   constructor( private sedeService: SedeService ,
     public authService: AuthService) { }
 
   ngOnInit() {
+    this.loading=true;
     this.sedeService.getSedes().subscribe(
-      sedes => this.sedes = sedes
-    );
+      sedes => {
+        this.sedes = sedes;
+        this.loading=false;
+      });
     this.dtOptions = {
       language: DatatablesEspaniol.spanish_datatables
     };
@@ -41,9 +45,11 @@ export class SedesComponent implements OnInit {
       reverseButtons: true
     }).then((result) =>{
       if (result.value){
+        this.loading=true;
         this.sedeService.delete(sede.id).subscribe(
           response => {
             this.sedes = this.sedes.filter(sed => sed !== sede)
+            this.loading=false;
             swal(
               'Borrado!',
               'La sede ha sido borrada',

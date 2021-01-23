@@ -5,8 +5,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
 import { Location } from '@angular/common';
 
-import { Carrera } from '../carreras/carrera';
-import { Usuario } from '../usuarios/usuario';
 import { Ramo } from '../ramos/ramo';
 import { MallaCurricular } from './malla_curricular';
 import { Semestre } from '../semestres/semestre';
@@ -21,10 +19,9 @@ import { RamoService } from '../ramos/ramo.service';
 export class FormDetalleMallaEditarComponent implements OnInit {
   public detalle_malla: DetalleMallaCurricular = new DetalleMallaCurricular()
 
-  private malla_id;
   ramos: Ramo[];
   malla: MallaCurricular;
-
+  public loading:boolean = false;
   semestres: Semestre[];
   public titulo:string = "Asignar Ramo a Malla"
   public errores:string[]
@@ -37,19 +34,20 @@ export class FormDetalleMallaEditarComponent implements OnInit {
     private _location: Location){ }
 
   ngOnInit(): void {
-    this.cargarJefeCarrera(),
+    this.cargarMalla(),
     this.cargarRamos(),
     this.cargarSemestres()
   }
 
-  cargarJefeCarrera(): void {
+  cargarMalla(): void {
     this.activedRoute.params.subscribe(params=> {
       let id = params['id']
       if (id){
+        this.loading=true;
         this.titulo ="Editar Ramo Malla Carrera";
         this.mallaService.getMallaEditar(id).subscribe( (malla) => {
-          console.log(malla)
           this.detalle_malla = malla;
+          this.loading=false;
         })
       }
     })
@@ -59,24 +57,26 @@ export class FormDetalleMallaEditarComponent implements OnInit {
     this.ramoService.getRamos().subscribe(ramos => { 
       this.ramos = ramos 
     });
-}
-cargarSemestres(): void {
-  this.semestreService.getSemestres().subscribe(semestres =>{
-    this.semestres = semestres;
-  })
-}
+  }
+  cargarSemestres(): void {
+    this.semestreService.getSemestres().subscribe(semestres =>{
+      this.semestres = semestres;
+    })
+  }
 
   update(): void{
+    this.loading=true;
     this.malla = JSON.parse(localStorage.getItem('malla_obj'));
     this.mallaService.updateDetalle(this.detalle_malla)
     .subscribe(malla => {
       this.router.navigate(['/mallas/ramos/'+this.malla.id])
+      this.loading=false;
       swal("Detalle malla actualizado", `Detalle malla actualizado con exito`, 'success')
     },
     err => {
-      this.errores = err.error.errors as string[]
-    }
-    )
+      this.errores = err.error.errors as string[];
+      this.loading=false;
+    })
   }
   goBack(){
     this._location.back();

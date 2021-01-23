@@ -29,6 +29,7 @@ export class FormDetalleMallaComponent implements OnInit {
     private malla_id;
     ramos: Ramo[];
     malla: MallaCurricular;
+    public loading:boolean=false;
 
     semestres: Semestre[];
 
@@ -45,9 +46,10 @@ export class FormDetalleMallaComponent implements OnInit {
     this.activedRoute.params.subscribe(params=> {
       let id = params['id']
       if (id){
-        this.titulo ="Editar detalle malla";
+        this.loading=true;
         this.mallaService.getMalla(id).subscribe( (malla) => {
           this.malla = malla;
+          this.loading=false;
         })
       }
     })
@@ -59,7 +61,7 @@ export class FormDetalleMallaComponent implements OnInit {
         this.malla_id=id;
         this.malla = JSON.parse(localStorage.getItem('malla_obj'));
         this.mallaService.getRamosMalla(this.malla).subscribe(ramos => { 
-        this.ramos = ramos 
+          this.ramos = ramos 
         });
       });
   }
@@ -71,16 +73,18 @@ export class FormDetalleMallaComponent implements OnInit {
 
 
   create(): void{
+    this.loading=true;
     this.malla = JSON.parse(localStorage.getItem('malla_obj'));
     this.detalle_malla.malla_curricular = this.malla;
     this.mallaService.crearDetalle(this.detalle_malla)
     .subscribe(malla => {
-      console.log(malla)
       this.router.navigate(['/mallas/ramos/'+this.malla.id])
+      this.loading=false;
       swal("Ramo asignado", `Ramo asignado con exito a la malla`, 'success')
     },
     err => {
-      this.errores = err.error.errors as string[]
+      this.errores = err.error.errors as string[];
+      this.loading=false;
     }
     );
   }

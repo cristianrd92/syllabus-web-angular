@@ -12,15 +12,19 @@ import { DatatablesEspaniol } from '../helper/datatables.component';
 export class SemestreComponent implements OnInit {
 
   semestres: Semestre[];
+  public loading:boolean=false;
   dtOptions: DataTables.Settings = {};
 
   constructor( private semestreService: SemestreService ,
     public authService: AuthService) { }
 
   ngOnInit() {
+    this.loading=true;
     this.semestreService.getSemestres().subscribe(
-      semestres => this.semestres = semestres
-    );
+      semestres => {
+        this.semestres = semestres;
+        this.loading=false;
+      });
     this.dtOptions = {
       language: DatatablesEspaniol.spanish_datatables
     };
@@ -41,9 +45,11 @@ export class SemestreComponent implements OnInit {
       reverseButtons: true
     }).then((result) =>{
       if (result.value){
+        this.loading=true;
         this.semestreService.delete(semestre.id).subscribe(
           response => {
             this.semestres = this.semestres.filter(mall => mall !== semestre)
+            this.loading=false;
             swal(
               'Borrado!',
               'El semestre ha sido borrada',

@@ -1,9 +1,10 @@
+<ngx-loading [show]="loading"></ngx-loading>
 <div class="card mb-3">
   <div class="card-header">{{carrera?.nombre_carrera | uppercase }}</div>
   <div class="card-body text-secondary">
     <h5 class="card-title">Listado docentes asignados a comisión</h5>
   <div class="my-2 text-left">
-    <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" class="btn btn-rounded btn-primary" [routerLink] = "['/carreras/comision/asignar',carrera?.id]">Asignar docente a comisión</button>
+    <button *ngIf="authService.hasRole('ROLE_C_COMISION')" type="button" class="btn btn-rounded btn-primary" [routerLink] = "['/carreras/comision/asignar',carrera?.id]">Asignar docente a comisión</button>
   </div>
   <div *ngIf="comisiones?.length==0" class="alert alert-info">
     No hay registros en la base de datos
@@ -13,13 +14,13 @@
       <thead>
         <tr>
           <th>Nombre Docente</th>
-          <th>Remover de Comisión</th>
+          <th *ngIf="authService.hasRole('ROLE_E_COMISION')">Remover de Comisión</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let comision of comisiones">
           <td>{{ comision.usuario.nombres | uppercase }} {{ comision.usuario.apellidos | uppercase}}</td>
-          <td *ngIf="authService.hasRole('ROLE_ADMIN')">
+          <td *ngIf="authService.hasRole('ROLE_E_COMISION')">
             <button type="button" name="eliminar" class="btn btn-danger" (click)='delete(comision)'>Remover</button>
           </td>
         </tr>

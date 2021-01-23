@@ -18,7 +18,7 @@ export class FormPerfilComponent implements OnInit {
   permisos: Permiso[];
   public errores:string[];
   public elementos: ElementRef;
-  public loading = false;
+  public loading:boolean = false;
   
   tabla = '';
 
@@ -60,6 +60,7 @@ export class FormPerfilComponent implements OnInit {
     }
     this.tabla+='</tr>'
     this.tabla+='</tbody></table>'
+    this.loading=false
     //this.html = this.sanitized.bypassSecurityTrustHtml(this.tabla);
   }
 
@@ -94,6 +95,7 @@ export class FormPerfilComponent implements OnInit {
     }
     this.tabla+='</tr>'
     this.tabla+='</tbody></table>'
+    this.loading=false;
     //this.html = this.sanitized.bypassSecurityTrustHtml(this.tabla);
   }
 
@@ -110,8 +112,10 @@ export class FormPerfilComponent implements OnInit {
   cargarPerfiles(): void {
     this.activedRoute.params.subscribe(params=> {
       let id = params['id']
+      this.loading=true;
       if (id){
         this.perfilService.getPerfil(id).subscribe( (perfil) => {
+          this.titulo = "Editar pefil"
           this.perfil = perfil;
           this.cargarPermisosEditar(perfil);
         } )
@@ -145,74 +149,73 @@ export class FormPerfilComponent implements OnInit {
       this.permisos = permisos;
     });
   }
-
  
-   validar() {
+  validar() {
     var checkboxes = document.querySelectorAll('input[name="permiso"]:checked'), values = [];
     Array.prototype.forEach.call(checkboxes, function(el) {
-      if(parseInt(el.value) > 5 && parseInt(el.value) < 9){
+      if(parseInt(el.value) >= 5 && parseInt(el.value) < 9){
         values.push(el.value)
-          if(!values.includes(5)){
+          if(!values.includes("5")){
             values.push(5)
           }
-      }else if(parseInt(el.value) > 9 && parseInt(el.value) < 13){
+      }else if(parseInt(el.value) >= 9 && parseInt(el.value) < 13){
         values.push(el.value)
-          if(!values.includes(9)){
+          if(!values.includes("9") ){
             values.push(9)
           }
-      }else if(parseInt(el.value) > 13 && parseInt(el.value) < 17){
+      }else if(parseInt(el.value) >= 13 && parseInt(el.value) < 17){
         values.push(el.value)
-          if(!values.includes(13)){
+          if(!values.includes("13")){
             values.push(13)
           }
-      } else if(parseInt(el.value) > 17 && parseInt(el.value) < 21){
+      } else if(parseInt(el.value) >= 17 && parseInt(el.value) < 21){
         values.push(el.value)
-          if(!values.includes(17)){
+          if(!values.includes("17")){
             values.push(17)
           }
-      }else if(parseInt(el.value) > 21 && parseInt(el.value) < 25){
+      }else if(parseInt(el.value) >= 21 && parseInt(el.value) < 25){
         values.push(el.value)
-          if(!values.includes(21)){
+          if(!values.includes("21")){
             values.push(21)
           }
-      }else if(parseInt(el.value) > 25 && parseInt(el.value) < 29){
+      }else if(parseInt(el.value) >= 25 && parseInt(el.value) < 29){
         values.push(el.value)
-          if(!values.includes(25)){
+          if(!values.includes("25")){
             values.push(25)
           }
-      }else if(parseInt(el.value) > 29 && parseInt(el.value) < 33){
+      }else if(parseInt(el.value) >= 29 && parseInt(el.value) < 33){
         values.push(el.value)
-          if(!values.includes(29)){
+          if(!values.includes("29")){
             values.push(29)
           }
-      }else if(parseInt(el.value) > 33 && parseInt(el.value) < 37){
+      }else if(parseInt(el.value) >= 33 && parseInt(el.value) < 37){
         values.push(el.value)
-          if(!values.includes(33)){
+          if(!values.includes("33")){
             values.push(33)
           }
-      }else if(parseInt(el.value) > 37 && parseInt(el.value) < 41){
+      }else if(parseInt(el.value) >= 37 && parseInt(el.value) < 41){
         values.push(el.value)
-          if(!values.includes(37)){
+          if(!values.includes("37")){
             values.push(37)
           }
-      }else if(parseInt(el.value) > 41 && parseInt(el.value) < 45){
+      }else if(parseInt(el.value) >= 41 && parseInt(el.value) < 45){
         values.push(el.value)
-          if(!values.includes(41)){
+          if(!values.includes("41")){
             values.push(41)
           }
-      }else if(parseInt(el.value) > 45 && parseInt(el.value) < 49){
+      }else if(parseInt(el.value) >= 45 && parseInt(el.value) < 49){
         values.push(el.value)
-          if(!values.includes(45)){
+          if(!values.includes("45")){
             values.push(45)
           }
-      }else if(parseInt(el.value) > 49 && parseInt(el.value) < 53){
+      }else if(parseInt(el.value) >= 49 && parseInt(el.value) < 53){
         values.push(el.value)
-          if(!values.includes(49)){
+          if(!values.includes("49")){
             values.push(49)
           }
-      }else if(parseInt(el.value) > 53 && parseInt(el.value) < 57){
+      }else if(parseInt(el.value) >= 53 && parseInt(el.value) < 57){
         values.push(el.value)
-          if(!values.includes(53)){
+          if(!values.includes("53")){
             values.push(53)
           }
       }
@@ -228,14 +231,14 @@ export class FormPerfilComponent implements OnInit {
       this.perfil.temporales = this.validar()
       this.perfilService.create(this.perfil)
       .subscribe(perfil => {
+        this.router.navigate(['/perfiles']);
         this.loading = false;
-        this.router.navigate(['/perfiles'])
-        swal("Nuevo perfil", `Perfil creado con exito`, 'success')
+        swal("Nuevo perfil", `Perfil creado con exito`, 'success');
       },
       err => {
-        this.errores = err.error.errors as string[]
-      }
-      );
+        this.errores = err.error.errors as string[];
+        this.loading = false;
+      });
     }
   }
 
@@ -247,15 +250,14 @@ export class FormPerfilComponent implements OnInit {
       this.perfil.temporales = this.validar()
       this.perfilService.update(this.perfil)
       .subscribe(perfil => {
-        this.loading = false;
         this.router.navigate(['/perfiles'])
+        this.loading = false;
         swal("Perfil actualizado", `Perfil actualizado con exito`, 'success')
       },
       err => {
+        this.errores = err.error.errors as string[];
         this.loading = false;
-        this.errores = err.error.errors as string[]
-      }
-      )
+      })
     }
   }
 }

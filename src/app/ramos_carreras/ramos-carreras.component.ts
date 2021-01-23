@@ -12,15 +12,19 @@ import { DatatablesEspaniol } from '../helper/datatables.component';
 export class RamosCarrerasComponent implements OnInit {
 
   ramos_carreras: RamoCarrera[];
+  public loading:boolean=false;
   dtOptions: DataTables.Settings = {};
 
   constructor( private ramoCarreraService: RamoCarreraService ,
     public authService: AuthService) { }
 
   ngOnInit() {
+    this.loading=true;
     this.ramoCarreraService.getRamosCarreras().subscribe(
-      ramos_carreras => this.ramos_carreras = ramos_carreras
-    );
+      ramos_carreras => {
+        this.ramos_carreras = ramos_carreras;
+        this.loading=false;
+      });
     this.dtOptions = {
       language: DatatablesEspaniol.spanish_datatables
     };
@@ -41,9 +45,11 @@ export class RamosCarrerasComponent implements OnInit {
       reverseButtons: true
     }).then((result) =>{
       if (result.value){
+        this.loading=true;
         this.ramoCarreraService.delete(ramo_carrera.id).subscribe(
           response => {
             this.ramos_carreras = this.ramos_carreras.filter(ram_car => ram_car !== ramo_carrera)
+            this.loading=false;
             swal(
               'Borrado!',
               'El ramo carrera ha sido borrada',

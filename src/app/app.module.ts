@@ -68,7 +68,6 @@ import { FormPasswordComponent } from './usuarios/form.password.component';
 import { FormDetalleMallaComponent } from './malla_curricular/form.detalle_malla';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MallaCurricularVerComponent } from './malla_curricular/malla_curricular.ver.component';
-import { CardComponent } from './malla_curricular/card.component';
 import { FormComisionComponent } from './comision/form.comision.component';
 import { FormSistemaComponent } from './sistema/form.sistema.component';
 import { SistemaService } from './sistema/sistema.service';
@@ -131,27 +130,28 @@ const routes: Routes = [
   {path: 'mallas/ramos/editar/:id', component:FormDetalleMallaEditarComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_M_MALLA"}},
   {path: 'mallas/ver/:id', component:MallaCurricularVerComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_V_MALLA"}},
 
-  {path: 'mallasCarrera', component:MallaCarreraComponent},
-  {path: 'ramosDocentes', component:RamosDocentesComponent},
+  {path: 'mallasCarrera', component:MallaCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_JEFE_CARRERA"}},
+  {path: 'ramosDocentes', component:RamosDocentesComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_DOCENTE"}},
 
-  {path: 'jefesCarreras', component:JefesCarrerasComponent},
-  {path: 'jefesCarreras/form', component:FormJefeCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
-  {path: 'jefesCarreras/form/:id', component:FormJefeCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
+  //LISTO
+  {path: 'jefesCarreras', component:JefesCarrerasComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_V_JEFE_CARRERA"}},
+  {path: 'jefesCarreras/form', component:FormJefeCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_C_JEFE_CARRERA"}},
+  {path: 'jefesCarreras/form/:id', component:FormJefeCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_M_JEFE_CARRERA"}},
 
-
-  {path: 'semestres', component:SemestreComponent},
-  {path: 'semestres/form', component:FormSemestreComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
-  {path: 'semestres/form/:id', component:FormSemestreComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
+  //LISTO
+  {path: 'semestres', component:SemestreComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_V_SEMESTRE"}},
+  {path: 'semestres/form', component:FormSemestreComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_C_SEMESTRE"}},
+  {path: 'semestres/form/:id', component:FormSemestreComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_M_SEMESTRE"}},
   
-  {path: 'syllabusPendientes', component:ComisionComponent},
+  {path: 'syllabusPendientes', component:ComisionComponent, data: {role:"ROLE_COMISION"}},
   {path: 'syllabusPendientes/form/:id', component:FormComisionComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_COMISION"}},
   //LISTO
   {path: 'usuarios', component:UsuariosComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_V_USUARIO"}},
   {path: 'usuarios/form', component:FormUsuarioComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_M_USUARIO"}},
   {path: 'usuarios/form/:id', component:FormUsuarioComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_E_USUARIO"}},
   
-  {path: 'carreras/comision/:id', component:ComisionCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
-  {path: 'carreras/comision/asignar/:id', component:FormComisionCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_ADMIN"}},
+  {path: 'carreras/comision/:id', component:ComisionCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_V_COMISION"}},
+  {path: 'carreras/comision/asignar/:id', component:FormComisionCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_C_COMISION"}},
 
 ]
 
@@ -195,7 +195,6 @@ const routes: Routes = [
     MallaCurricularRamosComponent,
     MallaCurricularVerComponent,
     FormDetalleMallaComponent,
-    CardComponent,
     FormComisionComponent,
     FormSistemaComponent,
     JefesCarrerasComponent,
@@ -207,7 +206,7 @@ const routes: Routes = [
     BrowserModule,
     RouterModule.forRoot(routes),
     NgxLoadingModule.forRoot({animationType: ngxLoadingAnimationTypes.wanderingCubes,
-      backdropBackgroundColour: 'rgba(0,0,0,0.1)', 
+      backdropBackgroundColour: 'rgba(0,0,0,0.6)', 
       backdropBorderRadius: '4px',
       primaryColour: '#ffffff', 
       secondaryColour: '#ffffff', 

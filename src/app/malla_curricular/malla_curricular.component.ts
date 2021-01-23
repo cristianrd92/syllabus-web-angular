@@ -13,14 +13,18 @@ export class MallaCurricularComponent implements OnInit {
 
   mallas: MallaCurricular[];
   dtOptions: DataTables.Settings = {};
+  public loading:boolean = false;
 
   constructor( private mallaService: MallaCurricularService ,
     public authService: AuthService) { }
 
   ngOnInit() {
+    this.loading=true;
     this.mallaService.getMallas().subscribe(
-      mallas => this.mallas = mallas
-    );
+      mallas => {
+        this.mallas = mallas;
+        this.loading=false;
+      });
     this.dtOptions = {
       language: DatatablesEspaniol.spanish_datatables
     };
@@ -41,9 +45,11 @@ export class MallaCurricularComponent implements OnInit {
       reverseButtons: true
     }).then((result) =>{
       if (result.value){
+        this.loading=true;
         this.mallaService.delete(malla.id).subscribe(
           response => {
             this.mallas = this.mallas.filter(mall => mall !== malla)
+            this.loading=false;
             swal(
               'Borrado!',
               'La malla ha sido borrada',

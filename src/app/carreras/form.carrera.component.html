@@ -1,3 +1,4 @@
+<ngx-loading [show]="loading"></ngx-loading>
 <ul class="alert alert-danger" *ngIf="errores?.length > 0">
   <li *ngFor="let err of errores">
     {{ err }}
@@ -43,7 +44,7 @@
         <div class="col-sm-6">
           <select [compareWith]="compararFacultad" class="form-control" [(ngModel)]="carrera.facultad" name="facultad" required #facultad="ngModel">
             <option [ngValue]="undefined" > --- Seleccione una facultad ---</option>
-            <option *ngFor="let facultad of facultades" [ngValue]="facultad">{{facultad.nombre_facultad}}</option>
+            <option *ngFor="let facultad of facultades" [ngValue]="facultad">{{facultad.nombre_facultad}} - {{facultad.sede.nombre_sede}}</option>
           </select>
           <div class="alert alert-danger" *ngIf="facultad.invalid && (facultad.dirty || facultad.touched)">
             <div *ngIf="facultad.errors.required">

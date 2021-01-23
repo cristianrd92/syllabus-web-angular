@@ -1,9 +1,10 @@
+<ngx-loading [show]="loading"></ngx-loading>
 <div class="card mb-3">
   <div class="card-header">Agregar ramo a malla</div>
   <div class="card-body text-secondary">
     <h5 class="card-title">Listado de ramos en malla curricular</h5>
   <div class="my-2 text-left">
-    <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" class="btn btn-rounded btn-primary" [routerLink] = "['/mallas/ramos/asignar',malla?.id]">Asignar ramo</button>
+    <button *ngIf="authService.hasRole('ROLE_C_MALLA')" type="button" class="btn btn-rounded btn-primary" [routerLink] = "['/mallas/ramos/asignar',malla?.id]">Asignar ramo</button>
   </div>
   <div *ngIf="detalles?.length==0" class="alert alert-info">
     No hay registros en la base de datos
@@ -15,8 +16,8 @@
           <th>Nombre ramo</th>
           <th>Semestre</th>
           <th>Posición ramo en semestre</th>
-          <th *ngIf="authService.hasRole('ROLE_ADMIN')">Editar</th> 
-          <th *ngIf="authService.hasRole('ROLE_ADMIN')">Borrar</th> 
+          <th *ngIf="authService.hasRole('ROLE_M_MALLA')">Editar</th> 
+          <th *ngIf="authService.hasRole('ROLE_E_MALLA')">Borrar</th> 
         </tr>
       </thead>
       <tbody>
@@ -25,10 +26,10 @@
         <td>{{detalle.ramo.nombre_ramo | uppercase}}</td>
         <td>{{detalle.semestre.descripcion_semestre | uppercase}}</td>
         <td>{{detalle.posicion }}</td>
-        <td *ngIf="authService.hasRole('ROLE_ADMIN')">
+        <td *ngIf="authService.hasRole('ROLE_M_MALLA')">
           <button type="button" name="editar" class="btn btn-primary" [routerLink]="['/mallas/ramos/editar', detalle.id]">Editar</button>
       </td>
-        <td *ngIf="authService.hasRole('ROLE_ADMIN')">
+        <td *ngIf="authService.hasRole('ROLE_E_MALLA')">
             <button type="button" name="eliminar" class="btn btn-danger" (click)='delete(detalle)'>Eliminar</button>
         </td>
         </tr>

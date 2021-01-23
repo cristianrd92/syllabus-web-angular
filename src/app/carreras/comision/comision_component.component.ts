@@ -17,6 +17,7 @@ export class ComisionCarreraComponent implements OnInit {
   comisiones: Comision[];
   carrera: Carrera;
   dtOptions: DataTables.Settings = {};
+  public loading:boolean=false;
 
   constructor( 
     private comisionService: ComisionCarreraService,
@@ -29,11 +30,15 @@ export class ComisionCarreraComponent implements OnInit {
     this.activedRoute.params.subscribe(params=> {
       let id = params['id']
       if (id){
+        this.loading=true;
         this.carreraService.getCarrera(id).subscribe( carrera => {
-          this.carrera = carrera
+          this.carrera = carrera;
           localStorage.setItem("carrera_obj", JSON.stringify(carrera))
         })
-        this.comisionService.getComisiones(id).subscribe( (comisiones) => this.comisiones = comisiones)
+        this.comisionService.getComisiones(id).subscribe( (comisiones) => {
+          this.comisiones = comisiones;
+          this.loading=false;
+        })
       }
     })
     this.dtOptions = {
@@ -58,9 +63,11 @@ export class ComisionCarreraComponent implements OnInit {
       reverseButtons: true
     }).then((result) =>{
       if (result.value){
+        this.loading=true;
         this.comisionService.delete(comision.id).subscribe(
           response => {
             this.comisiones = this.comisiones.filter(com => com !== comision)
+            this.loading=false;
             swal(
               'Borrado!',
               'El usuario ha sido borrada de la comisión',

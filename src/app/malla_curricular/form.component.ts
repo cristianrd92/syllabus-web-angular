@@ -18,6 +18,7 @@ export class FormMallaCurricularComponent implements OnInit {
   public titulo:string = "Crear Malla";
   public errores:string[];
   carreras: Carrera[];
+  public loading:boolean = false;
 
   constructor(public authService:AuthService,
     private ramoCarreraService: RamoCarreraService,
@@ -51,32 +52,41 @@ export class FormMallaCurricularComponent implements OnInit {
     this.activedRoute.params.subscribe(params=> {
       let id = params['id']
       if (id){
-        this.mallaService.getMalla(id).subscribe( (malla) => this.malla = malla)
+        this.loading=true;
+        this.titulo ="Editar Malla";
+        this.mallaService.getMalla(id).subscribe( (malla) => {
+          this.malla = malla
+          this.loading=false;
+        })
       }
     })
   }
 
   create(): void{
+    this.loading=true;
     this.mallaService.create(this.malla)
     .subscribe(malla => {
       this.router.navigate(['/mallas'])
+      this.loading=false;
       swal("Nueva malla", `Malla creada ${malla.descripcion_malla} con exito`, 'success')
     },
     err => {
-      this.errores = err.error.errors as string[]
-    }
-    );
+      this.errores = err.error.errors as string[];
+      this.loading=false;
+    });
   }
 
   update(): void{
+    this.loading=true;
     this.mallaService.update(this.malla)
     .subscribe(malla => {
       this.router.navigate(['/mallas'])
+      this.loading=false;
       swal("Malla actualizada", `Malla ${malla.descripcion_malla} actualizada con exito`, 'success')
     },
     err => {
-      this.errores = err.error.errors as string[]
-    }
-    )
+      this.errores = err.error.errors as string[];
+      this.loading=false;
+    })
   }
 }

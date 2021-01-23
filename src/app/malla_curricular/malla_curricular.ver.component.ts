@@ -21,6 +21,7 @@ export class MallaCurricularVerComponent implements OnInit {
   detalles: MallaDetalle[];
   malla: MallaCurricular;
   tabla = '';
+  public loading:boolean = false;
   dtOptions: DataTables.Settings = {};
 
   constructor( private mallaService: MallaCurricularService ,
@@ -34,10 +35,10 @@ export class MallaCurricularVerComponent implements OnInit {
     this.activedRoute.params.subscribe(params=> {
       let id = params['id']
       if (id){
+        this.loading=true;
         this.mallaService.getDetalleMalla(id).subscribe(detalles=>{
-          console.log(detalles)
-          this.tablaMalla(detalles)
           this.detalles = detalles
+          this.tablaMalla(detalles)
         })
       }
     })
@@ -58,8 +59,6 @@ export class MallaCurricularVerComponent implements OnInit {
         fila = detalles[t].posicion_semestre
       }
     }
-    console.log(fila);
-    console.log(columna);
     this.tabla+='<table class="table cardnew table-responsive table-borderless">';
     this.tabla+='<thead><tr>'
     
@@ -102,6 +101,6 @@ export class MallaCurricularVerComponent implements OnInit {
       this.tabla+='</tr>'
     }
     this.tabla+='</tbody></table>'
-    
+    this.loading=false;
   }
 }

@@ -1,9 +1,10 @@
+<ngx-loading [show]="loading"></ngx-loading>
 <div class="card mb-3">
   <div class="card-header">Directores Escuela</div>
   <div class="card-body text-secondary">
     <h5 class="card-title">Listado Directores Escuela</h5>
   <div class="my-2 text-left">
-    <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" class="btn btn-rounded btn-primary" [routerLink] = "['/jefesCarreras/form']">Asignar director de escuela</button>
+    <button *ngIf="authService.hasRole('ROLE_C_JEFE_CARRERA')" type="button" class="btn btn-rounded btn-primary" [routerLink] = "['/jefesCarreras/form']">Asignar director de escuela</button>
   </div>
   <div *ngIf="jefes_carreras?.length==0" class="alert alert-info">
     No hay registros en la base de datos
@@ -13,14 +14,14 @@
         <tr>
           <th>Carrera</th>
           <th>Docente</th>
-          <th *ngIf="authService.hasRole('ROLE_ADMIN')">Borrar</th>
+          <th *ngIf="authService.hasRole('ROLE_E_JEFE_CARRERA')">Borrar</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let jefe_carrera of jefes_carreras">
           <td>{{jefe_carrera.carrera.nombre_carrera | uppercase}}</td>
           <td>{{jefe_carrera.usuario.nombres | uppercase}} {{jefe_carrera.usuario.apellidos | uppercase}}</td>
-          <td *ngIf="authService.hasRole('ROLE_ADMIN')">
+          <td *ngIf="authService.hasRole('ROLE_E_JEFE_CARRERA')">
             <button type="button" name="eliminar" class="btn btn-danger" (click)='delete(jefe_carrera)'>Eliminar</button>
           </td>
         </tr>

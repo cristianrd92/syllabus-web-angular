@@ -18,6 +18,8 @@ export class MallaCurricularRamosComponent implements OnInit {
   detalles: DetalleMallaCurricular[];
   malla: MallaCurricular;
   dtOptions: DataTables.Settings = {};
+  public loading:boolean = false;
+
 
   constructor( private mallaService: MallaCurricularService ,
     public authService: AuthService,
@@ -29,13 +31,14 @@ export class MallaCurricularRamosComponent implements OnInit {
     this.activedRoute.params.subscribe(params=> {
       let id = params['id']
       if (id){
+        this.loading=true;
         this.mallaService.getMalla(id).subscribe(malla=>{
           this.malla = malla
           localStorage.setItem("malla_obj", JSON.stringify(malla))
         })
         this.mallaService.getDetalleMallaEliminar(id).subscribe(detalles=>{
-          console.log(detalles)
-          this.detalles = detalles
+          this.detalles = detalles;
+          this.loading=false;
         })
       }
     })
@@ -60,9 +63,11 @@ export class MallaCurricularRamosComponent implements OnInit {
       reverseButtons: true
     }).then((result) =>{
       if (result.value){
+        this.loading=true;
         this.mallaService.deleteDetalle(detalle.id).subscribe(
           response => {
             this.detalles = this.detalles.filter(det => det !== detalle)
+            this.loading=false;
             swal(
               'Borrado!',
               'El ramo ha sido borrada de esta malla',

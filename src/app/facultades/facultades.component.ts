@@ -13,24 +13,28 @@ export class FacultadesComponent implements OnInit {
 
   facultades: Facultad[];
   dtOptions: any = {};
+  public loading:boolean=false
 
   constructor( private facultadService: FacultadService ,
     public authService: AuthService) { }
 
   ngOnInit() {
+    this.loading=true;
     this.facultadService.getFacultades().subscribe(
-      facultades => this.facultades = facultades
-    );
+      facultades => {
+        this.facultades = facultades;
+        this.loading=false;
+      });
     this.dtOptions = {
       language: DatatablesEspaniol.spanish_datatables,
-      dom: 'Bfrtip',
-      buttons: [
-        'copy',
-        'print',
-        'pdf',
-        'excel',
-        'csv'
-      ]
+      // dom: 'Bfrtip',
+      // buttons: [
+      //   'copy',
+      //   'print',
+      //   'pdf',
+      //   'excel',
+      //   'csv'
+      // ]
     };
   }
   delete(facultad: Facultad): void {
@@ -49,9 +53,11 @@ export class FacultadesComponent implements OnInit {
       reverseButtons: true
     }).then((result) =>{
       if (result.value){
+        this.loading=true;
         this.facultadService.delete(facultad.id).subscribe(
           response => {
             this.facultades = this.facultades.filter(fac => fac !== facultad)
+            this.loading=false;
             swal(
               'Borrado!',
               'La facultad ha sido borrada',

@@ -19,6 +19,7 @@ export class FormUsuarioComponent implements OnInit {
   carreras: Carrera[];
   public titulo:string = "Crear Usuario"
   public errores:string[]
+  public loading:boolean = false;
   // esJefe:boolean;
 
   constructor(private usuarioService: UsuarioService,private perfilService: PerfilService,
@@ -29,27 +30,22 @@ export class FormUsuarioComponent implements OnInit {
   ngOnInit(): void {
     // this.esJefe=false;
     this.cargarUsuario(),
-    this.cargarPerfiles(),
-    this.cargarCarreras()
+    this.cargarPerfiles()
   }
   // esJefeF(e) {
   //   this.esJefe = e.target.checked;
   // }
-
-  cargarCarreras(): void {
-    this.usuarioService.getCarreras().subscribe(carreras=>{
-      this.carreras = carreras;
-    })
-  }
   
   cargarPerfiles(): void {
+    this.loading=true;
     this.perfilService.getPerfiles().subscribe(perfiles => { 
-      delete(perfiles[1])
-      delete(perfiles[3])
+      delete(perfiles[0])
+      delete(perfiles[2])
       var filtered = perfiles.filter(function (el) {
         return el != null;
       });
-      this.perfiles = filtered 
+      this.perfiles = filtered ;
+      this.loading=false;
     });
   }
 
@@ -61,51 +57,52 @@ export class FormUsuarioComponent implements OnInit {
     this.activedRoute.params.subscribe(params=> {
       let id = params['id']
       if (id){
+        this.loading=true;
         this.titulo = "Editar Usuario";
         this.usuarioService.getUsuario(id).subscribe( (usuario) => {
-          console.log(usuario.nombres)
-          this.usuario = usuario
-          console.log(this.usuario.perfiles)
+          this.usuario = usuario;
+          this.loading=false;
         })
       }
     })
   }
 
   create(): void{
+    this.loading=true;
     this.usuario.perfiles = this.usuario.perfil
     this.usuario.username = this.usuario.rut_usuario.slice(0,-1);
     this.usuarioService.create(this.usuario)
     .subscribe(usuario => {
       this.router.navigate(['/usuarios'])
+      this.loading=false;
       swal("Nuevo usuario", `Usuario creado con exito`, 'success')
     },
     err => {
-      this.errores = err.error.errors as string[]
+      this.errores = err.error.errors as string[];
+      this.loading=false;
     }
     );
   }
 
   update(): void{
+    this.loading=true;
     this.usuario.perfiles = this.usuario.perfil
     this.usuario.username = this.usuario.rut_usuario.slice(0,-1);
     this.usuarioService.update(this.usuario)
     .subscribe(usuario => {
       this.router.navigate(['/usuarios'])
+      this.loading=false;
       swal("Usuario actualizado", `Usuario actualizado con exito`, 'success')
     },
     err => {
-      this.errores = err.error.errors as string[]
-    }
-    )
+      this.errores = err.error.errors as string[];
+      this.loading=false;
+    })
   }
   goBack(){
     this._location.back();
   }
   compararPerfil(o1:Perfil, o2:Perfil): boolean{
-    
-    console.log(o1)
-    console.log(o2)
-
     if(o1===undefined && o2===undefined){
       return true;
     }

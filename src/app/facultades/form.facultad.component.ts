@@ -15,8 +15,9 @@ export class FormFacultadComponent implements OnInit {
   public facultad: Facultad = new Facultad()
  
   sedes: Sede[];
-  public titulo:string = "Crear Facultad"
-  public errores:string[]
+  public titulo:string = "Crear Facultad";
+  public loading:boolean=false;
+  public errores:string[];
   
   constructor(private facultadService: FacultadService,
     private router: Router,
@@ -24,45 +25,60 @@ export class FormFacultadComponent implements OnInit {
     private _location: Location){ }
 
   ngOnInit(): void {
-    this.cargarFacultad(),
-    this.cargarSedes()
+    this.cargarSedes(),
+    this.cargarFacultad()
   }
   goBack(){
     this._location.back();
   }
 
   cargarSedes(): void {
-    this.facultadService.getSedes().subscribe(sedes => { this.sedes = sedes });
+    this.loading=true;
+    this.facultadService.getSedes().subscribe(sedes => { 
+      this.sedes = sedes;
+      this.loading=false;
+    });
   }
 
   cargarFacultad(): void {
     this.activedRoute.params.subscribe(params=> {
       let id = params['id']
       if (id){
-        this.facultadService.getFacultad(id).subscribe( (facultad) => this.facultad = facultad)
+        this.loading=true;
+        this.titulo = "Editar facultad"
+        this.facultadService.getFacultad(id).subscribe( (facultad) => {
+          this.facultad = facultad;
+          this.loading=false;
+        })
       }
     })
   }
 
   create(): void{
+    this.loading=true;
     this.facultadService.create(this.facultad)
     .subscribe(facultad => {
       this.router.navigate(['/facultades'])
+      this.loading=false;
       swal("Nueva facultad", `Facultad creada ${facultad.nombre_facultad} con exito`, 'success')
     },
     err => {
+      this.loading=false;
       this.errores = err.error.errors as string[]
     }
     );
   }
 
   update(): void{
+    this.loading=true;
     this.facultadService.update(this.facultad)
     .subscribe(facultad => {
       this.router.navigate(['/facultades'])
+      this.loading=false;
       swal("Facultad actualizada", `Facultad ${facultad.nombre_facultad} actualizada con exito`, 'success')
     },
     err => {
+      this.loading=false;
       this.errores = err.error.errors as string[]
     }
     )

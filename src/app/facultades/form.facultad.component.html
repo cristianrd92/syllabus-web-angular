@@ -1,3 +1,4 @@
+<ngx-loading [show]="loading"></ngx-loading>
 <ul class="alert alert-danger" *ngIf="errores?.length > 0">
   <li *ngFor="let err of errores">
     {{ err }}
@@ -41,7 +42,7 @@
           <button class="btn btn-primary" role="button" (click)='create()' *ngIf="!facultad.id; else elseBlock" [disabled]="!facultadForm.form.valid" >Crear</button>
 
           <ng-template #elseBlock>
-            <button class="btn btn-primary" role="button" (click)='update()' [disabled]="estado">Editar</button>
+            <button class="btn btn-primary" role="button" (click)='update()' [disabled]="!facultadForm.form.valid">Editar</button>
           </ng-template>
           <button class="btn btn-danger" mat-raised-button (click)="goBack()">Volver</button>
         </div>

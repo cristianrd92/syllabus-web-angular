@@ -13,6 +13,7 @@ export class FormRamoComponent implements OnInit {
   public ramo: Ramo = new Ramo()
   public titulo:string = "Crear Ramo"
   public errores:string[]
+  public loading:boolean=false;
 
   constructor(private ramoService: RamoService,
     private router: Router,
@@ -31,32 +32,42 @@ export class FormRamoComponent implements OnInit {
     this.activedRoute.params.subscribe(params=> {
       let id = params['id']
       if (id){
-        this.ramoService.getRamo(id).subscribe( (ramo) => this.ramo = ramo)
+        this.loading=true;
+        this.titulo = "Editar Ramo"
+        this.ramoService.getRamo(id).subscribe( (ramo) => {
+          this.ramo = ramo;
+          this.loading=false;
+        })
       }
     })
   }
 
   create(): void{
+    this.loading=true;
     this.ramoService.create(this.ramo)
     .subscribe(ramo => {
       this.router.navigate(['/ramos'])
+      this.loading=false;
       swal("Nuevo ramo", `Ramo ${ramo.nombre_ramo} creado con exito`, 'success')
     },
     err => {
+      this.loading=false;
       this.errores = err.error.errors as string[]
     }
     );
   }
 
   update(): void{
+    this.loading=true;
     this.ramoService.update(this.ramo)
     .subscribe(ramo => {
       this.router.navigate(['/ramos'])
+    this.loading=false;
       swal("Ramo actualizado", `Ramo ${ramo.nombre_ramo} actualizado con exito`, 'success')
     },
     err => {
+      this.loading=false;
       this.errores = err.error.errors as string[]
-    }
-    )
+    })
   }
 }

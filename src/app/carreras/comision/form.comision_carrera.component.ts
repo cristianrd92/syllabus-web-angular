@@ -20,6 +20,7 @@ export class FormComisionCarreraComponent implements OnInit {
   public errores:string[];
   public carrera_id:number;
   public carrera: Carrera;
+  public loading:boolean=false;
 
   constructor(private comisionService: ComisionCarreraService,
     private router: Router,
@@ -36,23 +37,28 @@ export class FormComisionCarreraComponent implements OnInit {
 
   cargarUsuariosSinComision(): void {
     this.activedRoute.params.subscribe(params=> {
-      let id = params['id']
+      this.loading=true;
+      let id = params['id'];
       this.carrera_id=id;
       this.comisionService.getUsuarios(id).subscribe(usuarios => { 
-      this.usuarios = usuarios 
+        this.usuarios = usuarios;
+        this.loading=false; 
       });
     });
   }
 
   create(): void{
+    this.loading=true;
     this.carrera = JSON.parse(localStorage.getItem('carrera_obj'));
     this.comision.carrera = this.carrera;
     this.comisionService.create(this.comision)
     .subscribe(comision => {
       this.router.navigate(['/carreras/comision/'+this.carrera_id])
+      this.loading=false;
       swal("Nuevo usuario a comisión", `Usuario agregado a comision con exito`, 'success')
     },
     err => {
+      this.loading=false;
       this.errores = err.error.errors as string[]
     });
   }

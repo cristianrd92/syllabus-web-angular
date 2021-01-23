@@ -1,3 +1,5 @@
+<ngx-loading [show]="loading"></ngx-loading>
+
 <ul class="alert alert-danger" *ngIf="errores?.length > 0">
   <li *ngFor="let err of errores">
     {{ err }}
@@ -13,7 +15,7 @@
         <div class="col-sm-6">
           <select class="form-control" [(ngModel)]="comision.usuario" name="usuario" required #usuario="ngModel">
             <option [ngValue]="undefined" > --- Seleccione un usuario ---</option>
-            <option *ngFor="let usuario of usuarios" [ngValue]="usuario">{{usuario.nombres}} {{usuario.apellidos}}</option>
+            <option *ngFor="let usuario of usuarios" [ngValue]="usuario">{{usuario.nombres | uppercase}} {{usuario.apellidos | uppercase}}</option>
           </select>
           <div class="alert alert-danger" *ngIf="usuario.invalid && (usuario.dirty || usuario.touched)">
             <div *ngIf="usuario.errors.required">

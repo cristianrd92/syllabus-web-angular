@@ -13,14 +13,18 @@ export class RamosComponent implements OnInit {
 
   ramos: Ramo[];
   dtOptions: DataTables.Settings = {};
+  public loading:boolean=false;
 
   constructor( private ramoService: RamoService ,
     public authService: AuthService) { }
 
   ngOnInit() {
+    this.loading=true;
     this.ramoService.getRamos().subscribe(
-      ramos => this.ramos = ramos
-    );
+      ramos => {
+        this.ramos = ramos;
+        this.loading=false;
+      });
     this.dtOptions = {
       language: DatatablesEspaniol.spanish_datatables
     };
@@ -41,9 +45,11 @@ export class RamosComponent implements OnInit {
       reverseButtons: true
     }).then((result) =>{
       if (result.value){
+        this.loading=true;
         this.ramoService.delete(ramo.id).subscribe(
           response => {
             this.ramos = this.ramos.filter(ram => ram !== ramo)
+            this.loading=false;
             swal(
               'Borrado!',
               'El ramo ha sido borrado',

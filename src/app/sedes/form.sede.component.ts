@@ -11,11 +11,12 @@ import { Location } from '@angular/common';
   templateUrl: './form.sede.component.html',
 })
 export class FormSedeComponent implements OnInit {
-  public sede: Sede = new Sede()
+  public sede: Sede = new Sede();
   ciudades: Ciudad[];
-  public titulo:string = "Crear Sede"
-  public errores:string[]
-
+  public titulo:string = "Crear Sede";
+  public errores:string[];
+  public loading:boolean=false;
+  
   constructor(private sedeService: SedeService,
     private router: Router,
     private activedRoute: ActivatedRoute,
@@ -27,37 +28,52 @@ export class FormSedeComponent implements OnInit {
   }
 
   cargarCiudades(): void {
-    this.sedeService.getCiudades().subscribe(ciudades => { this.ciudades = ciudades });
+    this.loading=true;
+    this.sedeService.getCiudades().subscribe(ciudades => { 
+      this.ciudades = ciudades;
+      this.loading=false
+    });
   }
 
   cargarSede(): void {
     this.activedRoute.params.subscribe(params=> {
       let id = params['id']
       if (id){
-        this.sedeService.getSede(id).subscribe( (sede) => this.sede = sede)
+        this.loading=true
+        this.titulo = "Editar Sede"
+        this.sedeService.getSede(id).subscribe( (sede) => {
+          this.sede = sede;
+          this.loading=false;
+        })
       }
     })
   }
 
   create(): void{
+    this.loading=true;
     this.sedeService.create(this.sede)
     .subscribe(sede => {
       this.router.navigate(['/sedes'])
+      this.loading=false;
       swal("Nueva sede", `Sede creada ${sede.nombre_sede} con exito`, 'success')
     },
     err => {
+      this.loading=false;
       this.errores = err.error.errors as string[]
     }
     );
   }
 
   update(): void{
+    this.loading=true;
     this.sedeService.update(this.sede)
     .subscribe(sede => {
       this.router.navigate(['/sedes'])
+      this.loading=false;
       swal("Sede actualizada", `Sede ${sede.nombre_sede} actualizada con exito`, 'success')
     },
     err => {
+      this.loading=false;
       this.errores = err.error.errors as string[]
     }
     )

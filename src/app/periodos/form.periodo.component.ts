@@ -10,9 +10,11 @@ import swal from 'sweetalert2';
   templateUrl: './form.periodo.component.html',
 })
 export class FormPeriodoComponent implements OnInit {
-  public periodo: Periodo = new Periodo()
-  public titulo:string = "Crear Periodo"
-  public errores:string[]
+  public periodo: Periodo = new Periodo();
+  public titulo:string = "Crear Periodo";
+  public errores:string[];
+  public loading:boolean=false;
+
 
   constructor(private periodoService: PeriodoService,
     private router: Router,
@@ -30,30 +32,40 @@ export class FormPeriodoComponent implements OnInit {
     this.activedRoute.params.subscribe(params=> {
       let id = params['id']
       if (id){
-        this.periodoService.getPeriodo(id).subscribe( (periodo) => this.periodo = periodo)
+        this.loading=true;
+        this.periodoService.getPeriodo(id).subscribe( (periodo) => {
+          this.periodo = periodo;
+          this.loading=false;
+        })
       }
     })
   }
 
   create(): void{
+    this.loading=true;
     this.periodoService.create(this.periodo)
     .subscribe(periodo => {
       this.router.navigate(['/periodos'])
+      this.loading=false;
       swal("Nuevo periodo", `Periodo ${periodo.nombre_periodo} creado con exito`, 'success')
     },
     err => {
+      this.loading=false;
       this.errores = err.error.errors as string[]
     }
     );
   }
 
   update(): void{
+    this.loading=true;
     this.periodoService.update(this.periodo)
     .subscribe(periodo => {
-      this.router.navigate(['/periodos'])
+      this.router.navigate(['/periodos']);
+      this.loading=false;
       swal("Periodo actualizado", `Periodo ${periodo.nombre_periodo} actualizadp con exito`, 'success')
     },
     err => {
+      this.loading=false;
       this.errores = err.error.errors as string[]
     }
     )

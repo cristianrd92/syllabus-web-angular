@@ -13,14 +13,19 @@ export class PeriodosComponent implements OnInit {
 
   periodos: Periodo[];
   dtOptions: DataTables.Settings = {};
+  public loading:boolean=false;
+
 
   constructor( private periodoService: PeriodoService ,
     public authService: AuthService) { }
 
   ngOnInit() {
+    this.loading=true;
     this.periodoService.getPeriodos().subscribe(
-      periodos => this.periodos = periodos
-    );
+      periodos => {
+        this.periodos = periodos
+        this.loading=false;
+      });
     this.dtOptions = {
       language: DatatablesEspaniol.spanish_datatables
     };
@@ -41,9 +46,11 @@ export class PeriodosComponent implements OnInit {
       reverseButtons: true
     }).then((result) =>{
       if (result.value){
+        this.loading=true;
         this.periodoService.delete(periodo.id).subscribe(
           response => {
             this.periodos = this.periodos.filter(per => per !== periodo)
+            this.loading=false;
             swal(
               'Borrado!',
               'El periodo ha sido borrada',

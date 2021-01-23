@@ -12,14 +12,19 @@ import { JefeCarreraService } from './jefe_carrera.service';
 export class JefesCarrerasComponent implements OnInit {
 
   jefes_carreras: JefeCarrera[];
+  public loading:boolean=false;
   dtOptions: DataTables.Settings = {};
 
   constructor( private jefeCarreraService: JefeCarreraService ,
     public authService: AuthService) { }
 
   ngOnInit() {
+    this.loading = true;
     this.jefeCarreraService.getJefesCarreras().subscribe(
-      jefes_carreras => this.jefes_carreras = jefes_carreras
+      jefes_carreras => {
+        this.jefes_carreras = jefes_carreras;
+        this.loading = false;
+      }
     );
     this.dtOptions = {
       language: DatatablesEspaniol.spanish_datatables
@@ -41,9 +46,11 @@ export class JefesCarrerasComponent implements OnInit {
       reverseButtons: true
     }).then((result) =>{
       if (result.value){
+        this.loading=true;
         this.jefeCarreraService.delete(jefe_carrera.id).subscribe(
           response => {
             this.jefes_carreras = this.jefes_carreras.filter(jef => jef !== jefe_carrera)
+            this.loading=false;
             swal(
               'Borrado!',
               'El director de escuela ha sido borrada',
