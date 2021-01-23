@@ -96,8 +96,21 @@ export class AuthService {
     return false;
   }
 
+  hasPerfil(role):boolean{
+    if(role=="ROLE_ADMIN" && this.usuario.roles.length==52){
+      return true;
+    }
+    return false;
+  }
+
   hasRole(role):boolean{
     if(this.usuario.roles.includes(role)){
+      return true;
+    }
+    return false;
+  }
+  hasTwoRole(role1,role2):boolean{
+    if(this.usuario.roles.includes(role1) || this.usuario.roles.includes(role2)){
       return true;
     }
     return false;

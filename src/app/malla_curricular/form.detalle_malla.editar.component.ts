@@ -10,6 +10,7 @@ import { MallaCurricular } from './malla_curricular';
 import { Semestre } from '../semestres/semestre';
 import { SemestreService } from '../semestres/semestre.service';
 import { RamoService } from '../ramos/ramo.service';
+import { AuthService } from '../usuarios/auth.service';
 
 
 @Component({
@@ -27,10 +28,9 @@ export class FormDetalleMallaEditarComponent implements OnInit {
   public errores:string[]
 
   constructor(private mallaService: MallaCurricularService,
-    private semestreService: SemestreService,
-    private ramoService: RamoService,
     private router: Router,
     private activedRoute: ActivatedRoute,
+    private auth: AuthService,
     private _location: Location){ }
 
   ngOnInit(): void {
@@ -54,12 +54,16 @@ export class FormDetalleMallaEditarComponent implements OnInit {
   }
 
   cargarRamos(): void {
-    this.ramoService.getRamos().subscribe(ramos => { 
-      this.ramos = ramos 
+    this.activedRoute.params.subscribe(params=> {
+      let id = params['id']
+      this.malla = JSON.parse(localStorage.getItem('malla_obj'));
+      this.mallaService.getRamosMalla(this.malla).subscribe(ramos => { 
+        this.ramos = ramos 
+      });
     });
   }
   cargarSemestres(): void {
-    this.semestreService.getSemestres().subscribe(semestres =>{
+    this.mallaService.getSemestres().subscribe(semestres =>{
       this.semestres = semestres;
     })
   }
@@ -69,7 +73,11 @@ export class FormDetalleMallaEditarComponent implements OnInit {
     this.malla = JSON.parse(localStorage.getItem('malla_obj'));
     this.mallaService.updateDetalle(this.detalle_malla)
     .subscribe(malla => {
-      this.router.navigate(['/mallas/ramos/'+this.malla.id])
+      if(this.auth.hasRole("ROLE_JEFE_CARRERA")){
+        this.router.navigate(['/mallasCarrera/ramos/'+this.malla.id])
+      }else{    
+        this.router.navigate(['/mallas/ramos/'+this.malla.id])
+      }
       this.loading=false;
       swal("Detalle malla actualizado", `Detalle malla actualizado con exito`, 'success')
     },

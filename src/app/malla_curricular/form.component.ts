@@ -24,6 +24,7 @@ export class FormMallaCurricularComponent implements OnInit {
     private ramoCarreraService: RamoCarreraService,
     private mallaService: MallaCurricularService,
     private router: Router,
+    private auth: AuthService,
     private activedRoute: ActivatedRoute,
     private _location: Location){ }
 
@@ -66,7 +67,11 @@ export class FormMallaCurricularComponent implements OnInit {
     this.loading=true;
     this.mallaService.create(this.malla)
     .subscribe(malla => {
-      this.router.navigate(['/mallas'])
+      if(this.auth.hasRole("ROLE_JEFE_CARRERA")){
+        this.router.navigate(['/mallasCarrera'])
+      }else{+
+        this.router.navigate(['/mallas'])
+      }
       this.loading=false;
       swal("Nueva malla", `Malla creada ${malla.descripcion_malla} con exito`, 'success')
     },
@@ -80,7 +85,11 @@ export class FormMallaCurricularComponent implements OnInit {
     this.loading=true;
     this.mallaService.update(this.malla)
     .subscribe(malla => {
-      this.router.navigate(['/mallas'])
+      if(this.auth.hasRole("ROLE_JEFE_CARRERA")){
+        this.router.navigate(['/mallasCarrera'])
+      }else{+
+        this.router.navigate(['/mallas'])
+      }
       this.loading=false;
       swal("Malla actualizada", `Malla ${malla.descripcion_malla} actualizada con exito`, 'success')
     },

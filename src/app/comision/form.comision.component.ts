@@ -23,6 +23,7 @@ export class FormComisionComponent implements OnInit {
  
   sedes: Sede[];
   faFile = faFilePdf;
+  public loading:boolean=false;
   planificacion: Planificacion;
   public titulo:string = "Revisión"
   public errores:string[]
@@ -42,6 +43,7 @@ export class FormComisionComponent implements OnInit {
   }
 
   aprobar(){
+    this.loading=true;
     this.revision.id_planificacion = this.planificacion.id
     this.revision.id_usuario = this.authService.usuario.id
     this.revision.estado = "Aprobado"
@@ -49,14 +51,16 @@ export class FormComisionComponent implements OnInit {
       this.comisionService.crearRevision(this.revision)
       .subscribe(revision => {
         this.router.navigate(['/syllabusPendientes'])
+        this.loading=false;
         swal("Revisión guardada", `La revisión se realizo con exito, se envio correo de confirmación`, 'success')
       },
       err => {
-        this.errores = err.error.errors as string[]
-      }
-      );
+        this.errores = err.error.errors as string[];
+        this.loading=false;
+      });
   }
   rechazar(){
+    this.loading=true;
     this.revision.id_planificacion = this.planificacion.id
     this.revision.id_usuario = this.authService.usuario.id
     this.revision.estado = "Rechazado"
@@ -64,15 +68,17 @@ export class FormComisionComponent implements OnInit {
       this.comisionService.crearRevision(this.revision)
       .subscribe(revision => {
         this.router.navigate(['/syllabusPendientes'])
+        this.loading=false;
         swal("Revisión guardada", `La revisión se realizo con exito, se envio correo de confirmación`, 'success')
       },
       err => {
-        this.errores = err.error.errors as string[]
-      }
-      );
+        this.errores = err.error.errors as string[];
+        this.loading=false;
+      });
   }
 
   showPDF(nombre_archivo): void {
+    this.loading=true;
     this.planificacionService.getPDF(nombre_archivo)
         .subscribe(x => {
             var newBlob = new Blob([x], { type: "application/pdf" });
@@ -89,14 +95,17 @@ export class FormComisionComponent implements OnInit {
                 window.URL.revokeObjectURL(data);
                 link.remove();
             }, 100);
+            this.loading=false;
         });
   }
   cargarPlanificacion(): void {
     this.activedRoute.params.subscribe(params=> {
       let id = params['id']
       if (id){
+        this.loading=true;
         this.comisionService.getPlanificacion(id).subscribe(planificacion=>{
-          this.planificacion = planificacion;          
+          this.planificacion = planificacion;
+          this.loading=false;          
         })
       }
     })

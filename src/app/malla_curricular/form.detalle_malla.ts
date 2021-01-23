@@ -23,6 +23,7 @@ export class FormDetalleMallaComponent implements OnInit {
     private semestreService: SemestreService,
     private mallaService: MallaCurricularService,
     private router: Router,
+    private auth: AuthService,
     private activedRoute: ActivatedRoute,
     private _location: Location){ }
 
@@ -66,7 +67,7 @@ export class FormDetalleMallaComponent implements OnInit {
       });
   }
   cargarSemestres(): void {
-    this.semestreService.getSemestres().subscribe(semestres =>{
+    this.mallaService.getSemestres().subscribe(semestres =>{
       this.semestres = semestres;
     })
   }
@@ -78,7 +79,11 @@ export class FormDetalleMallaComponent implements OnInit {
     this.detalle_malla.malla_curricular = this.malla;
     this.mallaService.crearDetalle(this.detalle_malla)
     .subscribe(malla => {
-      this.router.navigate(['/mallas/ramos/'+this.malla.id])
+      if(this.auth.hasRole("ROLE_JEFE_CARRERA")){
+        this.router.navigate(['/mallasCarrera/ramos/'+this.malla.id])
+      }else{
+        this.router.navigate(['/mallas/ramos/'+this.malla.id])
+      }
       this.loading=false;
       swal("Ramo asignado", `Ramo asignado con exito a la malla`, 'success')
     },

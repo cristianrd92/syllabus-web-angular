@@ -1,13 +1,12 @@
 <app-planificacion *ngIf="ramoSeleccionado" [planificacion]= "ramoSeleccionado"></app-planificacion>
 <app-detalles *ngIf="ramoEstado" [ramoEstado]="ramoEstado"></app-detalles>
 
+<ngx-loading [show]="loading"></ngx-loading>
+
 <div class="card mb-3">
   <div class="card-header">Ramos Docente</div>
   <div class="card-body text-secondary">
     <h5 class="card-title">Listado de Ramos Asignados a Docente</h5>
-  <div class="my-2 text-left">
-    <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" class="btn btn-rounded btn-primary" [routerLink] = "['/ramosCarreras/form']">Crear ramo carrera</button>
-  </div>
   <div *ngIf="planificaciones?.length==0" class="alert alert-info">
     No cuenta con ramos asignados
   </div>
@@ -21,6 +20,7 @@
           <th>Subir</th>
           <th>Estado Syllabus</th>
           <th>Descargar Syllabus</th>
+          <th>Eliminar Syllabus</th>
         </tr>
       </thead>
       <tbody>
@@ -36,6 +36,15 @@
           <td *ngIf="planificacion.pla_fecha_subida!=null && planificacion.re_estado==null">Enviado</td>
           <td *ngIf="planificacion.pla_fecha_subida!=null && planificacion.re_estado!=null">{{planificacion.re_estado}} <button (click)="abrirModalDetalles(planificacion)"  type="button" name="editar" class="btn btn-primary">Ver detalles</button></td>
           <td *ngIf="planificacion.pla_fecha_subida!=null" ><a (click)="showPDF(planificacion.pla_ruta)" ><fa-icon [icon]="faFile"></fa-icon> Subido el: {{planificacion.pla_fecha_subida | date:"EEEE dd MMMM yyyy HH:mm"}}</a></td>
+          <td *ngIf="planificacion.pla_fecha_subida!=null && planificacion.re_estado==null">
+            <button type="button" name="eliminar" class="btn btn-danger" (click)='delete(planificacion.pla_id)'>Eliminar</button>
+          </td>
+          <td *ngIf="planificacion.re_estado==null && planificacion.pla_fecha_subida==null">
+            No subido
+          </td>
+          <td *ngIf="planificacion.pla_fecha_subida!=null && planificacion.re_estado!=null">
+            No es posible eliminar
+          </td>
         </tr>
       </tbody>
     </table>

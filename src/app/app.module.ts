@@ -129,9 +129,14 @@ const routes: Routes = [
   {path: 'mallas/ramos/asignar/:id', component:FormDetalleMallaComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_C_MALLA"}},  
   {path: 'mallas/ramos/editar/:id', component:FormDetalleMallaEditarComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_M_MALLA"}},
   {path: 'mallas/ver/:id', component:MallaCurricularVerComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_V_MALLA"}},
-
+  //LISTO
   {path: 'mallasCarrera', component:MallaCarreraComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_JEFE_CARRERA"}},
-  {path: 'ramosDocentes', component:RamosDocentesComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_DOCENTE"}},
+  {path: 'mallasCarrera/form', component:FormMallaCurricularComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_JEFE_CARRERA"}},
+  {path: 'mallasCarrera/form/:id', component:FormMallaCurricularComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_JEFE_CARRERA"}},
+  {path: 'mallasCarrera/ramos/:id', component:MallaCurricularRamosComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_JEFE_CARRERA"}},
+  {path: 'mallasCarrera/ramos/asignar/:id', component:FormDetalleMallaComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_JEFE_CARRERA"}},  
+  {path: 'mallasCarrera/ramos/editar/:id', component:FormDetalleMallaEditarComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_JEFE_CARRERA"}},
+  {path: 'mallasCarrera/ver/:id', component:MallaCurricularVerComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_JEFE_CARRERA"}},
 
   //LISTO
   {path: 'jefesCarreras', component:JefesCarrerasComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_V_JEFE_CARRERA"}},
@@ -142,7 +147,8 @@ const routes: Routes = [
   {path: 'semestres', component:SemestreComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_V_SEMESTRE"}},
   {path: 'semestres/form', component:FormSemestreComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_C_SEMESTRE"}},
   {path: 'semestres/form/:id', component:FormSemestreComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_M_SEMESTRE"}},
-  
+  //SYLLABUS SUBIDA Y REVISION LISTO
+  {path: 'ramosDocentes', component:RamosDocentesComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_DOCENTE"}},
   {path: 'syllabusPendientes', component:ComisionComponent, data: {role:"ROLE_COMISION"}},
   {path: 'syllabusPendientes/form/:id', component:FormComisionComponent, canActivate: [AuthGuard, RoleGuard], data: {role:"ROLE_COMISION"}},
   //LISTO
@@ -205,7 +211,7 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
-    NgxLoadingModule.forRoot({animationType: ngxLoadingAnimationTypes.wanderingCubes,
+    NgxLoadingModule.forRoot({animationType: ngxLoadingAnimationTypes.circleSwish,
       backdropBackgroundColour: 'rgba(0,0,0,0.6)', 
       backdropBorderRadius: '4px',
       primaryColour: '#ffffff', 

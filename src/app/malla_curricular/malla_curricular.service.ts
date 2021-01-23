@@ -10,6 +10,7 @@ import { Ramo } from '../ramos/ramo';
 import { DetalleMallaCurricular } from './detalle_malla_curricular';
 import { MallaDetalle } from './malla_detalla';
 import { AuthService } from '../usuarios/auth.service';
+import { Semestre } from '../semestres/semestre';
 
 
 @Injectable()
@@ -97,6 +98,33 @@ export class MallaCurricularService {
         return throwError(e);
       })
     )
+  }
+
+  getRamos() : Observable<Ramo[]> {
+    return this.http.get<Ramo[]>(`${this.urlEndPoint}/ramos/listado`).pipe(
+      catchError(e => {
+        return throwError(e);
+      }),
+    map( (response) => {
+      let ramos = response as Ramo[];
+      return ramos.map(ramo => {
+        ramo.nombre_ramo = ramo.nombre_ramo.toUpperCase();
+        return ramo;
+      });
+    }));
+  }
+  getSemestres() : Observable<Semestre[]> {
+    return this.http.get<Semestre[]>(`${this.urlEndPoint}/semestre/listado`).pipe(
+      catchError(e => {
+        return throwError(e);
+      }),
+    map( (response) => {
+      let semestres = response as Semestre[];
+      return semestres.map(semestre => {
+        semestre.descripcion_semestre = semestre.descripcion_semestre.toUpperCase();
+        return semestre;
+      });
+    }));
   }
 
   getMalla(id): Observable<MallaCurricular> {

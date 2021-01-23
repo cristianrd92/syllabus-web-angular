@@ -1,4 +1,5 @@
 <div *ngIf="modalService.modal" class="modal" tabindex="-1" role="dialog" style="display: block;">
+<ngx-loading [show]="loading"></ngx-loading>
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -14,9 +15,6 @@
             <label *ngIf="!archivoSeleccionado" class="custom-file-label" for="inputGroupFile04">Seleccione Syllabus</label>
             <label *ngIf="archivoSeleccionado" class="custom-file-label" for="inputGroupFile04">{{nombre_archivo}}</label>
           </div>
-          <div class="input-group-append">
-            <button (click)="subirArchivo()" [disabled]="!archivoSeleccionado"  class="btn btn-success" type="button">Subir</button>
-          </div>
         <!-- </div>
         <div *ngIf="progreso>0" class="progress">
           <div class="progress-bar" role="progressbar" [ngStyle]="{width:progreso+'%'}" attr.aria-valuenow="{{progreso}}" aria-valuemin="0" aria-valuemax="100"></div>
@@ -25,6 +23,7 @@
         </div>
       </div>
       <div class="modal-footer">
+        <button (click)="subirArchivo()" [disabled]="!archivoSeleccionado"  class="btn btn-success" type="button">Subir</button>
         <button type="button" class="btn btn-secondary" (click)="cerrarModal()" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
