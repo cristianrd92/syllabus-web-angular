@@ -10,6 +10,8 @@
   <div *ngIf="planificaciones?.length==0" class="alert alert-info">
     No cuenta con ramos asignados
   </div>
+  <div class="table-responsive">
+
   <table datatable [dtOptions]="dtOptions" class="table table-bordered table-striped" *ngIf="planificaciones?.length>0">
       <thead>
         <tr>
@@ -48,5 +50,6 @@
         </tr>
       </tbody>
     </table>
+  </div>
   </div> 
 </div>

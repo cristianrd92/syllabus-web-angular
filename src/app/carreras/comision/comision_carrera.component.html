@@ -9,6 +9,7 @@
   <div *ngIf="comisiones?.length==0" class="alert alert-info">
     No hay registros en la base de datos
   </div>
+  <div class="table-responsive">
 
   <table datatable [dtOptions]="dtOptions" class="table table-bordered table-striped" *ngIf="comisiones?.length>0">
       <thead>
@@ -26,5 +27,6 @@
         </tr>
       </tbody>
     </table>
+  </div>
   </div>
 </div>

@@ -1,45 +1,110 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">{{ title }}</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" routerLink="/ciudades">Ciudades <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" routerLink="/sedes">Sedes <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" routerLink="/facultades">Facultades <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" routerLink="/carreras">Carreras <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" routerLink="/periodos">Periodos <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" routerLink="/ramos">Ramos <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" routerLink="/ramosCarreras">Ramo Carrera<span class="sr-only">(current)</span></a>
-      </li>
-    </ul>
-    <ul class="navbar-nav navbar-rigth">
-      <li *ngIf="!authService.isAuthenticated()"><a routerLink="/login" class="btn btn-outline-primary">Iniciar Sesión</a></li>
-      <li  *ngIf="authService.isAuthenticated()" class="dropdown">
-        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          {{authService.usuario.username}}
-        </a>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-          <button (click)="logout()" class="dropdown-item" type="submit">Cerrar Sesión</button>
+<body *ngIf="authService.isAuthenticated() && authService.usuario.first==false" class="">
+  
+  <div id="wrapper">
+
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="sidebar-collapse">
+          <ul class="nav metismenu" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="block m-t-xs font-bold">{{authService.usuario.username}}</span>
+                        <span class="text-muted text-xs block">{{authService.usuario.email}} <b class="caret"></b></span>
+                    </a>
+                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li><a *ngIf="authService.hasPerfil('ROLE_ADMIN')" class="dropdown-item" routerLink="/ajustes">Ajustes de Sistema</a></li>
+                        <li><a class="dropdown-item" routerLink="/usuarios/cambiarPassword">Cambiar Clave</a></li>
+                        <li><a class="dropdown-item" (click)="logout()">Cerrar Sesión</a></li>
+                    </ul>
+                </div>
+                <div class="logo-element">
+                    SWEB
+                </div>
+            </li>
+            <li *ngIf="authService.hasRole('ROLE_V_CIUDAD')" routerLinkActive="active">
+                <a routerLink="/ciudades"><fa-icon [icon]="faCity"></fa-icon><span class="nav-label"> Ciudades</span><span class="sr-only">(current)</span></a>
+            </li>
+            <li *ngIf="authService.hasRole('ROLE_V_SEDE')" routerLinkActive="active">
+                <a routerLink="/sedes"><fa-icon [icon]="faUniversity"></fa-icon><span class="nav-label"> Sedes</span><span class="sr-only">(current)</span></a>
+            </li>
+            <li *ngIf="authService.hasRole('ROLE_V_FACULTAD')" routerLinkActive="active">
+                <a routerLink="/facultades"><fa-icon [icon]="faBuilding"></fa-icon><span class="nav-label"> Facultades</span><span class="sr-only">(current)</span></a>
+            </li>
+            <li *ngIf="authService.hasRole('ROLE_V_CARRERA')" routerLinkActive="active">
+                <a routerLink="/carreras"><fa-icon [icon]="faGraduationCap"></fa-icon><span class="nav-label"> Carreras</span><span class="sr-only">(current)</span></a>
+            </li>
+            <li *ngIf="authService.hasRole('ROLE_V_PERIODO')" routerLinkActive="active">
+                <a routerLink="/periodos"><fa-icon [icon]="faCalendarAlt"></fa-icon><span class="nav-label"> Periodos</span><span class="sr-only">(current)</span></a>
+            </li>
+            <li *ngIf="authService.hasRole('ROLE_V_RAMO')" routerLinkActive="active">
+                <a routerLink="/ramos"><fa-icon [icon]="faBookOpen"></fa-icon><span class="nav-label"> Ramos</span><span class="sr-only">(current)</span></a>
+            </li>
+            <li *ngIf="authService.hasRole('ROLE_V_RAMO_CARRERA')" routerLinkActive="active">
+                <a routerLink="/ramosCarreras"><fa-icon [icon]="faBookReader"></fa-icon><span class="nav-label"> Ramo Carrera</span><span class="sr-only">(current)</span></a>
+            </li>
+            <li *ngIf="authService.hasRole('ROLE_V_PERFIL')" routerLinkActive="active">
+                <a routerLink="/perfiles"><fa-icon [icon]="faUserLock"></fa-icon><span class="nav-label"> Perfiles de Usuario</span><span class="sr-only">(current)</span></a>
+            </li>
+            <li *ngIf="authService.hasRole('ROLE_V_USUARIO')" routerLinkActive="active">
+                <a routerLink="/usuarios"><fa-icon [icon]="faUser"></fa-icon><span class="nav-label"> Usuario</span><span class="sr-only">(current)</span></a>
+            </li>
+            <li *ngIf="authService.hasRole('ROLE_V_MALLA')" routerLinkActive="active">
+                <a routerLink="/mallas"><fa-icon [icon]="faTable"></fa-icon><span class="nav-label"> Malla</span><span class="sr-only">(current)</span></a>
+            </li>
+            <li *ngIf="authService.hasRole('ROLE_V_SEMESTRE')" routerLinkActive="active">
+                <a routerLink="/semestres"><fa-icon [icon]="faHourglass"></fa-icon><span class="nav-label"> Semestre</span><span class="sr-only">(current)</span></a>
+            </li>
+            <li *ngIf="authService.hasRole('ROLE_V_JEFE_CARRERA')" routerLinkActive="active">
+                <a routerLink="/jefesCarreras"><fa-icon [icon]="faBookReader"></fa-icon><span class="nav-label"> Director de Escuela</span><span class="sr-only">(current)</span></a>
+            </li>
+
+            <li *ngIf="authService.hasRole('ROLE_DOCENTE')" routerLinkActive="active">
+                <a routerLink="/ramosDocentes"><i class="fa fa-diamond"></i><span class="nav-label"> Ramos asignados</span><span class="sr-only">(current)</span></a>
+            </li>
+            <li *ngIf="authService.hasRole('ROLE_JEFE_CARRERA')" routerLinkActive="active">
+                <a routerLink="/mallasCarrera"><i class="fa fa-diamond"></i><span class="nav-label"> Mallas carrera</span><span class="sr-only">(current)</span></a>
+            </li> 
+            <li *ngIf="authService.hasRole('ROLE_COMISION')" routerLinkActive="active">
+                <a routerLink="/syllabusPendientes"><i class="fa fa-diamond"></i><span class="nav-label"> Syllabus por aprobar</span><span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+
         </div>
-      </li>
-    </ul>
-  </div>
-</nav>
+    </nav>
+
+        <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom">
+        <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href><fa-icon [icon]="faBars"></fa-icon> </a>
+        </div>
+        <ul class="nav navbar-top-links navbar-right">
+                
+          <li>
+              <span class="m-r-sm text-muted welcome-message">Bienvenido a Syllabus Web</span>
+          </li>
+          <li>
+              <a (click)="logout()">
+                  <i class="fa fa-sign-out"></i> Cerrar Sesión
+              </a>
+          </li>
+      </ul>
+
+        </nav>
+        </div>
+            <div class="wrapper wrapper-content">
+                  <router-outlet></router-outlet>
+            </div>
+            <div class="footer">
+              <div class="float-right">
+              </div>
+              <div>
+                  <strong>Copyright</strong> SolucionesRA &copy; 2018-2020
+              </div>
+          </div>
+
+        </div>
+        </div>
+</body>
+<change-password *ngIf="authService.isAuthenticated() && authService.usuario.first==true"></change-password>
+<app-login *ngIf="!authService.isAuthenticated()"></app-login>

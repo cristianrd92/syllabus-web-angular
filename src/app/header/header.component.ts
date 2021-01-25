@@ -7,17 +7,18 @@ import { faBuilding } from '@fortawesome/free-solid-svg-icons';
 import { faUniversity } from '@fortawesome/free-solid-svg-icons';
 import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
-import { faGraduationCap, faBookOpen, faBookReader, faUserLock, faUser, faTable, faHourglass } from '@fortawesome/free-solid-svg-icons';
+import { faGraduationCap, faBars, faBookOpen, faBookReader, faUserLock, faUser, faTable, faHourglass } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
   selector: 'app-header',
-  templateUrl: './header.component.html'
+  templateUrl: './header.componentv2.html'
 })
 export class HeaderComponent {
   title: string = 'Syllabus Web';
   // Se deben declarar todos los iconos que se usaran en el header
   faCity = faCity;
+  faBars = faBars;
   faHourglass = faHourglass;
   faUserLock = faUserLock;
   faUser = faUser
