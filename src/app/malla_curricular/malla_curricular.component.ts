@@ -14,31 +14,41 @@ export class MallaCurricularComponent implements OnInit {
   mallas: MallaCurricular[];
   dtOptions: DataTables.Settings = {};
   public loading:boolean = false;
+  first:boolean=true;
 
   constructor( private mallaService: MallaCurricularService ,
     public authService: AuthService) { }
 
   ngOnInit() {
-    this.loading=true;
+    if(this.first){
+      this.loading=true;
+    }
     this.mallaService.getMallas().subscribe(
       mallas => {
-        this.mallas = mallas;
+        this.mallas = [];
+        mallas.forEach(malla=>{
+          if(malla.vigente){
+            this.mallas.push(malla)
+          }
+          if(malla.vigente==false && this.authService.hasPerfil("ROLE_ADMIN")) {
+            this.mallas.push(malla);
+          }
+        })
         this.loading=false;
       });
     this.dtOptions = {
       language: DatatablesEspaniol.spanish_datatables
     };
   }
-  delete(malla: MallaCurricular): void {
+  desactivar(malla: MallaCurricular): void {
     swal({
-      title: `Esta seguro que desea eliminar la malla ${malla.descripcion_malla} ?`,
-      text: "Esto no se podra revertir",
+      title: `¿Esta seguro que desea desactivar la malla ${malla.descripcion_malla}?`,
       type: "warning",
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: "Si, borrar",
-      cancelButtonText: "No, cancelar!",
+      confirmButtonText: "Si, desactivar",
+      cancelButtonText: "No, cancelar",
       confirmButtonClass: "btn btn-success",
       cancelButtonClass: "btn btn-danger",
       buttonsStyling: false,
@@ -46,13 +56,46 @@ export class MallaCurricularComponent implements OnInit {
     }).then((result) =>{
       if (result.value){
         this.loading=true;
-        this.mallaService.delete(malla.id).subscribe(
+        this.first=false;
+        this.mallaService.desactivar(malla).subscribe(
           response => {
-            this.mallas = this.mallas.filter(mall => mall !== malla)
             this.loading=false;
+            this.ngOnInit();
             swal(
-              'Borrado!',
-              'La malla ha sido borrada',
+              '¡Desactivada!',
+              'La malla ha sido desactivada',
+              'success'
+              )
+          }
+        )
+      }
+    })
+  }
+
+  activar(malla: MallaCurricular): void {
+    swal({
+      title: `¿Esta seguro que desea activar la malla ${malla.descripcion_malla}?`,
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: "Si, activar",
+      cancelButtonText: "No, cancelar",
+      confirmButtonClass: "btn btn-success",
+      cancelButtonClass: "btn btn-danger",
+      buttonsStyling: false,
+      reverseButtons: true
+    }).then((result) =>{
+      if (result.value){
+        this.loading=true;
+        this.first=false;
+        this.mallaService.activar(malla).subscribe(
+          response => {
+            this.loading=false;
+            this.ngOnInit();
+            swal(
+              '¡Activada!',
+              'La malla ha sido activada',
               'success'
               )
           }

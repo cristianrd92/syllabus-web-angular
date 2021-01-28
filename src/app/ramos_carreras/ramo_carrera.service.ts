@@ -92,9 +92,31 @@ export class RamoCarreraService {
     )
   }
 
-  delete(id: number): Observable<RamoCarrera> {
-    return this.http.delete<RamoCarrera>(`${this.urlEndPoint}/${id}`).pipe(
+  desactivar(ramo_carrera: RamoCarrera): Observable<RamoCarrera> {
+    return this.http.put<RamoCarrera>(`${this.urlEndPoint}/d/${ramo_carrera.id}`,ramo_carrera).pipe(
+      map((response:any) => response.ramo as RamoCarrera),
       catchError(e => {
+        if(e.status==400){
+          return throwError(e);
+        }
+        if (e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        return throwError(e);
+      })
+    )
+  }
+
+  activar(ramo_carrera: RamoCarrera): Observable<RamoCarrera> {
+    return this.http.put<RamoCarrera>(`${this.urlEndPoint}/a/${ramo_carrera.id}`,ramo_carrera).pipe(
+      map((response:any) => response.ramo as RamoCarrera),
+      catchError(e => {
+        if(e.status==400){
+          return throwError(e);
+        }
+        if (e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
         return throwError(e);
       })
     )

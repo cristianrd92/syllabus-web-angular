@@ -13,18 +13,30 @@ export class PerfilesComponent implements OnInit {
 
   perfiles: Perfil[];
   dtOptions: DataTables.Settings = {};
+  first:boolean=true;
   public loading:boolean = false;
 
   constructor( private perfilService: PerfilService ,
     public authService: AuthService) { }
 
   ngOnInit() {
-    this.loading=true;
+    if(this.first){
+      this.loading=true;
+    }
     this.perfilService.getPerfiles().subscribe(perfiles => { 
+      this.perfiles = [];
       delete(perfiles[0])
       delete(perfiles[1])
       delete(perfiles[2])
       delete(perfiles[3])
+      perfiles.forEach(perfil=>{
+        if(perfil.vigente){
+          this.perfiles.push(perfil)
+        }
+        if(perfil.vigente==false && this.authService.hasPerfil("ROLE_ADMIN")) {
+          this.perfiles.push(perfil);
+        }
+      })
       var filtered = perfiles.filter(function (el) {
         return el != null;
       });
@@ -35,16 +47,15 @@ export class PerfilesComponent implements OnInit {
       language: DatatablesEspaniol.spanish_datatables
     };
   }
-  delete(perfil: Perfil): void {
+  desactivar(perfil: Perfil): void {
     swal({
-      title: `Esta seguro que desea eliminar el perfil de usuario ${perfil.name} ?`,
-      text: "Esto no se podra revertir",
+      title: `¿Esta seguro que desea desactivar el perfil ${perfil.name}?`,
       type: "warning",
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: "Si, borrar",
-      cancelButtonText: "No, cancelar!",
+      confirmButtonText: "Si, desactivar",
+      cancelButtonText: "No, cancelar",
       confirmButtonClass: "btn btn-success",
       cancelButtonClass: "btn btn-danger",
       buttonsStyling: false,
@@ -52,13 +63,46 @@ export class PerfilesComponent implements OnInit {
     }).then((result) =>{
       if (result.value){
         this.loading=true;
-        this.perfilService.delete(perfil.id).subscribe(
+        this.first=false;
+        this.perfilService.desactivar(perfil).subscribe(
           response => {
-            this.perfiles = this.perfiles.filter(per => per !== perfil)
             this.loading=false;
+            this.ngOnInit();
             swal(
-              'Borrado!',
-              'El perfil ha sido borrada',
+              '¡Desactivado!',
+              'El perfil ha sido desactivado',
+              'success'
+              )
+          }
+        )
+      }
+    })
+  }
+
+  activar(perfil: Perfil): void {
+    swal({
+      title: `¿Esta seguro que desea activar el perfil ${perfil.name}?`,
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: "Si, activar",
+      cancelButtonText: "No, cancelar",
+      confirmButtonClass: "btn btn-success",
+      cancelButtonClass: "btn btn-danger",
+      buttonsStyling: false,
+      reverseButtons: true
+    }).then((result) =>{
+      if (result.value){
+        this.loading=true;
+        this.first=false;
+        this.perfilService.activar(perfil).subscribe(
+          response => {
+            this.loading=false;
+            this.ngOnInit();
+            swal(
+              '¡Activado!',
+              'El perfil ha sido activado',
               'success'
               )
           }

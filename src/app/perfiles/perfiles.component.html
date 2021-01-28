@@ -16,7 +16,8 @@
         <tr>
           <th>Nombre perfil</th>
           <th *ngIf="authService.hasRole('ROLE_M_PERFIL')">Editar</th>
-          <th *ngIf="authService.hasRole('ROLE_E_PERFIL')">Borrar</th>
+          <th *ngIf="authService.hasRole('ROLE_E_PERFIL') && !authService.hasPerfil('ROLE_ADMIN')">Desactivar</th>
+          <th *ngIf="authService.hasRole('ROLE_E_PERFIL') && authService.hasPerfil('ROLE_ADMIN')">Desactivar/Activar</th>
         </tr>
       </thead>
       <tbody>
@@ -25,8 +26,11 @@
           <td *ngIf="authService.hasRole('ROLE_M_PERFIL')" >
             <button type="button" name="editar" class="btn btn-primary" [routerLink]="['/perfiles/form', perfil.id]">Editar</button>
           </td>
-          <td *ngIf="authService.hasRole('ROLE_E_PERFIL')">
-            <button type="button" name="eliminar" class="btn btn-danger" (click)='delete(perfil)'>Eliminar</button>
+          <td *ngIf="authService.hasRole('ROLE_E_PERFIL') && perfil.vigente==true">
+            <button type="button" name="eliminar" class="btn btn-danger" (click)='desactivar(perfil)'>Desactivar</button>
+          </td>
+          <td *ngIf="authService.hasRole('ROLE_E_PERFIL') && perfil.vigente==false">
+            <button type="button" name="activar" class="btn btn-success" (click)='activar(perfil)'>Activar</button>
           </td>
         </tr>
       </tbody>

@@ -74,9 +74,31 @@ export class SemestreService {
     )
   }
 
-  delete(id: number): Observable<Semestre> {
-    return this.http.delete<Semestre>(`${this.urlEndPoint}/${id}`).pipe(
+  desactivar(semestre: Semestre): Observable<Semestre> {
+    return this.http.put<Semestre>(`${this.urlEndPoint}/d/${semestre.id}`,semestre).pipe(
+      map((response:any) => response.semestre as Semestre),
       catchError(e => {
+        if(e.status==400){
+          return throwError(e);
+        }
+        if (e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        return throwError(e);
+      })
+    )
+  }
+
+  activar(semestre: Semestre): Observable<Semestre> {
+    return this.http.put<Semestre>(`${this.urlEndPoint}/a/${semestre.id}`,semestre).pipe(
+      map((response:any) => response.semestre as Semestre),
+      catchError(e => {
+        if(e.status==400){
+          return throwError(e);
+        }
+        if (e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
         return throwError(e);
       })
     )

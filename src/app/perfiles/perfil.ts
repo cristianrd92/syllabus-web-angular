@@ -5,6 +5,7 @@ export class Perfil {
   id: number;
   name: string;
   descripcion: string;
+  vigente: boolean;
   permisos: Permiso[];
   temporales: any[];
 }

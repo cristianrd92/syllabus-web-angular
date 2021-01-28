@@ -46,9 +46,9 @@ export class PerfilService {
     );
   }
 
-  create(facultad: Perfil) : Observable<Perfil> {
-    return this.http.post(this.urlEndPoint, facultad).pipe(
-      map((response:any) => response.facultad as Perfil),
+  create(perfil: Perfil) : Observable<Perfil> {
+    return this.http.post(this.urlEndPoint, perfil).pipe(
+      map((response:any) => response.perfil as Perfil),
       catchError(e => {
         if(e.status==400){
           return throwError(e);
@@ -76,8 +76,8 @@ export class PerfilService {
     )
   }
 
-  update(facultad: Perfil) : Observable<Perfil> {
-    return this.http.put<Perfil>(`${this.urlEndPoint}/${facultad.id}`, facultad).pipe(
+  update(perfil: Perfil) : Observable<Perfil> {
+    return this.http.put<Perfil>(`${this.urlEndPoint}/${perfil.id}`, perfil).pipe(
       map((response:any) => response.facultad as Perfil),
       catchError(e => {
         if(e.status==400){
@@ -91,9 +91,31 @@ export class PerfilService {
     )
   }
 
-  delete(id: number): Observable<Perfil> {
-    return this.http.delete<Perfil>(`${this.urlEndPoint}/${id}`).pipe(
+  desactivar(perfil: Perfil): Observable<Perfil> {
+    return this.http.put<Perfil>(`${this.urlEndPoint}/d/${perfil.id}`,perfil).pipe(
+      map((response:any) => response.ramo as Perfil),
       catchError(e => {
+        if(e.status==400){
+          return throwError(e);
+        }
+        if (e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        return throwError(e);
+      })
+    )
+  }
+
+  activar(perfil: Perfil): Observable<Perfil> {
+    return this.http.put<Perfil>(`${this.urlEndPoint}/a/${perfil.id}`,perfil).pipe(
+      map((response:any) => response.ramo as Perfil),
+      catchError(e => {
+        if(e.status==400){
+          return throwError(e);
+        }
+        if (e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
         return throwError(e);
       })
     )

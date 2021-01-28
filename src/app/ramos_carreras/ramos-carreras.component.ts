@@ -13,32 +13,42 @@ export class RamosCarrerasComponent implements OnInit {
 
   ramos_carreras: RamoCarrera[];
   public loading:boolean=false;
+  first:boolean=true;
   dtOptions: DataTables.Settings = {};
 
   constructor( private ramoCarreraService: RamoCarreraService ,
     public authService: AuthService) { }
 
   ngOnInit() {
-    this.loading=true;
+    if(this.first){
+      this.loading=true;
+    }
     this.ramoCarreraService.getRamosCarreras().subscribe(
       ramos_carreras => {
-        this.ramos_carreras = ramos_carreras;
+        this.ramos_carreras = [];
+        ramos_carreras.forEach(ramo_carrera=>{
+          if(ramo_carrera.vigente){
+            this.ramos_carreras.push(ramo_carrera)
+          }
+          if(ramo_carrera.vigente==false && this.authService.hasPerfil("ROLE_ADMIN")) {
+            this.ramos_carreras.push(ramo_carrera);
+          }
+        })
         this.loading=false;
       });
     this.dtOptions = {
       language: DatatablesEspaniol.spanish_datatables
     };
   }
-  delete(ramo_carrera: RamoCarrera): void {
+  desactivar(ramo_carrera: RamoCarrera): void {
     swal({
-      title: `Esta seguro que desea eliminar el ramo carrera ?`,
-      text: "Esto no se podra revertir",
+      title: `¿Esta seguro que desea desactivar el ramo ${ramo_carrera.ramo.nombre_ramo} de la carrera ${ramo_carrera.carrera.nombre_carrera}?`,
       type: "warning",
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: "Si, borrar",
-      cancelButtonText: "No, cancelar!",
+      confirmButtonText: "Si, desactivar",
+      cancelButtonText: "No, cancelar",
       confirmButtonClass: "btn btn-success",
       cancelButtonClass: "btn btn-danger",
       buttonsStyling: false,
@@ -46,13 +56,46 @@ export class RamosCarrerasComponent implements OnInit {
     }).then((result) =>{
       if (result.value){
         this.loading=true;
-        this.ramoCarreraService.delete(ramo_carrera.id).subscribe(
+        this.first=false;
+        this.ramoCarreraService.desactivar(ramo_carrera).subscribe(
           response => {
-            this.ramos_carreras = this.ramos_carreras.filter(ram_car => ram_car !== ramo_carrera)
             this.loading=false;
+            this.ngOnInit();
             swal(
-              'Borrado!',
-              'El ramo carrera ha sido borrada',
+              '¡Desactivado!',
+              'El ramo carrera ha sido desactivado',
+              'success'
+              )
+          }
+        )
+      }
+    })
+  }
+
+  activar(ramo_carrera: RamoCarrera): void {
+    swal({
+      title: `¿Esta seguro que desea activar el ramo ${ramo_carrera.ramo.nombre_ramo} de la carrera ${ramo_carrera.carrera.nombre_carrera}?`,
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: "Si, activar",
+      cancelButtonText: "No, cancelar",
+      confirmButtonClass: "btn btn-success",
+      cancelButtonClass: "btn btn-danger",
+      buttonsStyling: false,
+      reverseButtons: true
+    }).then((result) =>{
+      if (result.value){
+        this.loading=true;
+        this.first=false;
+        this.ramoCarreraService.activar(ramo_carrera).subscribe(
+          response => {
+            this.loading=false;
+            this.ngOnInit();
+            swal(
+              '¡Activado!',
+              'El ramo carrera ha sido activado',
               'success'
               )
           }

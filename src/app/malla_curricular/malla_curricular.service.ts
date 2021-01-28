@@ -237,9 +237,31 @@ export class MallaCurricularService {
     )
   }
 
-  delete(id: number): Observable<MallaCurricular> {
-    return this.http.delete<MallaCurricular>(`${this.urlEndPoint}/${id}`).pipe(
+  desactivar(malla: MallaCurricular): Observable<MallaCurricular> {
+    return this.http.put<MallaCurricular>(`${this.urlEndPoint}/d/${malla.id}`,malla).pipe(
+      map((response:any) => response.ramo as MallaCurricular),
       catchError(e => {
+        if(e.status==400){
+          return throwError(e);
+        }
+        if (e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        return throwError(e);
+      })
+    )
+  }
+
+  activar(malla: MallaCurricular): Observable<MallaCurricular> {
+    return this.http.put<MallaCurricular>(`${this.urlEndPoint}/a/${malla.id}`,malla).pipe(
+      map((response:any) => response.ramo as MallaCurricular),
+      catchError(e => {
+        if(e.status==400){
+          return throwError(e);
+        }
+        if (e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
         return throwError(e);
       })
     )

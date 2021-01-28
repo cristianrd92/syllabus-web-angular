@@ -14,31 +14,42 @@ export class SemestreComponent implements OnInit {
   semestres: Semestre[];
   public loading:boolean=false;
   dtOptions: DataTables.Settings = {};
+  first:boolean=true;
 
   constructor( private semestreService: SemestreService ,
     public authService: AuthService) { }
 
   ngOnInit() {
-    this.loading=true;
+    if(this.first){
+      this.loading=true;
+    }
     this.semestreService.getSemestres().subscribe(
       semestres => {
-        this.semestres = semestres;
+        this.semestres = [];
+        semestres.forEach(semestre=>{
+          if(semestre.vigente){
+            this.semestres.push(semestre)
+          }
+          if(semestre.vigente==false && this.authService.hasPerfil("ROLE_ADMIN")) {
+            this.semestres.push(semestre);
+          }
+        })
         this.loading=false;
       });
     this.dtOptions = {
       language: DatatablesEspaniol.spanish_datatables
     };
   }
-  delete(semestre: Semestre): void {
+
+  desactivar(semestre: Semestre): void {
     swal({
-      title: `Esta seguro que desea eliminar el semestre ${semestre.descripcion_semestre} ?`,
-      text: "Esto no se podra revertir",
+      title: `¿Esta seguro que desea desactivar el semestre ${semestre.descripcion_semestre}?`,
       type: "warning",
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: "Si, borrar",
-      cancelButtonText: "No, cancelar!",
+      confirmButtonText: "Si, desactivar",
+      cancelButtonText: "No, cancelar",
       confirmButtonClass: "btn btn-success",
       cancelButtonClass: "btn btn-danger",
       buttonsStyling: false,
@@ -46,13 +57,46 @@ export class SemestreComponent implements OnInit {
     }).then((result) =>{
       if (result.value){
         this.loading=true;
-        this.semestreService.delete(semestre.id).subscribe(
+        this.first=false;
+        this.semestreService.desactivar(semestre).subscribe(
           response => {
-            this.semestres = this.semestres.filter(mall => mall !== semestre)
             this.loading=false;
+            this.ngOnInit();
             swal(
-              'Borrado!',
-              'El semestre ha sido borrada',
+              '¡Desactivado!',
+              'El semestre ha sido desactivado',
+              'success'
+              )
+          }
+        )
+      }
+    })
+  }
+
+  activar(semestre: Semestre): void {
+    swal({
+      title: `¿Esta seguro que desea activar el semestre ${semestre.descripcion_semestre}?`,
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: "Si, activar",
+      cancelButtonText: "No, cancelar",
+      confirmButtonClass: "btn btn-success",
+      cancelButtonClass: "btn btn-danger",
+      buttonsStyling: false,
+      reverseButtons: true
+    }).then((result) =>{
+      if (result.value){
+        this.loading=true;
+        this.first=false;
+        this.semestreService.activar(semestre).subscribe(
+          response => {
+            this.loading=false;
+            this.ngOnInit();
+            swal(
+              '¡Activado!',
+              'El semestre ha sido activado',
               'success'
               )
           }

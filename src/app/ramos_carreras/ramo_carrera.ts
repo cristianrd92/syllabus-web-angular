@@ -7,6 +7,7 @@ export class RamoCarrera {
   id: number;
   anio: number;
   creditos: number;
+  vigente: boolean;
   usuario: Usuario;
   carrera: Carrera;
   ramo: Ramo;
