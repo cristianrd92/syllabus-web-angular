@@ -17,7 +17,8 @@
         <tr>
           <th>Nombre periodo</th>
           <th *ngIf="authService.hasRole('ROLE_M_PERIODO')">Editar</th>
-          <th *ngIf="authService.hasRole('ROLE_E_PERIODO')">Borrar</th>
+          <th *ngIf="authService.hasRole('ROLE_E_PERIODO') && !authService.hasPerfil('ROLE_ADMIN')">Desactivar</th>
+          <th *ngIf="authService.hasRole('ROLE_E_PERIODO') && authService.hasPerfil('ROLE_ADMIN')">Desactivar/Activar</th>
         </tr>
       </thead>
       <tbody>
@@ -26,8 +27,11 @@
           <td *ngIf="authService.hasRole('ROLE_M_PERIODO')" >
             <button type="button" name="editar" class="btn btn-primary" [routerLink]="['/periodos/form', periodo.id]">Editar</button>
           </td>
-          <td *ngIf="authService.hasRole('ROLE_E_PERIODO')">
-            <button type="button" name="eliminar" class="btn btn-danger" (click)='delete(periodo)'>Eliminar</button>
+          <td *ngIf="authService.hasRole('ROLE_E_PERIODO') && periodo.vigente==true">
+            <button type="button" name="eliminar" class="btn btn-danger" (click)='desactivar(periodo)'>Desactivar</button>
+          </td>
+          <td *ngIf="authService.hasRole('ROLE_E_PERIODO') && periodo.vigente==false">
+            <button type="button" name="activar" class="btn btn-success" (click)='activar(periodo)'>Activar</button>
           </td>
         </tr>
       </tbody>

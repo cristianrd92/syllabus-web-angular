@@ -11,6 +11,7 @@ import { DatatablesEspaniol } from '../helper/datatables.component';
 })
 export class SedesComponent implements OnInit {
 
+  first:boolean=true;
   sedes: Sede[];
   dtOptions: DataTables.Settings = {};
   public loading= false;
@@ -19,26 +20,35 @@ export class SedesComponent implements OnInit {
     public authService: AuthService) { }
 
   ngOnInit() {
-    this.loading=true;
+    if(this.first){
+      this.loading=true;
+    }
     this.sedeService.getSedes().subscribe(
       sedes => {
-        this.sedes = sedes;
+        this.sedes = [];
+        sedes.forEach(sede=>{
+          if(sede.vigente){
+            this.sedes.push(sede)
+          }
+          if(sede.vigente==false && this.authService.hasPerfil("ROLE_ADMIN")) {
+            this.sedes.push(sede);
+          }
+        })
         this.loading=false;
       });
     this.dtOptions = {
       language: DatatablesEspaniol.spanish_datatables
     };
   }
-  delete(sede: Sede): void {
+  desactivar(sede: Sede): void {
     swal({
-      title: `Esta seguro que desea eliminar la sede ${sede.nombre_sede} ?`,
-      text: "Esto no se podra revertir",
+      title: `¿Esta seguro que desea desactivar la sede ${sede.nombre_sede}?`,
       type: "warning",
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: "Si, borrar",
-      cancelButtonText: "No, cancelar!",
+      confirmButtonText: "Si, desactivar",
+      cancelButtonText: "No, cancelar",
       confirmButtonClass: "btn btn-success",
       cancelButtonClass: "btn btn-danger",
       buttonsStyling: false,
@@ -46,13 +56,45 @@ export class SedesComponent implements OnInit {
     }).then((result) =>{
       if (result.value){
         this.loading=true;
-        this.sedeService.delete(sede.id).subscribe(
+        this.sedeService.desactivar(sede).subscribe(
           response => {
-            this.sedes = this.sedes.filter(sed => sed !== sede)
             this.loading=false;
+            this.ngOnInit();
             swal(
-              'Borrado!',
-              'La sede ha sido borrada',
+              '¡Desactivada!',
+              'La sede ha sido desactivada',
+              'success'
+              )
+          }
+        )
+      }
+    })
+  }
+
+  activar(sede: Sede): void {
+    swal({
+      title: `Esta seguro que desea activar la sede ${sede.nombre_sede} ?`,
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: "Si, activar",
+      cancelButtonText: "No, cancelar",
+      confirmButtonClass: "btn btn-success",
+      cancelButtonClass: "btn btn-danger",
+      buttonsStyling: false,
+      reverseButtons: true
+    }).then((result) =>{
+      if (result.value){
+        this.loading=true;
+        this.first=false;
+        this.sedeService.activar(sede).subscribe(
+          response => {
+            this.loading=false;
+            this.ngOnInit();
+            swal(
+              '¡Activada!',
+              'La sede ha sido activada',
               'success'
               )
           }

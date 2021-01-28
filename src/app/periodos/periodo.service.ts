@@ -82,4 +82,34 @@ export class PeriodoService {
       })
     )
   }
+
+  desactivar(periodo: Periodo): Observable<Periodo> {
+    return this.http.put<Periodo>(`${this.urlEndPoint}/d/${periodo.id}`,periodo).pipe(
+      map((response:any) => response.periodo as Periodo),
+      catchError(e => {
+        if(e.status==400){
+          return throwError(e);
+        }
+        if (e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        return throwError(e);
+      })
+    )
+  }
+
+  activar(periodo: Periodo): Observable<Periodo> {
+    return this.http.put<Periodo>(`${this.urlEndPoint}/a/${periodo.id}`,periodo).pipe(
+      map((response:any) => response.periodo as Periodo),
+      catchError(e => {
+        if(e.status==400){
+          return throwError(e);
+        }
+        if (e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        return throwError(e);
+      })
+    )
+  }
 }

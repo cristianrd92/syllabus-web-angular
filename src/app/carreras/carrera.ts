@@ -5,5 +5,6 @@ export class Carrera {
   nombre_carrera: string;
   nombre_corto: string;
   codigo_carrera: string;
+  vigente:boolean;
   facultad: Facultad;
 }

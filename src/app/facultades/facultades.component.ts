@@ -12,6 +12,7 @@ import { DatatablesEspaniol } from '../helper/datatables.component';
 export class FacultadesComponent implements OnInit {
 
   facultades: Facultad[];
+  first:boolean=true;
   dtOptions: any = {};
   public loading:boolean=false
 
@@ -19,10 +20,20 @@ export class FacultadesComponent implements OnInit {
     public authService: AuthService) { }
 
   ngOnInit() {
-    this.loading=true;
+    if(this.first){
+      this.loading=true;
+    }
     this.facultadService.getFacultades().subscribe(
       facultades => {
-        this.facultades = facultades;
+        this.facultades = [];
+        facultades.forEach(facultad=>{
+          if(facultad.vigente){
+            this.facultades.push(facultad)
+          }
+          if(facultad.vigente==false && this.authService.hasPerfil("ROLE_ADMIN")) {
+            this.facultades.push(facultad);
+          }
+        })
         this.loading=false;
       });
     this.dtOptions = {
@@ -37,16 +48,16 @@ export class FacultadesComponent implements OnInit {
       // ]
     };
   }
-  delete(facultad: Facultad): void {
+  
+  desactivar(facultad: Facultad): void {
     swal({
-      title: `Esta seguro que desea eliminar la facultad ${facultad.nombre_facultad} ?`,
-      text: "Esto no se podra revertir",
+      title: `¿Esta seguro que desea desactivar la facultad ${facultad.nombre_facultad}?`,
       type: "warning",
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: "Si, borrar",
-      cancelButtonText: "No, cancelar!",
+      confirmButtonText: "Si, desactivar",
+      cancelButtonText: "No, cancelar",
       confirmButtonClass: "btn btn-success",
       cancelButtonClass: "btn btn-danger",
       buttonsStyling: false,
@@ -54,13 +65,13 @@ export class FacultadesComponent implements OnInit {
     }).then((result) =>{
       if (result.value){
         this.loading=true;
-        this.facultadService.delete(facultad.id).subscribe(
+        this.facultadService.desactivar(facultad).subscribe(
           response => {
-            this.facultades = this.facultades.filter(fac => fac !== facultad)
             this.loading=false;
+            this.ngOnInit();
             swal(
-              'Borrado!',
-              'La facultad ha sido borrada',
+              '¡Desactivada!',
+              'La facultad ha sido desactivada',
               'success'
               )
           }
@@ -68,4 +79,37 @@ export class FacultadesComponent implements OnInit {
       }
     })
   }
+
+  activar(facultad: Facultad): void {
+    swal({
+      title: `¿Esta seguro que desea activar la facultad ${facultad.nombre_facultad}?`,
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: "Si, activar",
+      cancelButtonText: "No, cancelar",
+      confirmButtonClass: "btn btn-success",
+      cancelButtonClass: "btn btn-danger",
+      buttonsStyling: false,
+      reverseButtons: true
+    }).then((result) =>{
+      if (result.value){
+        this.loading=true;
+        this.first=false;
+        this.facultadService.activar(facultad).subscribe(
+          response => {
+            this.loading=false;
+            this.ngOnInit();
+            swal(
+              '¡Activada!',
+              'La facultad ha sido activada',
+              'success'
+              )
+          }
+        )
+      }
+    })
+  }
+
 }

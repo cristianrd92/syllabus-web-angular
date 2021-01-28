@@ -12,6 +12,7 @@ import { DatatablesEspaniol } from "../helper/datatables.component";
 export class PeriodosComponent implements OnInit {
 
   periodos: Periodo[];
+  first:boolean=true;
   dtOptions: DataTables.Settings = {};
   public loading:boolean=false;
 
@@ -20,26 +21,36 @@ export class PeriodosComponent implements OnInit {
     public authService: AuthService) { }
 
   ngOnInit() {
-    this.loading=true;
+    if(this.first){
+      this.loading=true;
+    }
     this.periodoService.getPeriodos().subscribe(
       periodos => {
-        this.periodos = periodos
+        this.periodos = [];
+        periodos.forEach(periodo=>{
+          if(periodo.vigente){
+            this.periodos.push(periodo)
+          }
+          if(periodo.vigente==false && this.authService.hasPerfil("ROLE_ADMIN")) {
+            this.periodos.push(periodo);
+          }
+        })
         this.loading=false;
       });
     this.dtOptions = {
       language: DatatablesEspaniol.spanish_datatables
     };
   }
-  delete(periodo: Periodo): void {
+
+  desactivar(periodo: Periodo): void {
     swal({
-      title: `Esta seguro que desea eliminar el periodo ${periodo.nombre_periodo} ?`,
-      text: "Esto no se podra revertir",
+      title: `¿Esta seguro que desea desactivar el periodo ${periodo.nombre_periodo}?`,
       type: "warning",
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: "Si, borrar",
-      cancelButtonText: "No, cancelar!",
+      confirmButtonText: "Si, desactivar",
+      cancelButtonText: "No, cancelar",
       confirmButtonClass: "btn btn-success",
       cancelButtonClass: "btn btn-danger",
       buttonsStyling: false,
@@ -47,13 +58,14 @@ export class PeriodosComponent implements OnInit {
     }).then((result) =>{
       if (result.value){
         this.loading=true;
-        this.periodoService.delete(periodo.id).subscribe(
+        this.first=false;
+        this.periodoService.desactivar(periodo).subscribe(
           response => {
-            this.periodos = this.periodos.filter(per => per !== periodo)
             this.loading=false;
+            this.ngOnInit();
             swal(
-              'Borrado!',
-              'El periodo ha sido borrada',
+              '¡Desactivado!',
+              'El periodo ha sido desactivado',
               'success'
               )
           }
@@ -61,4 +73,37 @@ export class PeriodosComponent implements OnInit {
       }
     })
   }
+
+  activar(periodo: Periodo): void {
+    swal({
+      title: `¿Esta seguro que desea activar el periodo ${periodo.nombre_periodo}?`,
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: "Si, activar",
+      cancelButtonText: "No, cancelar",
+      confirmButtonClass: "btn btn-success",
+      cancelButtonClass: "btn btn-danger",
+      buttonsStyling: false,
+      reverseButtons: true
+    }).then((result) =>{
+      if (result.value){
+        this.loading=true;
+        this.first=false;
+        this.periodoService.activar(periodo).subscribe(
+          response => {
+            this.loading=false;
+            this.ngOnInit();
+            swal(
+              '¡Activado!',
+              'El periodo ha sido activado',
+              'success'
+              )
+          }
+        )
+      }
+    })
+  }
+
 }

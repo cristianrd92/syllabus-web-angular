@@ -82,4 +82,34 @@ export class CiudadService {
       })
     )
   }
+
+  desactivar(ciudad: Ciudad): Observable<Ciudad> {
+    return this.http.put<Ciudad>(`${this.urlEndPoint}/d/${ciudad.id}`,ciudad).pipe(
+      map((response:any) => response.usuario as Ciudad),
+      catchError(e => {
+        if(e.status==400){
+          return throwError(e);
+        }
+        if (e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        return throwError(e);
+      })
+    )
+  }
+
+  activar(ciudad: Ciudad): Observable<Ciudad> {
+    return this.http.put<Ciudad>(`${this.urlEndPoint}/a/${ciudad.id}`,ciudad).pipe(
+      map((response:any) => response.usuario as Ciudad),
+      catchError(e => {
+        if(e.status==400){
+          return throwError(e);
+        }
+        if (e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        return throwError(e);
+      })
+    )
+  }
 }

@@ -102,4 +102,34 @@ export class CarreraService {
       })
     )
   }
+
+  desactivar(carrera: Carrera): Observable<Carrera> {
+    return this.http.put<Carrera>(`${this.urlEndPoint}/d/${carrera.id}`,carrera).pipe(
+      map((response:any) => response.usuario as Carrera),
+      catchError(e => {
+        if(e.status==400){
+          return throwError(e);
+        }
+        if (e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        return throwError(e);
+      })
+    )
+  }
+
+  activar(carrera: Carrera): Observable<Carrera> {
+    return this.http.put<Carrera>(`${this.urlEndPoint}/a/${carrera.id}`,carrera).pipe(
+      map((response:any) => response.usuario as Carrera),
+      catchError(e => {
+        if(e.status==400){
+          return throwError(e);
+        }
+        if (e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        return throwError(e);
+      })
+    )
+  }
 }

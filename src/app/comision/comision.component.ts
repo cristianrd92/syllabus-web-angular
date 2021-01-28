@@ -32,8 +32,8 @@ export class ComisionComponent implements OnInit {
     })
   }
   onOptionsSelected(value: string){
+    this.loading=true;
     if(value!="--- Seleccione una carrera ---"){
-      this.loading=true;
       this.comisionService.getPlanificacionRevision(value).subscribe(resultado=>{
         this.syllabus = resultado;
         this.loading=false;

@@ -82,4 +82,34 @@ export class RamoService {
       })
     )
   }
+
+  desactivar(ramo: Ramo): Observable<Ramo> {
+    return this.http.put<Ramo>(`${this.urlEndPoint}/d/${ramo.id}`,ramo).pipe(
+      map((response:any) => response.ramo as Ramo),
+      catchError(e => {
+        if(e.status==400){
+          return throwError(e);
+        }
+        if (e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        return throwError(e);
+      })
+    )
+  }
+
+  activar(ramo: Ramo): Observable<Ramo> {
+    return this.http.put<Ramo>(`${this.urlEndPoint}/a/${ramo.id}`,ramo).pipe(
+      map((response:any) => response.ramo as Ramo),
+      catchError(e => {
+        if(e.status==400){
+          return throwError(e);
+        }
+        if (e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        return throwError(e);
+      })
+    )
+  }
 }

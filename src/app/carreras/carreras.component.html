@@ -17,7 +17,8 @@
           <th>Facultad</th>
           <th *ngIf="authService.hasRole('ROLE_V_COMISION')">Comisión</th>
           <th *ngIf="authService.hasRole('ROLE_M_CARRERA')">Editar</th>
-          <th *ngIf="authService.hasRole('ROLE_E_CARRERA')">Borrar</th>
+          <th *ngIf="authService.hasRole('ROLE_E_CARRERA') && !authService.hasPerfil('ROLE_ADMIN')">Desactivar</th>
+          <th *ngIf="authService.hasRole('ROLE_E_CARRERA') && authService.hasPerfil('ROLE_ADMIN')">Desactivar/Activar</th>
         </tr>
       </thead>
       <tbody>
@@ -30,8 +31,11 @@
           <td *ngIf="authService.hasRole('ROLE_M_CARRERA')" >
             <button type="button" name="editar" class="btn btn-primary" [routerLink]="['/carreras/form', carrera.id]">Editar</button>
           </td>
-          <td *ngIf="authService.hasRole('ROLE_E_CARRERA')">
-            <button type="button" name="eliminar" class="btn btn-danger" (click)='delete(carrera)'>Eliminar</button>
+          <td *ngIf="authService.hasRole('ROLE_E_CARRERA') && carrera.vigente==true">
+            <button type="button" name="eliminar" class="btn btn-danger" (click)='desactivar(carrera)'>Desactivar</button>
+          </td>
+          <td *ngIf="authService.hasRole('ROLE_E_CARRERA') && carrera.vigente==false">
+            <button type="button" name="activar" class="btn btn-success" (click)='activar(carrera)'>Activar</button>
           </td>
         </tr>
       </tbody>

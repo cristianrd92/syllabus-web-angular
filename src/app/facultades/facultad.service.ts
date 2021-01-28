@@ -87,4 +87,35 @@ export class FacultadService {
       })
     )
   }
+
+  desactivar(facultad: Facultad): Observable<Facultad> {
+    return this.http.put<Facultad>(`${this.urlEndPoint}/d/${facultad.id}`,facultad).pipe(
+      map((response:any) => response.facultad as Facultad),
+      catchError(e => {
+        if(e.status==400){
+          return throwError(e);
+        }
+        if (e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        return throwError(e);
+      })
+    )
+  }
+
+  activar(facultad: Facultad): Observable<Facultad> {
+    return this.http.put<Facultad>(`${this.urlEndPoint}/a/${facultad.id}`,facultad).pipe(
+      map((response:any) => response.facultad as Facultad),
+      catchError(e => {
+        if(e.status==400){
+          return throwError(e);
+        }
+        if (e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        return throwError(e);
+      })
+    )
+  }
+
 }

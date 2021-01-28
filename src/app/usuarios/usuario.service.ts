@@ -116,4 +116,34 @@ export class UsuarioService {
       })
     )
   }
+
+  desactivar(usuario: Usuario): Observable<Usuario> {
+    return this.http.put<Usuario>(`${this.urlEndPoint}/d/${usuario.id}`,usuario).pipe(
+      map((response:any) => response.usuario as Usuario),
+      catchError(e => {
+        if(e.status==400){
+          return throwError(e);
+        }
+        if (e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        return throwError(e);
+      })
+    )
+  }
+
+  activar(usuario: Usuario): Observable<Usuario> {
+    return this.http.put<Usuario>(`${this.urlEndPoint}/a/${usuario.id}`,usuario).pipe(
+      map((response:any) => response.usuario as Usuario),
+      catchError(e => {
+        if(e.status==400){
+          return throwError(e);
+        }
+        if (e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        return throwError(e);
+      })
+    )
+  }
 }

@@ -87,4 +87,34 @@ export class SedeService {
       })
     )
   }
+
+  desactivar(sede: Sede): Observable<Sede> {
+    return this.http.put<Sede>(`${this.urlEndPoint}/d/${sede.id}`,sede).pipe(
+      map((response:any) => response.sede as Sede),
+      catchError(e => {
+        if(e.status==400){
+          return throwError(e);
+        }
+        if (e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        return throwError(e);
+      })
+    )
+  }
+
+  activar(sede: Sede): Observable<Sede> {
+    return this.http.put<Sede>(`${this.urlEndPoint}/a/${sede.id}`,sede).pipe(
+      map((response:any) => response.sede as Sede),
+      catchError(e => {
+        if(e.status==400){
+          return throwError(e);
+        }
+        if (e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        return throwError(e);
+      })
+    )
+  }
 }
