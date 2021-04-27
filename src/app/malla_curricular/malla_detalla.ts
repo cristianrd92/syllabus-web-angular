@@ -8,6 +8,7 @@ export class MallaDetalle{
     creditos:number;
     descripcion_malla:string;
     carrera_id:number;
+    vigente:boolean;
     nombre_ramo:string;
     descripcion_semestre:string;
     posicion_semestre:number;

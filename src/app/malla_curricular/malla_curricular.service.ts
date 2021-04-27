@@ -192,13 +192,14 @@ export class MallaCurricularService {
           detalle.malla_id = detalle[5]
           detalle.descripcion_malla = detalle[6]
           detalle.carrera_id = detalle[7]
-          detalle.nombre_ramo = detalle[8]
-          detalle.creditos = detalle[9]
-          detalle.descripcion_semestre = detalle[10]
-          detalle.posicion_semestre = detalle[11]
-          detalle.nombre_usuario = detalle[12]
-          detalle.estado = detalle[13]
-          for (let index = 0; index <= 13; index++) {
+          detalle.vigente = detalle[8]
+          detalle.nombre_ramo = detalle[9]
+          detalle.creditos = detalle[10]
+          detalle.descripcion_semestre = detalle[11]
+          detalle.posicion_semestre = detalle[12]
+          detalle.nombre_usuario = detalle[13]
+          detalle.estado = detalle[14]
+          for (let index = 0; index <= 14; index++) {
             delete detalle[index]          
           }
           return detalle;

@@ -18,7 +18,7 @@
           <th *ngIf="authService.hasRole('ROLE_JEFE_CARRERA')">Ver malla</th>
           <th *ngIf="authService.hasRole('ROLE_JEFE_CARRERA')">Asignar ramos</th>
           <th *ngIf="authService.hasRole('ROLE_JEFE_CARRERA')">Editar</th>
-          <th *ngIf="authService.hasRole('ROLE_JEFE_CARRERA')">Borrar</th>
+          <th *ngIf="authService.hasRole('ROLE_JEFE_CARRERA')">Desactivar/Activar</th>
         </tr>
       </thead>
       <tbody>
@@ -33,8 +33,11 @@
           <td *ngIf="authService.hasRole('ROLE_JEFE_CARRERA')" >
             <button type="button" name="editar" class="btn btn-primary" [routerLink]="['/mallasCarrera/form', malla.id]">Editar</button>
           </td>
-          <td *ngIf="authService.hasRole('ROLE_JEFE_CARRERA')">
-            <button type="button" name="eliminar" class="btn btn-danger" (click)='delete(malla)'>Eliminar</button>
+          <td *ngIf="authService.hasRole('ROLE_JEFE_CARRERA') && malla.vigente==true">
+            <button type="button" name="eliminar" class="btn btn-danger" (click)='desactivar(malla)'>Desactivar</button>
+          </td>
+          <td *ngIf="authService.hasRole('ROLE_JEFE_CARRERA') && malla.vigente==false">
+            <button type="button" name="activar" class="btn btn-success" (click)='activar(malla)'>Activar</button>
           </td>
         </tr>
       </tbody>

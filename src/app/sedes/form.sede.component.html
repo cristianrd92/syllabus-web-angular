@@ -29,7 +29,7 @@
         <div class="col-sm-6">
           <select [compareWith]="compararCiudad" class="form-control" [(ngModel)]="sede.ciudad" name="ciudad" required #ciudad="ngModel">
             <option [ngValue]="undefined" > --- Seleccione una ciuad ---</option>
-            <option *ngFor="let ciudad of ciudades" [ngValue]="ciudad">{{ciudad.nombre_ciudad}}</option>
+            <option *ngFor="let ciudad of ciudades" [ngValue]="ciudad">{{ciudad.nombre_ciudad | uppercase}}</option>
           </select>
           <div class="alert alert-danger" *ngIf="ciudad.invalid && (ciudad.dirty || ciudad.touched)">
             <div *ngIf="ciudad.errors.required">

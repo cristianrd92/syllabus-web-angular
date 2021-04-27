@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MallaCurricular } from './malla_curricular';
 import { MallaCurricularService } from './malla_curricular.service';
-import swal from 'sweetalert2';
 import { AuthService } from '../usuarios/auth.service';
 import { DatatablesEspaniol } from '../helper/datatables.component';
 import { ActivatedRoute } from '@angular/router';
 import { CarreraService } from '../carreras/carrera.service';
-import { Ramo } from '../ramos/ramo';
-import { DetalleMallaCurricular } from './detalle_malla_curricular';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MallaDetalle } from './malla_detalla';
 
@@ -47,6 +44,7 @@ export class MallaCurricularVerComponent implements OnInit {
     };
   }
   tablaMalla(detalles){
+    console.log(detalles)
     let fila=0;
     let columna=0;
     let presente = 0;
@@ -59,7 +57,8 @@ export class MallaCurricularVerComponent implements OnInit {
         fila = detalles[t].posicion_semestre
       }
     }
-    this.tabla+='<table class="table cardnew table-responsive table-borderless">';
+    this.tabla+='<div class="table-responsive">'
+    this.tabla+='<table class="table cardnew table-borderless">';
     this.tabla+='<thead><tr>'
     
     for (let t=0; t<detalles.length; t++){
@@ -100,7 +99,7 @@ export class MallaCurricularVerComponent implements OnInit {
       }
       this.tabla+='</tr>'
     }
-    this.tabla+='</tbody></table>'
+    this.tabla+='</tbody></table></div>'
     this.loading=false;
   }
 }
